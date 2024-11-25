@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class DataSplitter:
     def __init__(self, val_size=0.2, random_state=None, shuffle=True):
         self.val_size = val_size
