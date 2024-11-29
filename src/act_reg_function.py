@@ -12,7 +12,7 @@ class function:
 class Act_Sigmoid(function):
     def forward_fun(self, input_data):
         return 1 / (1 + np.exp(-input_data))
-
+ 
     def derivative_fun(self, input_data):
         sigmoid = self.forward_fun(input_data)
         return sigmoid * (1 - sigmoid)
