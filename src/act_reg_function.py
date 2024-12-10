@@ -6,7 +6,7 @@ class function:
         raise NotImplementedError
 
     def derivative_fun(self, input_data):
-        raise NotImplementedError
+        return None
 
 
 class Act_Sigmoid(function):

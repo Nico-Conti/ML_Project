@@ -2,10 +2,13 @@ import os
 import numpy as np
 
 import src.act_reg_function as fun
-from src.metrics import mean_squared_error as MSE
+from src.metrics import mean_squared_error as MSE, binary_accuracy
 from src.layer import LayerDense
 import src.learning_rate as lr
+from src.utils.plot import provaplot
 
+loss = []
+acc = []
 
 class Network:
     def __init__(self, n_in, nUnit_l, a_fun):
@@ -29,10 +32,16 @@ class Network:
     def forw_back(self, data_in, y_true, learning_rate=0.01):
         y_out = self.forward(data_in).flatten()
         diff = np.subtract(y_out, y_true)
-        print(MSE(y_true,y_out))
+        loss.append(MSE(y_true,y_out))
+        acc.append(binary_accuracy(y_true,y_out))
+        print(y_true-y_out)
+        # print(MSE(y_true,y_out))
         self.backward(diff, learning_rate)
 
-    def train(self, data_in, y_true, learning_rate, epochs=2000, batch_size=-1):
+    def train(self, data_in, y_true, learning_rate, epochs=700, batch_size=-1):
         if batch_size == -1:
             for epoch in range(epochs):
                 self.forw_back(data_in, y_true, learning_rate)
+                
+
+            provaplot(loss, acc, epochs)
