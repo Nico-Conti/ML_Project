@@ -31,19 +31,19 @@ class Network:
         y_out = data_in
         return y_out
 
-    def backward(self, upstream_delta, learning_rate):
+    def backward(self, upstream_delta, learning_rate, lambd, momentum):
         # upstream_delta is the gradient of the error of the final output
         for layer in reversed(self.layers):
-            upstream_delta = layer.backward(upstream_delta, learning_rate)
+            upstream_delta = layer.backward(upstream_delta, learning_rate, lambd, momentum)
 
-    def forw_back(self, data_in, y_true, learning_rate=0.01):
+    def forw_back(self, data_in, y_true, learning_rate, lambd, momentum):
         y_out = self.forward(data_in).flatten()
         diff = np.subtract(y_out, y_true)
         loss.append(MSE(y_true,y_out))
         acc.append(binary_accuracy(y_true,y_out))
         # print(y_true-y_out)
         # print(MSE(y_true,y_out))
-        self.backward(diff, learning_rate)
+        self.backward(diff, learning_rate, lambd, momentum)
 
     def forw_val(self, data_in, y_true):
         y_out = self.forward(data_in).flatten()
@@ -59,12 +59,12 @@ class Network:
         loss_val.append(MSE(y_true,y_out))
         acc_val.append(binary_accuracy(y_true,y_out))
                            
-    def train(self, data_in, y_true, learning_rate, epochs=1000, batch_size=-1, patience = 20):
+    def train(self, data_in, y_true, learning_rate=0.01, epochs=1000, batch_size=-1, patience = 40, lambd = None, momentum = None):
         if batch_size == -1:
-            data = DataSplitter(val_size= 0.2)
+            data = DataSplitter(val_size= 0.2, random_state=1)
             x_train, x_val, y_train, y_val = data.split(data_in, y_true)
             for epoch in range(epochs):
-                self.forw_back(x_train, y_train, learning_rate)
+                self.forw_back(x_train, y_train, learning_rate, lambd, momentum)
                 self.forw_val(x_val, y_val)
 
                 if self.wait >= patience:
