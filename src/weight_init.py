@@ -11,7 +11,7 @@ def init_forward_w(n_in, n_out, init_val=None):
     return np.full((n_in, n_out), init_val)
 
 
-def init_rand_w(n_in, n_out, interval=None):
+def init_rand_w(n_in, n_out, interval=None, seed=None):
     if interval is None:
         # default [-0.5, 0.5]
         limit = 0.5
@@ -19,15 +19,25 @@ def init_rand_w(n_in, n_out, interval=None):
     else:
         a, b = interval
 
+    # Set the seed for reproducibility
+    if seed is not None:
+        np.random.seed(seed)
+
     return np.random.uniform(a, b, size=(n_in, n_out))
 
-def init_rand_bias(n_out, interval=None):
+
+def init_rand_bias(n_out, interval=None, seed=None):
     if interval is None:
         # default [-0.5,0.5]
         limit = 0.5
         a, b = -limit, limit
     else:
         a, b = interval
+
+    # Set the seed for reproducibility
+    if seed is not None:
+        np.random.seed(seed)
+    
     return np.random.uniform(a, b, size=n_out)
 
 
