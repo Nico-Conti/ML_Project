@@ -45,26 +45,4 @@ class Act_Tanh(function):
         return 1 - np.tanh(input_data) ** 2
 
 
-class Reg_Lasso(function):
-    def forward_fun(self, weights, lam):
-        return lam * np.sum(np.abs(weights))
 
-    def derivative_fun(self, weights, lam):
-        grad = np.zeros_like(weights)
-        for i in range(len(weights)):
-            if weights[i] > 0:
-                grad[i] = lam
-            elif weights[i] < 0:
-                grad[i] = -lam
-            else:
-                grad[i] = 0  # could be any value in the range [-lam,+lam]
-
-        return grad
-
-
-class Reg_Ridge(function):
-    def forward_fun(self, weights, lam):
-        return lam * np.sum(np.square(weights))
-
-    def derivative_fun(self, weights, lam):
-        return 2 * lam * weights
