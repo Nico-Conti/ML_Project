@@ -28,12 +28,12 @@ n_out = 1
 
 n_in_test = np.size(x_test[1])
 
-n_unit_per_layer = [4,1]
+n_unit_per_layer = [5,1]
 act_per_layer = [Act_Tanh(), Act_Sigmoid()]
 
 network = nn(n_in, n_unit_per_layer, act_per_layer)
 
-network.train(x,y,0.01)
+network.train(x, y, learning_rate=0.01, momentum=0.9)
 
 y_out = network.forward(x_test).flatten()
 
