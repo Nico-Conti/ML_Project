@@ -33,6 +33,25 @@ class DataSplitter:
         y_val = y[val_split_idx:]
         
         return X_train, X_val, y_train, y_val
+    
+    def k_fold_split(self, X, y, k=5):
+        n_samples = X.shape[0]
+        indices = np.arange(n_samples)
+        
+        if self.shuffle:
+            if self.random_state is not None:
+                np.random.seed(self.random_state)
+            np.random.shuffle(indices)
+        
+        fold_size = n_samples // k
+        for i in range(k):
+            val_indices = indices[i * fold_size: (i + 1) * fold_size]
+            train_indices = np.setdiff1d(indices, val_indices)
+            
+            X_train, X_val = X[train_indices], X[val_indices]
+            y_train, y_val = y[train_indices], y[val_indices]
+            
+            yield X_train, X_val, y_train, y_val
 
 class StratifiedDataSplitter(DataSplitter):
     def split(self, X, y):
