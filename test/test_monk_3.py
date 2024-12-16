@@ -3,7 +3,7 @@ import os
 sys.path.append(os.path.join(sys.path[0], '..'))
 
 from src.utils.data_utils import *
-from src.act_reg_function import  Act_Sigmoid, Act_Tanh
+from src.activation_function import  Act_Sigmoid, Act_Tanh
 from src.layer import LayerDense
 from src.metrics import mean_squared_error, binary_accuracy
 from src.network import Network as nn
@@ -33,7 +33,7 @@ act_per_layer = [Act_Tanh(), Act_Sigmoid()]
 
 network = nn(n_in, n_unit_per_layer, act_per_layer)
 
-network.train(x,y,0.01, lambd=0.01)
+network.train(x,y, learning_rate=0.02, lambd=0.1, momentum=0.7)
 
 y_out = network.forward(x_test).flatten()
 
