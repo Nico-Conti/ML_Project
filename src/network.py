@@ -1,18 +1,13 @@
 import os
 import numpy as np
 
-import src.act_reg_function as fun
+import src.activation_function as fun
 from src.metrics import mean_squared_error as MSE, binary_accuracy
 from src.layer import LayerDense
 import src.learning_rate as lr
 from src.utils.plot import provaplot
 from src.data_splitter import DataSplitter
 
-loss = []
-acc = []
-
-loss_val = []
-acc_val = []
 
 class Network:
     def __init__(self, n_in, nUnit_l, a_fun):
@@ -23,6 +18,11 @@ class Network:
 
         self.min_val = float('inf')
         self.wait = 0
+
+        self.loss = []
+        self.acc = []
+        self.loss_val = []
+        self.acc_val = []
 
     def forward(self, data_in):
         for layer in self.layers:
@@ -39,8 +39,8 @@ class Network:
     def forw_back(self, data_in, y_true, learning_rate, lambd, momentum):
         y_out = self.forward(data_in).flatten()
         diff = np.subtract(y_out, y_true)
-        loss.append(MSE(y_true,y_out))
-        acc.append(binary_accuracy(y_true,y_out))
+        self.loss.append(MSE(y_true,y_out))
+        self.acc.append(binary_accuracy(y_true,y_out))
         # print(y_true-y_out)
         # print(MSE(y_true,y_out))
         self.backward(diff, learning_rate, lambd, momentum)
@@ -56,21 +56,29 @@ class Network:
         else:
             self.wait += 1
 
-        loss_val.append(MSE(y_true,y_out))
-        acc_val.append(binary_accuracy(y_true,y_out))
+        self.loss_val.append(MSE(y_true,y_out))
+        self.acc_val.append(binary_accuracy(y_true,y_out))
                            
-    def train(self, data_in, y_true, learning_rate=0.01, epochs=1000, batch_size=-1, patience = 40, lambd = None, momentum = None):
+    def train(self, x_train, y_train, x_val=None, y_val=None, learning_rate=0.01, epochs=500, batch_size=-1, patience = None, lambd = None, momentum = None, early_stopping = True):
         if batch_size == -1:
-            data = DataSplitter(val_size= 0.2, random_state=1)
-            x_train, x_val, y_train, y_val = data.split(data_in, y_true)
-            for epoch in range(epochs):
-                self.forw_back(x_train, y_train, learning_rate, lambd, momentum)
-                self.forw_val(x_val, y_val)
+            
+            if early_stopping is True:
 
-                if self.wait >= patience:
-                    print(f"GOOD THING THERE IS EARLY STOPPING TO SAVE THE DAY! epoch stopped at:{epoch}")
-                    break
+                for epoch in range(epochs):
+                    self.forw_back(x_train, y_train, learning_rate, lambd, momentum)
+                    self.forw_val(x_val, y_val)
+                    if self.wait >= patience:
+                        # print(f"GOOD THING THERE IS EARLY STOPPING TO SAVE THE DAY! epoch stopped at:{epoch}")
+                        break
+
+                # provaplot(self.loss_val, self.acc_val, epoch+1)
+                # provaplot(self.loss, self.acc, epoch+1)
+
+            else:
+                for epoch in range(epochs):
+                    self.forw_back(x_train, y_train, learning_rate, lambd, momentum)
+     
                 
+                provaplot(self.loss, self.acc, epoch+1)
+ 
 
-            provaplot(loss, acc, epoch+1)
-            provaplot(loss_val, acc_val, epoch+1)

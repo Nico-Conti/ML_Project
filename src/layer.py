@@ -1,12 +1,12 @@
 import numpy as np
-from src.act_reg_function import function
+from src.activation_function import function
 from src.weight_init import init_rand_bias, init_rand_w
 
 class LayerDense():
 
     def __init__(self, n_in, n_out, activation:function):
-        self.weights = init_rand_w(n_in, n_out, seed=33)
-        self.bias = init_rand_bias(n_out, seed=33)
+        self.weights = init_rand_w(n_in, n_out, limit=0.5, seed=None)
+        self.bias = init_rand_bias(n_out, limit=0.5, seed=None)
         self.activation = activation
 
         self.grad_biases = None
@@ -55,6 +55,6 @@ class LayerDense():
         else:
             self.bias -= self.grad_biases * learning_rate 
             self.weights -= self.grad_weights * learning_rate
-            print(self.weights)
+            # print(self.weights)
 
         return new_upstream_delta
