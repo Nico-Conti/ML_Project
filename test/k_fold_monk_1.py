@@ -15,13 +15,13 @@ from src.metrics import binary_accuracy as BA
 import numpy as np
 
 grid = {
-    'n_layers': [2],
+    'n_layers': [2, 3],
     'a_fun': [Act_Tanh(), Act_Sigmoid()],
     'n_unit': [2, 3, 4],
     'learning_rate': [0.1, 0.05, 0.02, 0.01],
-    'lambd': [None],
+    'lambd': [0.1, 0.01, None],
     'momentum': [0.9, 0.7, 0.5, None],
-    'patience':[6, 9]
+    'patience':[6, 9, 12]
 }
 
 script_dir = os.path.dirname(__file__)
@@ -50,14 +50,17 @@ acc_val = []
 
 k_loss = {}
  
-n_trials = 5
+n_trials = 3
 val_size = 0.2
 
 data = DataSplitter(val_size, random_state=None)
 
 fold_index = 1
 
-for x_train, x_val, y_train, y_val in data.k_fold_split(x, y, k=4):
+for x_train, x_val, y_train, y_val in data.k_fold_split(x, y, k=6):
+    print(len(x_train))
+    print("-------------------")
+    print(len(x_val))
 
     for config in configs:
             config_key = str(config)
@@ -71,7 +74,12 @@ for x_train, x_val, y_train, y_val in data.k_fold_split(x, y, k=4):
                 loss_val.append(MSE(y_val,pred_val))
                 acc_val.append(BA(y_val,pred_val))
 
+                
+
             avg_loss = sum(loss_val) / len(loss_val)
+            # print(avg_loss)
+            loss_val = []
+            acc_val = []
 
             if config_key not in k_loss:
                 k_loss[config_key] = [avg_loss]
