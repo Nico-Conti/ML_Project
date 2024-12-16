@@ -11,13 +11,13 @@ def init_forward_w(n_in, n_out, init_val=None):
     return np.full((n_in, n_out), init_val)
 
 
-def init_rand_w(n_in, n_out, interval=None, seed=None):
-    if interval is None:
+def init_rand_w(n_in, n_out, limit=None, seed=None):
+    if limit is None:
         # default [-0.5, 0.5]
         limit = 0.5
         a, b = -limit, limit
     else:
-        a, b = interval
+        a, b = -limit, limit
 
     # Set the seed for reproducibility
     if seed is not None:
@@ -26,13 +26,13 @@ def init_rand_w(n_in, n_out, interval=None, seed=None):
     return np.random.uniform(a, b, size=(n_in, n_out))
 
 
-def init_rand_bias(n_out, interval=None, seed=None):
-    if interval is None:
+def init_rand_bias(n_out, limit=None, seed=None):
+    if limit is None:
         # default [-0.5,0.5]
         limit = 0.5
         a, b = -limit, limit
     else:
-        a, b = interval
+        a, b = -limit, limit
 
     # Set the seed for reproducibility
     if seed is not None:
