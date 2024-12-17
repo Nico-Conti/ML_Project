@@ -5,12 +5,13 @@ from src.weight_init import init_rand_bias, init_rand_w
 class LayerDense():
 
     def __init__(self, n_in, n_out, activation:function):
-        self.weights = init_rand_w(n_in, n_out, limit=0.5, seed=None)
-        self.bias = init_rand_bias(n_out, limit=0.5, seed=None)
+        self.weights = init_rand_w(n_in, n_out, limit=0.5, seed=2)
+        self.bias = init_rand_bias(n_out, limit=0.5, seed=2)
         self.activation = activation
 
-        self.grad_biases = None
-        self.grad_weights = None
+        self.grad_biases = np.zeros_like(self.bias)
+        self.grad_weights = np.zeros_like(self.weights)
+
 
     def forward(self, inputs):
         self.inputs = inputs
@@ -26,21 +27,15 @@ class LayerDense():
         if derivative_output.shape[1] == 1: derivative_output = np.reshape(derivative_output, derivative_output.shape[0])
 
         # Calculate the delta for this layer
-        delta = upstream_delta * derivative_output 
+        delta = upstream_delta * derivative_output
 
-        if momentum is not None and self.grad_weights is not None:
-            if self.grad_weights.shape[1] == 1:
-                self.grad_weights = self.grad_weights.reshape(-1)
+        if self.grad_weights.shape[1] == 1 : self.grad_weights = self.grad_weights.reshape(-1)
 
-            # print(momentum*self.grad_weights)
-            # print(self.grad_weights)
+        self.grad_biases = np.sum(delta, axis=0) + momentum*self.grad_biases
+        self.grad_weights = np.dot(self.inputs.T,delta) + momentum*self.grad_weights
 
-            self.grad_biases = np.sum(delta, axis=0) + momentum*self.grad_biases
-            self.grad_weights = np.dot(self.inputs.T,delta) + momentum*self.grad_weights
-            
-        else:
-            self.grad_biases = np.sum(delta, axis=0)
-            self.grad_weights = np.dot(self.inputs.T,delta)
+        np.clip(self.grad_biases, -0.5, 0.5)
+        np.clip(self.grad_weights, -0.5, 0.5)
 
         # print(np.shape(self.grad_weights))
         if self.weights.shape[1] == 1: self.grad_weights = self.grad_weights.reshape(self.weights.shape)
@@ -49,12 +44,10 @@ class LayerDense():
         if len(delta.shape) == 1: delta = delta.reshape(delta.shape[0], 1)
         new_upstream_delta = np.dot(delta, self.weights.T)
 
-        if lambd is not None:
-            self.bias -= self.grad_biases * learning_rate + lambd*self.bias
-            self.weights -= self.grad_weights * learning_rate + lambd*self.weights
-        else:
-            self.bias -= self.grad_biases * learning_rate 
-            self.weights -= self.grad_weights * learning_rate
-            # print(self.weights)
+        self.bias -= self.grad_biases * learning_rate + lambd*self.bias
+        self.weights -= self.grad_weights * learning_rate + lambd*self.weights
+
+         
+                
 
         return new_upstream_delta

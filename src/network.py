@@ -5,7 +5,7 @@ import src.activation_function as fun
 from src.metrics import mean_squared_error as MSE, binary_accuracy
 from src.layer import LayerDense
 import src.learning_rate as lr
-from src.utils.plot import provaplot
+from src.utils.plot import provaplot, plot_learning_curve
 from src.data_splitter import DataSplitter
 
 
@@ -36,49 +36,65 @@ class Network:
         for layer in reversed(self.layers):
             upstream_delta = layer.backward(upstream_delta, learning_rate, lambd, momentum)
 
-    def forw_back(self, data_in, y_true, learning_rate, lambd, momentum):
+    def forw_then_back(self, data_in, y_true, learning_rate, lambd, momentum):
         y_out = self.forward(data_in).flatten()
         diff = np.subtract(y_out, y_true)
-        self.loss.append(MSE(y_true,y_out))
-        self.acc.append(binary_accuracy(y_true,y_out))
-        # print(y_true-y_out)
-        # print(MSE(y_true,y_out))
         self.backward(diff, learning_rate, lambd, momentum)
 
-    def forw_val(self, data_in, y_true):
+    
+                           
+    def train(self, x_train, y_train, x_val=None, y_val=None, batch_size=-1, learning_rate=0.01, epochs=300, patience = None, lambd = 0, momentum = 0, early_stopping = True):
+        if batch_size == -1:
+
+                for epoch in range(epochs):
+                    self.forw_then_back(x_train, y_train, learning_rate, lambd, momentum)
+                    self.update_train_metrics(x_train, y_train)
+                    self.update_val_metrics(x_val, y_val)
+                    if early_stopping is True:
+                        if self.wait >= patience:
+                            print(f"GOOD THING THERE IS EARLY STOPPING TO SAVE THE DAY! epoch stopped at:{epoch}")
+                            break
+
+                plot_learning_curve(self.loss, self.loss_val, self.acc_val)
+
+        else:
+ 
+                for epoch in range(epochs):
+                    for i in range(0, len(x_train), batch_size):
+                        if i+batch_size < len(x_train):
+                            self.forw_then_back(x_train[i:i+batch_size], y_train[i:i+batch_size], learning_rate, lambd, momentum)
+                        else:
+                            self.forw_then_back(x_train[i:], y_train[i:], learning_rate, lambd, momentum)
+                        
+                    self.update_train_metrics(x_train, y_train)
+                    self.update_val_metrics(x_val, y_val)
+                    if early_stopping is True:
+                        if self.wait >= patience:
+                            print(f"GOOD THING THERE IS EARLY STOPPING TO SAVE THE DAY! epoch stopped at:{epoch}")
+                            break
+
+                plot_learning_curve(self.loss, self.loss_val, self.acc_val)
+                
+
+
+
+
+    def update_train_metrics(self, data_in, y_true):
         y_out = self.forward(data_in).flatten()
-        diff = np.subtract(y_out, y_true)
+
+        self.loss.append(MSE(y_true,y_out))
+        self.acc.append(binary_accuracy(y_true,y_out))
+
+    def update_val_metrics(self, data_in, y_true):
+        y_out = self.forward(data_in).flatten()
         diff = MSE(y_true,y_out)
+      
+        self.loss_val.append(diff)
+        self.acc_val.append(binary_accuracy(y_true,y_out))
 
         if diff < self.min_val:
             self.min_val = diff
             self.wait = 0
         else:
             self.wait += 1
-
-        self.loss_val.append(MSE(y_true,y_out))
-        self.acc_val.append(binary_accuracy(y_true,y_out))
-                           
-    def train(self, x_train, y_train, x_val=None, y_val=None, learning_rate=0.01, epochs=500, batch_size=-1, patience = None, lambd = None, momentum = None, early_stopping = True):
-        if batch_size == -1:
-            
-            if early_stopping is True:
-
-                for epoch in range(epochs):
-                    self.forw_back(x_train, y_train, learning_rate, lambd, momentum)
-                    self.forw_val(x_val, y_val)
-                    if self.wait >= patience:
-                        # print(f"GOOD THING THERE IS EARLY STOPPING TO SAVE THE DAY! epoch stopped at:{epoch}")
-                        break
-
-                # provaplot(self.loss_val, self.acc_val, epoch+1)
-                # provaplot(self.loss, self.acc, epoch+1)
-
-            else:
-                for epoch in range(epochs):
-                    self.forw_back(x_train, y_train, learning_rate, lambd, momentum)
-     
-                
-                provaplot(self.loss, self.acc, epoch+1)
- 
-
+  

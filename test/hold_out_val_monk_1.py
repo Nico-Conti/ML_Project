@@ -21,7 +21,7 @@ grid = {
     'learning_rate': [0.1, 0.05, 0.02, 0.01],
     'lambd': [None],
     'momentum': [0.9, 0.7, 0.5, None],
-    'patience':[6, 9]
+    'patience':[9]
 }
 
 script_dir = os.path.dirname(__file__)
@@ -48,18 +48,19 @@ best_loss = 1
 loss_val = []
 acc_val = []
  
-n_trials = 5
+n_trials = 4
 val_size = 0.2
 
 data = DataSplitter(val_size, random_state=None)
 x_train, x_val, y_train, y_val = data.split(x, y)
 
-for config in configs:
 
+for config in configs:
+    
     # print(f"Trying config:{config}")
     for trial in range(n_trials):
         network = nn(n_in, config['n_unit_list'], config['act_list'])
-        network.train(x_train, y_train, x_val, y_val, learning_rate=config['learning_rate'], lambd=config['lambd'], momentum=config['momentum'], patience=config['patience'], early_stopping = True)
+        network.train(x_train, y_train, x_val, y_val, batch_size = 1, learning_rate=config['learning_rate'], lambd=config['lambd'], momentum=config['momentum'], patience=config['patience'], early_stopping = True)
 
         pred_val = network.forward(x_val).flatten()
 
