@@ -18,7 +18,7 @@ grid = {
     'n_layers': [2],
     'a_fun': [Act_Tanh(), Act_Sigmoid()],
     'n_unit': [2, 3, 4],
-    'learning_rate': [0.1, 0.05, 0.02, 0.01],
+    'learning_rate': [0.07, 0.05, 0.03, 0.01],
     'lambd': [0.1, 0.01, None],
     'momentum': [0.9, 0.7, 0.5, None],
     'patience':[12]
@@ -27,12 +27,12 @@ grid = {
 script_dir = os.path.dirname(__file__)
 
 # Construct the relative path to the data file
-monk_1_train = os.path.join(script_dir, "../data/monk+s+problems/monks-1.train")
-monk_1_test = os.path.join(script_dir, "../data/monk+s+problems/monks-1.test")
+monk_2_train = os.path.join(script_dir, "../data/monk+s+problems/monks-2.train")
+monk_2_test = os.path.join(script_dir, "../data/monk+s+problems/monks-2.test")
 
 # Read the data using the constructed path
-x, y =  read_monk_data(monk_1_train)
-x_test, y_true = read_monk_data(monk_1_test)
+x, y =  read_monk_data(monk_2_train)
+x_test, y_true = read_monk_data(monk_2_test)
 x = feature_one_hot_encoding(x, [3,3,2,3,4,2])
 x_test = feature_one_hot_encoding(x_test, [3,3,2,3,4,2])
 
@@ -67,7 +67,7 @@ for x_train, x_val, y_train, y_val in data.k_fold_split(x, y, k=6):
 
             for trial in range(n_trials):
                 network = nn(n_in, config['n_unit_list'], config['act_list'])
-                network.train(x_train, y_train, x_val, y_val, batch_size = 1, learning_rate=config['learning_rate'], lambd=config['lambd'], momentum=config['momentum'], patience=config['patience'], early_stopping = True)
+                network.train(x_train, y_train, x_val, y_val, learning_rate=config['learning_rate'], lambd=config['lambd'], momentum=config['momentum'], patience=config['patience'], early_stopping = True)
 
                 pred_val = network.forward(x_val).flatten()
 

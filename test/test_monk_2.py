@@ -33,7 +33,7 @@ act_per_layer = [Act_Tanh(), Act_Sigmoid()]
 
 network = nn(n_in, n_unit_per_layer, act_per_layer)
 
-network.train(x,y, learning_rate=0.02, momentum=0.9)
+network.train(x, y, x_test, y_true, learning_rate=0.07, momentum=0.9, early_stopping= False)
 
 y_out = network.forward(x_test).flatten()
 
