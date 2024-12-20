@@ -28,6 +28,18 @@ class Act_ReLU(function):
         else:
             return np.ones(shape=np.shape(input_data))
 
+class Act_LeakyReLU(function):
+    def __init__(self, alpha=0.01):
+        self.alpha = alpha  # Leaky slope, typically set to 0.01
+
+    def forward_fun(self, input_data):
+        # Leaky ReLU forward pass: returns alpha * input_data for negative, else input_data
+        return np.where(input_data > 0, input_data, self.alpha * input_data)
+
+    def derivative_fun(self, input_data):
+        # Derivative of Leaky ReLU: alpha for negative inputs, 1 for positive inputs
+        return np.where(input_data > 0, 1, self.alpha).astype(float)
+
 
 class Act_Linear(function):
     def forward_fun(self, input_data):

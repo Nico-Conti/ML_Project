@@ -7,7 +7,8 @@ from src.activation_function import  *
 from src.layer import LayerDense
 from src.metrics import mean_squared_error, binary_accuracy
 from src.network import Network as nn
-from src.utils.plot import *
+from src.learning_rate import LearningRate, LearningRateLinearDecay, LearningRateExponentialDecay
+
 
 import numpy as np
 
@@ -28,14 +29,16 @@ n_out = 1
 
 n_in_test = np.size(x_test[1])
 
-n_unit_per_layer = [2, 1]
-act_per_layer = [Act_Tanh(), Act_ReLU()]
+n_unit_per_layer = [4, 1]
+act_per_layer = [Act_Tanh(), Act_Sigmoid()]
+
+lr = LearningRateLinearDecay(0.2, 100, 0.02)
 
 network = nn(n_in, n_unit_per_layer, act_per_layer)
 
-network.train(x, y, x_test, y_true, batch_size=1, patience=3, learning_rate=0.05, momentum = 0.7,  early_stopping=True)
+network.train(x, y, x_test, y_true, batch_size=-1, patience = 12, learning_rate=0.02, lambd=reg, momentum = 0.7,  early_stopping=False)
 
 y_out = network.forward(x_test).flatten()
 
-
+print(mean_squared_error(y_true, y_out))
 print(binary_accuracy(y_true, y_out))

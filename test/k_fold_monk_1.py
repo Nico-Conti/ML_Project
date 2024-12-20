@@ -8,21 +8,13 @@ from src.layer import LayerDense
 from src.network import Network as nn
 from src.utils.plot import *
 from src.grid_search import grid_search
+from src.utils.grid_search_configs import grid_search_config
 from src.data_splitter import DataSplitter
 from src.metrics import mean_euclidean_error as MSE
 from src.metrics import binary_accuracy as BA
+from src.learning_rate import LearningRateLinearDecay as Ld
 
 import numpy as np
-
-grid = {
-    'n_layers': [2],
-    'a_fun': [Act_Tanh(), Act_Sigmoid()],
-    'n_unit': [2, 3, 4],
-    'learning_rate': [0.1, 0.05, 0.02, 0.01],
-    'lambd': [0.1, 0.01, None],
-    'momentum': [0.9, 0.7, 0.5, None],
-    'patience':[12]
-}
 
 script_dir = os.path.dirname(__file__)
 
@@ -41,14 +33,8 @@ n_out = 1
 
 n_in_test = np.size(x_test[1])
 
-
-configs = grid_search(grid)
-best_loss = 1
-
-loss_val = []
-acc_val = []
-
 k_loss = {}
+configs = grid_search_config()
  
 n_trials = 3
 val_size = 0.2
@@ -57,37 +43,13 @@ data = DataSplitter(val_size, random_state=None)
 
 fold_index = 1
 
+
 for x_train, x_val, y_train, y_val in data.k_fold_split(x, y, k=6):
     print(len(x_train))
     print("-------------------")
     print(len(x_val))
 
-    for config in configs:
-            config_key = str(config)
-
-            for trial in range(n_trials):
-                network = nn(n_in, config['n_unit_list'], config['act_list'])
-                network.train(x_train, y_train, x_val, y_val, batch_size = 1, learning_rate=config['learning_rate'], lambd=config['lambd'], momentum=config['momentum'], patience=config['patience'], early_stopping = True)
-
-                pred_val = network.forward(x_val).flatten()
-
-                loss_val.append(MSE(y_val,pred_val))
-                acc_val.append(BA(y_val,pred_val))
-
-                
-
-            avg_loss = sum(loss_val) / len(loss_val)
-            # print(avg_loss)
-            loss_val = []
-            acc_val = []
-
-            if config_key not in k_loss:
-                k_loss[config_key] = [avg_loss]
-            else:
-                k_loss[config_key].append(avg_loss)
-
-            print(k_loss[config_key])
-
+    k_loss = grid_search(x_train, y_train, x_val, y_val, batch_size=-1, configs_loss=k_loss, configs=configs)
  
     fold_index += 1
 

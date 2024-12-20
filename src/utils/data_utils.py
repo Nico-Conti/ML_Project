@@ -39,3 +39,16 @@ def feature_one_hot_encoding(y, classes):
                 prev_classes = int(np.sum(classes[0:j]))
                 one_hot[i, prev_classes + y[i,j] - 1] = 1
     return one_hot
+
+def shuffle_indices(X, y, random_state=None):
+        n_samples = X.shape[0]
+
+        if random_state is not None:
+            np.random.seed(random_state)
+
+        indices = np.arange(n_samples)
+        np.random.shuffle(indices)
+        X = X[indices]
+        y = y[indices]
+
+        return X, y

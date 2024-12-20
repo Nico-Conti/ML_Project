@@ -1,5 +1,5 @@
 from layer import LayerDense
-from act_reg_function import Act_Sigmoid
+from src.activation_function import Act_Sigmoid
 import numpy as np
 
 x = np.array([[1,2,3,4,5], [6,2,3,4,5]])
