@@ -1,0 +1,1 @@
+"Minimum loss: nan with std: nan for config: {'learning_rate': 'LearningRateLinearDecay(0.1, 50, 0.001)', 'lambd': 'L1Regularization(1e-05)', 'momentum': 0.95, 'patience': 12, 'n_unit_list': [2, 1], 'act_list': ['Act_Linear()', 'Act_Linear()']}"

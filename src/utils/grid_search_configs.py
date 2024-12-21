@@ -2,23 +2,9 @@ from src.activation_function import *
 import random
 import itertools
 
-from src.regularization import L2Regularization as L2
-from src.regularization import L1Regularization as L1
-
-param_grid = {
-    'n_layers': [2],
-    'a_fun': [Act_Tanh(), Act_Sigmoid()],
-    'n_unit': [2, 3, 4],
-    'learning_rate': [0.2, 0.05, 0],
-    'lambd': [L2(0.01)],
-    'momentum': [0.9, 0.8, 0.7, 0.6, 0.5],
-    'patience':[12]
-}
-
-
-def grid_search_config():
-
-    n_unit_per_layer, act_per_layer  = layer_unit_act_list(param_grid)
+def grid_search_config(param_grid, n_unit_out=1, regression=False):
+    param_grid = param_grid.copy()
+    n_unit_per_layer, act_per_layer  = layer_unit_act_list(param_grid, n_unit_out, regression)
 
     param_grid['n_unit_list'] = n_unit_per_layer
     param_grid['act_list'] = act_per_layer
@@ -33,7 +19,7 @@ def grid_search_config():
 
     return permutations_dicts
 
-def layer_unit_act_list(param_grid):
+def layer_unit_act_list(param_grid, n_unit_out, regression):
     n_layers = param_grid['n_layers']
 
     n_unit_per_layer = []
@@ -41,8 +27,11 @@ def layer_unit_act_list(param_grid):
     
     for n in n_layers:
     
-        unit = [list(item) + [1] for item in itertools.product(param_grid['n_unit'], repeat=n-1)]
-        act = [list(item) for item in itertools.product(param_grid['a_fun'], repeat=n)]
+        unit = [list(item) + [n_unit_out] for item in itertools.product(param_grid['n_unit'], repeat=n-1)]
+        if regression:
+            act = [list(item) + [Act_Linear()] for item in itertools.product(param_grid['a_fun'], repeat=n-1)]
+        else:
+            act = [list(item) + [Act_Sigmoid()] for item in itertools.product(param_grid['a_fun'], repeat=n-1)]
 
         n_unit_per_layer.append(unit)
         act_per_layer.append(act)
@@ -54,39 +43,29 @@ def layer_unit_act_list(param_grid):
 
     return n_unit_per_layer, act_per_layer
 
-def randomize_hyperp(param_grid, num_instances=3):
 
+def parse_config(config):
+    new_dict = {}
+    processed_act_list = []
+    
+    for key, value in config.items():
+        if key == 'lambd':
+            class_name = value.__class__.__name__
+            if hasattr(value, 'lambd'):
+                new_dict[key] = f"{class_name}({value.lambd})"
 
-    randomized_configs = []
-    for _ in range(num_instances):
+        elif key == 'act_list':
+            for i, act in enumerate(value):
+                class_name = act.__class__.__name__
+                processed_act_list.append(f"{class_name}()")
+            new_dict['act_list'] = processed_act_list
 
-        nUnit_l = random.choice(param_grid['nUnit_l'])
-
-        a_fun = random.choice(param_grid['a_fun'])
-
-        learning_rate = random.uniform(
-            min(param_grid['learning_rate']), max(param_grid['learning_rate'])
-        )
-
-        lambd_values = [val for val in param_grid['lambd'] if val is not None]
-        if lambd_values:
-            lambd = random.uniform(min(lambd_values), max(lambd_values))
+        elif key == 'learning_rate':
+            class_name = value.__class__.__name__
+            if hasattr(value, 'tau'):
+                new_dict[key] = f"{class_name}({value.learning_rate}, {value.tau}, {value.final_learning_rate})"
+            else:
+                new_dict[key] = f"{class_name}({value.learning_rate})"
         else:
-            lambd = None
-
-        momentum_values = [val for val in param_grid['momentum'] if val is not None]
-        if momentum_values:
-            momentum = random.uniform(min(momentum_values), max(momentum_values))
-        else:
-            momentum = None
-
-        new_config = {
-            'nUnit_l': nUnit_l,
-            'a_fun': a_fun,
-            'learning_rate': round(learning_rate, 3),
-            'lambd': None if lambd is None else round(lambd, 2),
-            'momentum': None if momentum is None else round(momentum, 1)
-        }
-        randomized_configs.append(new_config)
-
-    return randomized_configs
+            new_dict[key] = value
+    return new_dict

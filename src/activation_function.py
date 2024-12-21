@@ -23,10 +23,7 @@ class Act_ReLU(function):
         return np.maximum(input_data, 0)
 
     def derivative_fun(self, input_data):
-        if np.all(input_data) <= 0:
-            return np.zeros(shape=np.shape(input_data))
-        else:
-            return np.ones(shape=np.shape(input_data))
+        return np.where(input_data > 0, 1, 0)
 
 class Act_LeakyReLU(function):
     def __init__(self, alpha=0.01):
@@ -46,7 +43,7 @@ class Act_Linear(function):
         return input_data
 
     def derivative_fun(self, input_data):
-        return 1
+        return np.ones(shape=np.shape(input_data))
 
 
 class Act_Tanh(function):

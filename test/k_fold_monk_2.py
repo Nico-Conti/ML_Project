@@ -5,24 +5,15 @@ sys.path.append(os.path.join(sys.path[0], '..'))
 from src.utils.data_utils import *
 from src.activation_function import  *
 from src.layer import LayerDense
-from src.network import Network as nn
+from src.data_splitter import *
 from src.utils.plot import *
+from src.network import Network as nn
 from src.grid_search import grid_search
-from src.data_splitter import DataSplitter
 from src.metrics import mean_euclidean_error as MSE
 from src.metrics import binary_accuracy as BA
 
-import numpy as np
 
-grid = {
-    'n_layers': [2],
-    'a_fun': [Act_Tanh(), Act_Sigmoid()],
-    'n_unit': [2, 3, 4],
-    'learning_rate': [0.07, 0.05, 0.03, 0.01],
-    'lambd': [0.1, 0.01, None],
-    'momentum': [0.9, 0.7, 0.5, None],
-    'patience':[12]
-}
+import numpy as np
 
 script_dir = os.path.dirname(__file__)
 
@@ -41,19 +32,12 @@ n_out = 1
 
 n_in_test = np.size(x_test[1])
 
+k_loss_list = {}
 
-configs = grid_search(grid)
-best_loss = 1
-
-loss_val = []
-acc_val = []
-
-k_loss = {}
- 
 n_trials = 3
 val_size = 0.2
 
-data = DataSplitter(val_size, random_state=None)
+data = StratifiedDataSplitter(val_size, random_state=None)
 
 fold_index = 1
 
@@ -62,42 +46,22 @@ for x_train, x_val, y_train, y_val in data.k_fold_split(x, y, k=6):
     print("-------------------")
     print(len(x_val))
 
-    for config in configs:
-            config_key = str(config)
-
-            for trial in range(n_trials):
-                network = nn(n_in, config['n_unit_list'], config['act_list'])
-                network.train(x_train, y_train, x_val, y_val, learning_rate=config['learning_rate'], lambd=config['lambd'], momentum=config['momentum'], patience=config['patience'], early_stopping = True)
-
-                pred_val = network.forward(x_val).flatten()
-
-                loss_val.append(MSE(y_val,pred_val))
-                acc_val.append(BA(y_val,pred_val))
-
-                
-
-            avg_loss = sum(loss_val) / len(loss_val)
-            # print(avg_loss)
-            loss_val = []
-            acc_val = []
-
-            if config_key not in k_loss:
-                k_loss[config_key] = [avg_loss]
-            else:
-                k_loss[config_key].append(avg_loss)
-
-            print(k_loss[config_key])
-
+    k_loss_list = grid_search(x_train, y_train, x_val, y_val, batch_size=-1, configs_loss=k_loss_list)
  
     fold_index += 1
 
 
-for config_key, loss_list in k_loss.items():
-    k_loss[config_key] = sum(loss_list) / len(loss_list)  # Replace the list with the mean
+for config_key, loss_list in k_loss_list.items():
+    k_std = np.std(loss_list)  # Calculate the standard deviation of the loss list
+    k_loss = np.mean(loss_list)  # Calculate the mean of the loss list
+
+    k_loss_list[config_key] = [k_loss, k_std]
 
 # Find the minimum mean value in the entire k_loss dictionary
-min_loss_key = min(k_loss, key=k_loss.get)  # Get the key with the minimum mean loss
-min_loss = k_loss[min_loss_key]
+min_loss_config = min(k_loss_list, key=lambda key: k_loss_list[key][0])  # Get the key with the minimum mean loss
+min_loss = k_loss_list[min_loss_config][0]
+std = k_loss_list[min_loss_config][1]
 
-print(f"Configuration with minimum mean loss: {min_loss_key}")
-print(f"Minimum mean loss: {min_loss}")
+save = (f"Minimum loss: {min_loss} with std: {std} for config: {min_loss_config}")
+
+save_config_to_json(save, "config/config_k_fold_monk_2.json")

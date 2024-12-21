@@ -52,3 +52,31 @@ def shuffle_indices(X, y, random_state=None):
         y = y[indices]
 
         return X, y
+
+def readTrainingCupData(filename):
+    input = []
+    output = []
+    with open(filename, "r") as file:
+        for line in file:
+            if line.startswith('#'): continue
+            values = list(map(float, line.split(',')[1:]))
+            input.append(values[0:-3])
+            output.append(values[-3:])
+    return np.array(input), np.array(output)
+
+def readTestCupData(filename):
+    input = []
+    with open(filename, 'r') as file:
+        for line in file:
+            if line.startswith('#'): continue
+            values = list(map(float, line.split(',')[1:]))
+            input.append(values)
+    return input
+
+import json
+
+def save_config_to_json(config, file_path):
+
+    with open(file_path, 'w') as f:
+            json.dump(config, f, indent=4)
+

@@ -5,8 +5,8 @@ from src.weight_init import init_rand_bias, init_rand_w
 class LayerDense():
 
     def __init__(self, n_in, n_out, activation:function):
-        self.weights = init_rand_w(n_in, n_out, limit=0.5, seed=1)
-        self.bias = init_rand_bias(n_out, limit=0.5, seed=1)
+        self.weights = init_rand_w(n_in, n_out, limit=0.5, seed=None)
+        self.bias = init_rand_bias(n_out, limit=0.5, seed=None)
         self.activation = activation
 
         self.grad_biases = np.zeros_like(self.bias)
@@ -29,10 +29,18 @@ class LayerDense():
         # Calculate the delta for this layer
         delta = upstream_delta * derivative_output
 
+        # print(np.shape(self.grad_weights))
+
         if self.grad_weights.shape[1] == 1 : self.grad_weights = self.grad_weights.reshape(-1)
+
+        # print(np.shape(self.grad_weights))
+
+        # print(np.shape(self.inputs))
+        # print(np.shape(delta))
 
         self.grad_biases = np.sum(delta, axis=0) + momentum*self.grad_biases
         self.grad_weights = np.dot(self.inputs.T,delta) + momentum*self.grad_weights
+
 
         np.clip(self.grad_biases, -0.5, 0.5)
         np.clip(self.grad_weights, -0.5, 0.5)

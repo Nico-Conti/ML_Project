@@ -1,4 +1,0 @@
-SGD K-fold=6 trials=3 Configuration with minimum mean loss: {'learning_rate': 0.1, 'lambd': 0, 'momentum': 0.7, 'patience': 12, 'n_unit_list': [4, 1], 'act_list': [<src.activation_function.Act_Tanh object at 0x7f95a7d44770>, <src.activation_function.Act_Sigmoid object at 0x7f959387dbe0>]}
-Minimum mean loss: 0.0423769144661361
-
-{'learning_rate': 0.2, 'lambd': 0, 'momentum': 0.6, 'patience': 12, 'n_unit_list': [4, 1], 'act_list': [<src.activation_function.Act_Tanh object at 0x7fb26ff58920>, <src.activation_function.Act_Sigmoid object at 0x7fb26ff51190>]}

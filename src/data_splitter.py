@@ -106,3 +106,49 @@ class StratifiedDataSplitter(DataSplitter):
         y_val = np.concatenate(y_val)
         
         return X_train, X_val, y_train, y_val
+    
+    
+    
+    def k_fold_split(self, X, y, k=5):
+        if not isinstance(X, np.ndarray) or not isinstance(y, np.ndarray):
+            raise ValueError("X and y must be numpy arrays.")
+
+        if X.shape[0] != y.shape[0]:
+            raise ValueError("X and y must have the same number of samples.")
+
+        n_samples = X.shape[0]
+
+        # Group indices by class
+        unique_classes = np.unique(y)
+        class_indices = {cls: np.where(y == cls)[0] for cls in unique_classes}
+
+        # Shuffle indices within each class
+        if self.shuffle:
+            if self.random_state is not None:
+                np.random.seed(self.random_state)
+            for cls in unique_classes:
+                np.random.shuffle(class_indices[cls])
+
+        # Determine the number of samples of each class in each fold
+        n_splits = k
+        fold_indices = [[] for _ in range(n_splits)] #fold_indices = [0, 1, 2, 3]
+        for cls in unique_classes:
+            indices_cls = class_indices[cls]                              #indices_cls = np.array(2, 3, 9, 1. 30, 4, 5, 6, 7, 8)
+            n_samples_cls = len(indices_cls)
+            fold_sizes = np.repeat(n_samples_cls // n_splits, n_splits)   #[2, 2, 2, 2, 2]
+            fold_sizes[:n_samples_cls % n_splits] += 1                    #[3, 3, 3, 2, 2]
+
+            current_idx = 0
+            for f in range(n_splits):
+                start, stop = current_idx, current_idx + fold_sizes[f]
+                fold_indices[f].extend(indices_cls[start:stop])
+                current_idx = stop
+
+        # Yield the train and validation sets for each fold
+        for i in range(n_splits):
+            val_indices = np.array(fold_indices[i])
+            train_indices = np.concatenate([fold_indices[j] for j in range(n_splits) if j != i])
+            X_train, X_val = X[train_indices], X[val_indices]
+            y_train, y_val = y[train_indices], y[val_indices]
+
+            yield X_train, X_val, y_train, y_val

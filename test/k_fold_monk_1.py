@@ -5,14 +5,13 @@ sys.path.append(os.path.join(sys.path[0], '..'))
 from src.utils.data_utils import *
 from src.activation_function import  *
 from src.layer import LayerDense
-from src.network import Network as nn
+from src.data_splitter import *
 from src.utils.plot import *
+from src.network import Network as nn
 from src.grid_search import grid_search
-from src.utils.grid_search_configs import grid_search_config
-from src.data_splitter import DataSplitter
 from src.metrics import mean_euclidean_error as MSE
 from src.metrics import binary_accuracy as BA
-from src.learning_rate import LearningRateLinearDecay as Ld
+
 
 import numpy as np
 
@@ -33,33 +32,38 @@ n_out = 1
 
 n_in_test = np.size(x_test[1])
 
-k_loss = {}
-configs = grid_search_config()
- 
+k_loss_list = {}
+
 n_trials = 3
 val_size = 0.2
 
-data = DataSplitter(val_size, random_state=None)
+data = StratifiedDataSplitter(val_size, random_state=None)
 
 fold_index = 1
-
 
 for x_train, x_val, y_train, y_val in data.k_fold_split(x, y, k=6):
     print(len(x_train))
     print("-------------------")
     print(len(x_val))
 
-    k_loss = grid_search(x_train, y_train, x_val, y_val, batch_size=-1, configs_loss=k_loss, configs=configs)
+    k_loss_list = grid_search(x_train, y_train, x_val, y_val, batch_size=-1, configs_loss=k_loss_list)
  
     fold_index += 1
 
 
-for config_key, loss_list in k_loss.items():
-    k_loss[config_key] = sum(loss_list) / len(loss_list)  # Replace the list with the mean
+for config_key, loss_list in k_loss_list.items():
+    k_std = np.std(loss_list)  # Calculate the standard deviation of the loss list
+    k_loss = np.mean(loss_list)  # Calculate the mean of the loss list
+
+    k_loss_list[config_key] = [k_loss, k_std]
 
 # Find the minimum mean value in the entire k_loss dictionary
-min_loss_key = min(k_loss, key=k_loss.get)  # Get the key with the minimum mean loss
-min_loss = k_loss[min_loss_key]
+min_loss_config = min(k_loss_list, key=lambda key: k_loss_list[key][0])  # Get the key with the minimum mean loss
+min_loss = k_loss_list[min_loss_config][0]
+std = k_loss_list[min_loss_config][1]
 
-print(f"Configuration with minimum mean loss: {min_loss_key}")
-print(f"Minimum mean loss: {min_loss}")
+
+
+save = (f"Minimum loss: {min_loss} with std: {std} for config: {min_loss_config}")
+
+save_config_to_json(save, "config/config_k_fold_monk_1.json")

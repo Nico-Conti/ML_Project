@@ -4,7 +4,8 @@ import numpy as np
 import src.activation_function as fun
 from src.metrics import mean_squared_error as MSE, binary_accuracy
 from src.layer import LayerDense
-import src.learning_rate as lr
+from src.learning_rate import LearningRate as lr
+from src.regularization import L2Regularization as L2
 from src.utils.plot import provaplot, plot_learning_curve
 from src.utils.data_utils import shuffle_indices
 from src.data_splitter import DataSplitter
@@ -38,16 +39,17 @@ class Network:
             upstream_delta = layer.backward(upstream_delta, learning_rate, lambd, momentum)
 
     def forw_then_back(self, data_in, y_true, learning_rate, lambd, momentum):
-        y_out = self.forward(data_in).flatten()
+        y_out = self.forward(data_in)
+        if y_out.shape[1] == 1: y_out = np.reshape(y_out, y_out.shape[0])
         diff = np.subtract(y_true,y_out)
         self.backward(diff, learning_rate, lambd, momentum)
 
     
                            
-    def train(self, x_train, y_train, x_val=None, y_val=None, batch_size=-1, learning_rate=0.01, epochs=300, patience = None, lambd = 0, momentum = 0, early_stopping = True, min_delta=0.001):
+    def train(self, x_train, y_train, x_val=None, y_val=None, batch_size=-1, learning_rate=lr(0.001), epochs=500, patience = None, lambd = L2(0), momentum = 0, early_stopping = True, min_delta=0.001):
         if batch_size == -1:
                 for epoch in range(epochs):
-                    self.forw_then_back(x_train, y_train, learning_rate, lambd, momentum)
+                    self.forw_then_back(x_train, y_train, learning_rate(epoch), lambd, momentum)
                     self.update_train_metrics(x_train, y_train)
                     self.update_val_metrics(x_val, y_val)
                     if early_stopping is True:
@@ -83,14 +85,14 @@ class Network:
 
 
     def update_train_metrics(self, data_in, y_true):
-        y_out = self.forward(data_in).flatten()
-
+        y_out = self.forward(data_in)
+        if y_out.shape[1] == 1: y_out = np.reshape(y_out, y_out.shape[0])
         self.loss.append(MSE(y_true,y_out))
         self.acc.append(binary_accuracy(y_true,y_out))
 
     def update_val_metrics(self, data_in, y_true):
-        y_out = self.forward(data_in).flatten()
-
+        y_out = self.forward(data_in)
+        if y_out.shape[1] == 1: y_out = np.reshape(y_out, y_out.shape[0])
         self.loss_val.append(MSE(y_true,y_out))
         self.acc_val.append(binary_accuracy(y_true,y_out))
 

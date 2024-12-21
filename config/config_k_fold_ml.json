@@ -1,0 +1,1 @@
+"Minimum loss: 0.9761792267082613 with std: 0.12940821809498643 for config: {'learning_rate': 'LearningRate(0.001)', 'lambd': 'L2Regularization(0.0001)', 'momentum': 0.6, 'patience': 50, 'n_unit_list': [2, 8, 3], 'act_list': ['Act_LeakyReLU()', 'Act_Sigmoid()', 'Act_Linear()']}"
