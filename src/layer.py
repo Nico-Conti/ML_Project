@@ -1,12 +1,18 @@
 import numpy as np
 from src.activation_function import function
-from src.weight_init import init_rand_bias, init_rand_w
+from src.weight_init import *
 
 class LayerDense():
 
     def __init__(self, n_in, n_out, activation:function):
-        self.weights = init_rand_w(n_in, n_out, limit=0.5, seed=None)
+        if activation.__class__.__name__ == 'Act_Sigmoid' or activation.__class__.__name__ == 'Act_Tanh':
+            self.weights = init_xavier_weights(n_in, n_out, seed=None)
+        elif activation.__class__.__name__ == 'Act_LeakyReLU' or activation.__class__.__name__ == 'Act_ReLU':
+            self.weights = init_he_weights(n_in, n_out, seed=None)
+        else:
+            self.weights = init_rand_w(n_in, n_out, limit=0.1, seed=None)
         self.bias = init_rand_bias(n_out, limit=0.5, seed=None)
+
         self.activation = activation
 
         self.grad_biases = np.zeros_like(self.bias)

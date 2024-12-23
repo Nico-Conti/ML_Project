@@ -41,11 +41,19 @@ def init_rand_bias(n_out, limit=None, seed=None):
     return np.random.uniform(a, b, size=n_out)
 
 
-# in case of symmetric function as tanh, sigmoid ecc
-def init_forw_xavier(n_in, n_out):
-    w = np.sqrt(2 / (n_in + n_out))
-    return np.random.normal(0, w, (n_in, n_out))
+def init_xavier_weights(n_in, n_out, seed=None):
+    if seed is not None:
+        np.random.seed(seed)
 
+    stddev = np.sqrt(2.0 / (n_in + n_out))
+    return np.random.normal(0, stddev, size=(n_in, n_out))
+
+def init_xavier_bias(n_out, seed=None):
+
+    if seed is not None:
+        np.random.seed(seed)
+
+    return np.zeros(n_out)
 
 def init_unif_xavier(n_in, n_out, interval=None):
     if interval is None:
@@ -55,3 +63,20 @@ def init_unif_xavier(n_in, n_out, interval=None):
         a, b = interval
 
     return np.random.uniform(a, b, (n_in, n_out))
+
+
+def init_he_weights(n_in, n_out, seed=None):
+    if seed is not None:
+        np.random.seed(seed)
+
+    # He initialization standard deviation
+    stddev = np.sqrt(2.0 / n_in)
+
+    return np.random.normal(0, stddev, size=(n_in, n_out))
+
+
+def init_he_bias(n_out, seed=None):
+    if seed is not None:
+        np.random.seed(seed)
+    
+    return np.zeros(n_out)

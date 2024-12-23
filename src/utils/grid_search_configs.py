@@ -2,6 +2,8 @@ from src.activation_function import *
 import random
 import itertools
 
+
+
 def grid_search_config(param_grid, n_unit_out=1, regression=False):
     param_grid = param_grid.copy()
     n_unit_per_layer, act_per_layer  = layer_unit_act_list(param_grid, n_unit_out, regression)
@@ -42,6 +44,82 @@ def layer_unit_act_list(param_grid, n_unit_out, regression):
     # print(n_unit_per_layer)
 
     return n_unit_per_layer, act_per_layer
+
+
+def random_serach_layer_config(param_grid, n_unit_out=1, regression=False):
+    param_grid = param_grid.copy()
+    n_unit_per_layer, act_per_layer  = layer_unit_act_list(param_grid, n_unit_out, regression)
+
+    param_grid['n_unit_list'] = n_unit_per_layer
+    param_grid['act_list'] = act_per_layer
+    del param_grid['n_layers']
+    del param_grid['a_fun']
+    del param_grid['n_unit']
+    del param_grid['lambd']
+    del param_grid['learning_rate']
+    del param_grid['momentum']
+    del param_grid['patience']
+
+    keys, values = zip(*param_grid.items())
+    permutations_dicts = [dict(zip(keys, v)) for v in itertools.product(*values) if len(v[-2]) == len(v[-1])]
+
+    return permutations_dicts
+
+from src.regularization import L2Regularization as L2
+from src.regularization import L1Regularization as L1
+from src.learning_rate import LearningRate as lr, LearningRateLinearDecay as lrLD
+
+def random_search_config(param_grid, n_unit_out=1, regression=False, num_instances=1):
+    layer_configs = random_serach_layer_config(param_grid, n_unit_out, regression)
+    lambd_range = (0, 0.0001)
+    learning_rate_range = (0.0001, 0.1)
+    learning_rate_range_linear_decay_min = (0.0001, 0.001)
+    learning_rate_range_linear_decay_max = (0.08, 0.4)
+    linear_decay_epoch_range = (50, 150)
+    momentum_range = (0.5, 0.95)
+
+    randomized_configs = []
+    
+    for _ in range(num_instances):
+
+        random_index = random.choice(range(len(layer_configs)))
+
+        # Use the same index to select values for both
+        n_unit_list = layer_configs[random_index]['n_unit_list']
+        act_list = layer_configs[random_index]['act_list']
+
+        learning_choices = [
+            lr(random.uniform(*learning_rate_range)),
+            lrLD(random.uniform(*learning_rate_range_linear_decay_max), random.randint(*linear_decay_epoch_range), random.uniform(*learning_rate_range_linear_decay_min))
+        ]
+
+        learning_rate = random.choice(
+            learning_choices
+        )
+
+        lambd_choices = [L1(random.uniform(*lambd_range)), L2(random.uniform(*lambd_range))]
+
+        lambd = random.choice(
+            lambd_choices     
+        )
+
+        if random.random() < 0.1:
+            momentum = 0
+        else:
+            momentum = random.uniform(*momentum_range)
+
+        new_config = {
+            'n_unit_list': n_unit_list,
+            'act_list': act_list,
+            'learning_rate': learning_rate,
+            'lambd': lambd,
+            'momentum': momentum,
+            'patience': 12
+        }
+
+        randomized_configs.append(new_config)
+
+    return randomized_configs
 
 
 def parse_config(config):

@@ -1,1 +1,1 @@
-"Minimum loss: nan with std: nan for config: {'learning_rate': 'LearningRateLinearDecay(0.1, 50, 0.001)', 'lambd': 'L1Regularization(1e-05)', 'momentum': 0.95, 'patience': 12, 'n_unit_list': [2, 1], 'act_list': ['Act_Linear()', 'Act_Linear()']}"
+"Minimum loss: 0.12007850371652039 with std: 0.0651216006198816 for config: {'learning_rate': 'LearningRate(0.1)', 'lambd': 'L1Regularization(0)', 'momentum': 0.5, 'patience': 12, 'n_unit_list': [4, 1], 'act_list': ['Act_LeakyReLU()', 'Act_Sigmoid()']}"
