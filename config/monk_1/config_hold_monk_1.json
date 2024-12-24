@@ -1,0 +1,4 @@
+[
+    "Eval: [np.float64(0.31202130616916757)]  for config: {'n_unit_list': [6, 1], 'act_list': ['Act_Sigmoid()', 'Act_Sigmoid()'], 'learning_rate': 'LearningRate(0.04300734656215225)', 'lambd': 'L2Regularization(3.761506001923137e-06)', 'momentum': 0, 'patience': 12}",
+    "Eval train: [np.float64(0.23514823885891442)]  for config: {'n_unit_list': [6, 1], 'act_list': ['Act_Sigmoid()', 'Act_Sigmoid()'], 'learning_rate': 'LearningRate(0.04300734656215225)', 'lambd': 'L2Regularization(3.761506001923137e-06)', 'momentum': 0, 'patience': 12}"
+]

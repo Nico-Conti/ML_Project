@@ -1,1 +1,0 @@
-"Minimum loss val: 0.049079449279084586 with std: 0.03947116386114938 and min loss train: 0.02545993483036297 for config: {'n_unit_list': [4, 1], 'act_list': ['Act_Tanh()', 'Act_Sigmoid()'], 'learning_rate': 'LearningRate(0.09039463878309739)', 'lambd': 'L2Regularization(0.0)', 'momentum': 0.6910891471939817, 'patience': 12}"

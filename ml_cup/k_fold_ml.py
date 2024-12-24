@@ -8,7 +8,7 @@ from src.layer import LayerDense
 from src.data_splitter import *
 from src.utils.plot import *
 from src.network import Network as nn
-from src.grid_search import grid_search
+from src.model_selection import grid_search
 from src.utils.hyperparameters_grid import *
 from src.utils.grid_search_configs import *
 from src.metrics import mean_euclidean_error as MSE

@@ -1,0 +1,49 @@
+{
+    "model_1": {
+        "n_unit_list": [
+            5,
+            1
+        ],
+        "act_list": [
+            "Act_ReLU()",
+            "Act_Sigmoid()"
+        ],
+        "learning_rate": "LearningRate(0.024069639907017742)",
+        "lambd": "L1Regularization(5.982365707733038e-06)",
+        "momentum": 0.7074530967914473,
+        "patience": 12
+    },
+    "model_2": {
+        "n_unit_list": [
+            5,
+            1
+        ],
+        "act_list": [
+            "Act_Tanh()",
+            "Act_Sigmoid()"
+        ],
+        "learning_rate": "LearningRate(0.048774416890992524)",
+        "lambd": "L1Regularization(6.195832294067161e-06)",
+        "momentum": 0.6007035138991208,
+        "patience": 12
+    },
+    "model_3": {
+        "n_unit_list": [
+            2,
+            1
+        ],
+        "act_list": [
+            "Act_ReLU()",
+            "Act_Sigmoid()"
+        ],
+        "learning_rate": "LearningRate(0.041719414759960625)",
+        "lambd": "L1Regularization(1.632243436385961e-06)",
+        "momentum": 0.5491348366776082,
+        "patience": 12
+    },
+    "metrics": [
+        "First Eval: 0.0905432698655902 with std: 0.05828177642548176 and train Eval: 0.060140787086495964",
+        "Second Eval: 0.11781456335634141 with std: 0.051584101742955635 and train Eval 0.07537920571080298",
+        "Third Eval: 0.181854134467897 with std: 0.08783943043650398 and train Eval: 0.13417605039331676"
+    ]
+}

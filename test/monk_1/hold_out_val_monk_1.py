@@ -11,7 +11,7 @@ from src.utils.plot import *
 from src.data_splitter import DataSplitter
 from src.metrics import mean_euclidean_error as MSE
 from src.metrics import binary_accuracy as BA
-from src.grid_search import *
+from src.model_selection import *
 from src.utils.hyperparameters_grid import *
 
 import numpy as np
@@ -38,8 +38,8 @@ n_trials = 5
 val_size = 0.2
 
 
-hold_out_validation(x, y, n_out, val_size, random_grid)
+best_model = hold_out_validation(x, y, n_out, val_size, random_grid)
 
-
+save_config_to_json(best_model, "config/config_hold_monk_1.json")
 
 
