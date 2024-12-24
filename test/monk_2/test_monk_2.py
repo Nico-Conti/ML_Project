@@ -1,6 +1,6 @@
 import sys
 import os
-sys.path.append(os.path.join(sys.path[0], '..'))
+sys.path.append(os.path.join(sys.path[0], '..', '..'))
 
 from src.utils.data_utils import *
 from src.activation_function import  Act_Sigmoid, Act_Tanh
@@ -14,8 +14,8 @@ import numpy as np
 script_dir = os.path.dirname(__file__)
 
 # Construct the relative path to the data file
-monk_2_train = os.path.join(script_dir, "../data/monk+s+problems/monks-2.train")
-monk_2_test = os.path.join(script_dir, "../data/monk+s+problems/monks-2.test")
+monk_2_train = os.path.join(script_dir, "../../data/monk+s+problems/monks-2.train")
+monk_2_test = os.path.join(script_dir, "../../data/monk+s+problems/monks-2.test")
 
 # Read the data using the constructed path
 x, y =  read_monk_data(monk_2_train)

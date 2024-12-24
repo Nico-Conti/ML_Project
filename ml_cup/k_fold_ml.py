@@ -9,6 +9,8 @@ from src.data_splitter import *
 from src.utils.plot import *
 from src.network import Network as nn
 from src.grid_search import grid_search
+from src.utils.hyperparameters_grid import *
+from src.utils.grid_search_configs import *
 from src.metrics import mean_euclidean_error as MSE
 from src.metrics import binary_accuracy as BA
 
@@ -41,12 +43,15 @@ data = DataSplitter(val_size, random_state=None)
 
 fold_index = 1
 
-for x_train, x_val, y_train, y_val in data.k_fold_split(x, y, k=6):
-    print(len(x_train))
-    print("-------------------")
-    print(len(x_val))
+configs = generate_grid_search_configs( n_unit_out=3, regression=True, grid = grid_1 )
 
-    k_loss_list = grid_search(x_train, y_train, x_val, y_val, batch_size=-1, configs_loss=k_loss_list, n_unit_out=n_out, regression=True)
+for x_train, x_val, y_train, y_val in data.k_fold_split(x, y, k=6):
+    print("------------------------------")
+    print("Fold: ", fold_index)
+    print("------------------------------")
+    
+
+    k_loss_list = grid_search(x_train, y_train, x_val, y_val, batch_size=-1, configs_loss=k_loss_list, configs=configs)
  
     fold_index += 1
 

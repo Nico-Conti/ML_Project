@@ -2,7 +2,7 @@ import os
 import numpy as np
 
 import src.activation_function as fun
-from src.metrics import mean_squared_error as MSE, binary_accuracy
+from src.metrics import mean_euclidean_error as MEE, binary_accuracy
 from src.layer import LayerDense
 from src.learning_rate import LearningRate as lr
 from src.regularization import L2Regularization as L2
@@ -46,7 +46,7 @@ class Network:
 
     
                            
-    def train(self, x_train, y_train, x_val=None, y_val=None, batch_size=-1, learning_rate=lr(0.001), epochs=300, patience = None, lambd = L2(0), momentum = 0, early_stopping = False, min_delta=0.001):
+    def train(self, x_train, y_train, x_val=None, y_val=None, batch_size=-1, learning_rate=lr(0.001), epochs=300, patience = None, lambd = L2(0), momentum = 0, early_stopping = False, min_delta=0.001, min_train_loss=0):
         if batch_size == -1:
                 for epoch in range(epochs):
                     self.forw_then_back(x_train, y_train, learning_rate(epoch), lambd, momentum)
@@ -55,11 +55,18 @@ class Network:
                     if early_stopping is True:
                         self.early_stopping(0.0005)
                         if self.wait >= patience:
+                            
                             # print(f"GOOD THING THERE IS EARLY STOPPING TO SAVE THE DAY! epoch stopped at:{epoch}")
                             break
+                # plot_learning_curve(self.loss, self.loss_val, self.acc_val)
+
+                    else:
+                        if self.loss[-1] < min_train_loss:
+                            break
+
                            
-                # if early_stopping is False:
-                #     plot_learning_curve(self.loss, self.loss_val, self.acc_val)
+                if early_stopping is False:
+                    plot_learning_curve(self.loss, self.loss_val, self.acc_val)
 
         else:
                 for epoch in range(epochs):
@@ -78,7 +85,7 @@ class Network:
                             break
                 
                 # if early_stopping is False:
-                    # plot_learning_curve(self.loss, self.loss_val, self.acc_val)
+                #     plot_learning_curve(self.loss, self.loss_val, self.acc_val)
                 
 
 
@@ -87,13 +94,13 @@ class Network:
     def update_train_metrics(self, data_in, y_true):
         y_out = self.forward(data_in)
         if y_out.shape[1] == 1: y_out = np.reshape(y_out, y_out.shape[0])
-        self.loss.append(MSE(y_true,y_out))
+        self.loss.append(MEE(y_true,y_out))
         self.acc.append(binary_accuracy(y_true,y_out))
 
     def update_val_metrics(self, data_in, y_true):
         y_out = self.forward(data_in)
         if y_out.shape[1] == 1: y_out = np.reshape(y_out, y_out.shape[0])
-        self.loss_val.append(MSE(y_true,y_out))
+        self.loss_val.append(MEE(y_true,y_out))
         self.acc_val.append(binary_accuracy(y_true,y_out))
 
 

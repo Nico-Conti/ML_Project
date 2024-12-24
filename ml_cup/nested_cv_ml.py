@@ -9,6 +9,7 @@ from src.data_splitter import *
 from src.utils.plot import *
 from src.network import Network as nn
 from src.grid_search import *
+from src.utils.hyperparameters_grid import *
 from src.metrics import mean_euclidean_error as MEE
 from src.metrics import binary_accuracy as BA
 from src.learning_rate import LearningRate, LearningRateLinearDecay
@@ -27,7 +28,6 @@ ml_test = os.path.join(script_dir, "../data/ml_cup/ML-CUP24-TS.csv")
 # Read the data using the constructed path
 x, y =  readTrainingCupData(ml_train)
 
-
 n_in = np.size(x[1])
 n_out = 3
 
@@ -43,14 +43,12 @@ outter_fold = DataSplitter(test_size, random_state=None)
 inner_fold = DataSplitter(val_size, random_state=None)
 
 
-
-
 for x_train_out, x_test, y_train_out, y_test in outter_fold.k_fold_split(x, y, k=4):
     print("-------------------------------------------------------------------------------------")
     print("OUTTER FOLD")
     print("-------------------------------------------------------------------------------------")
 
-    randomized_configs = random_search_config(param_grid, n_unit_out=3, regression=True, num_instances=100)
+    configs = generate_random_search_configs(num_instances=400, n_unit_out=3, regression=True, grid = random_grid )
 
     for x_train, x_val, y_train, y_val in inner_fold.k_fold_split(x_train_out, y_train_out, k=5):
         print("-------------------")
@@ -58,7 +56,7 @@ for x_train_out, x_test, y_train_out, y_test in outter_fold.k_fold_split(x, y, k
         print("-------------------")
 
 
-        k_loss_list = random_search(x_train, y_train, x_val, y_val, batch_size=-1, configs_loss=k_loss_list, randomized_configs=randomized_configs)
+        k_loss_list = grid_search(x_train, y_train, x_val, y_val, batch_size=-1, configs_loss=k_loss_list, configs=configs)
 
 
     for config_key, loss_list in k_loss_list.items():
@@ -71,17 +69,22 @@ for x_train_out, x_test, y_train_out, y_test in outter_fold.k_fold_split(x, y, k
         key: value for key, value in k_loss_list.items() if not math.isnan(value[0])
     }
 
-    min_loss_config_inner = min(valid_models, key=lambda key: k_loss_list[key][0])
+    sorted_models = sorted(valid_models.items(), key=lambda x: x[1][0])
 
-    min_loss = valid_models[min_loss_config_inner][0]
-    std = valid_models[min_loss_config_inner][1]
+    if len(sorted_models) >= 3:
+        min_loss_config_inner = sorted_models[0]  # First minimum
+        second_min_loss_config_inner = sorted_models[1]  # Second minimum
+        third_min_loss_config_inner = sorted_models[2]  # Third minimum
 
-    
+    # Unpack results for the first, second, and third minimums
+    min_loss, min_std = min_loss_config_inner[1] if min_loss_config_inner else (None, None)
+    second_min_loss, second_std = second_min_loss_config_inner[1] if second_min_loss_config_inner else (None, None)
+    third_min_loss, third_std = third_min_loss_config_inner[1] if third_min_loss_config_inner else (None, None)
 
 
-    save = (f"Minimum loss: {min_loss} with std: {std} for config: {min_loss_config_inner}")
+    save = (f"Minimum loss: {min_loss} with std: {min_std} for config: {min_loss_config_inner}")
 
-    min_loss_config_inner = ast.literal_eval(min_loss_config_inner)
+    min_loss_config_inner = ast.literal_eval(min_loss_config_inner[0])
 
     min_loss_config.append(save)
 
@@ -98,7 +101,8 @@ for x_train_out, x_test, y_train_out, y_test in outter_fold.k_fold_split(x, y, k
     )
     
     k_loss_list = {}
-    y_out = network.forward(x_test).flatten()
+    y_out = network.forward(x_test)
+    if y_out.shape[1] == 1: y_out = np.reshape(y_out, y_out.shape[0])
 
     test_loss.append(MEE(y_test, y_out))
 

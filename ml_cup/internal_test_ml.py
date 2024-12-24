@@ -32,15 +32,15 @@ y_test = y[int(len(y)*0.75):]
 n_in = np.size(x[1])
 n_out = 3
 
-n_unit_per_layer = [2, 8, 3]
-act_per_layer = [Act_LeakyReLU(), Act_Sigmoid(), Act_Linear()]
+n_unit_per_layer = [20, 17, 3]
+act_per_layer = [Act_Sigmoid(), Act_Linear(), Act_Linear()]
 
 network = nn(n_in, n_unit_per_layer, act_per_layer)
 
-network.train(x, y, x_test, y_test, batch_size=-1, patience = 12, learning_rate=lr(0.001), lambd=L2Regularization(0.0001), momentum = 0.6,  early_stopping=False)
+network.train(x, y, x_test, y_test, batch_size=-1, patience = 12, learning_rate=lrLD(9.829493466999429e-05, 191, 5.5556164514867e-06), lambd=L2Regularization(0.017), momentum = 0.75,  early_stopping=False)
 
 y_out = network.forward(x_test).flatten()
 
-print(mean_squared_error(y_test, y_out))
-print(binary_accuracy(y_test, y_out))
+# print(mean_squared_error(y_test, y_out))
+# print(binary_accuracy(y_test, y_out))
 

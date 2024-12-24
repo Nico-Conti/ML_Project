@@ -1,1 +1,4 @@
-"Minimum loss: [np.float64(0.17403758601192684)]  for config: {'learning_rate': 'LearningRate(0.065)', 'lambd': 'L1Regularization(2.5e-05)', 'momentum': 0.95, 'patience': 12, 'n_unit_list': [4, 1], 'act_list': ['Act_ReLU()', 'Act_Sigmoid()']}"
+[
+    "Eval: [np.float64(0.04440642584996792)]  for config: {'n_unit_list': [4, 1], 'act_list': ['Act_ReLU()', 'Act_Sigmoid()'], 'learning_rate': 'LearningRate(0.04259537764507646)', 'lambd': 'L2Regularization(1.0777939636934001e-06)', 'momentum': 0.6192717587575711, 'patience': 12}",
+    "Eval train: [np.float64(0.01331162222201293)]  for config: {'n_unit_list': [4, 1], 'act_list': ['Act_ReLU()', 'Act_Sigmoid()'], 'learning_rate': 'LearningRate(0.04259537764507646)', 'lambd': 'L2Regularization(1.0777939636934001e-06)', 'momentum': 0.6192717587575711, 'patience': 12}"
+]

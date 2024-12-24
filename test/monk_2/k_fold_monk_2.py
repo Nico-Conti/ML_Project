@@ -1,6 +1,6 @@
 import sys
 import os
-sys.path.append(os.path.join(sys.path[0], '..'))
+sys.path.append(os.path.join(sys.path[0], '..', '..'))
 
 from src.utils.data_utils import *
 from src.activation_function import  *
@@ -14,17 +14,16 @@ from src.metrics import binary_accuracy as BA
 
 
 import numpy as np
-import math
 
 script_dir = os.path.dirname(__file__)
 
 # Construct the relative path to the data file
-monk_3_train = os.path.join(script_dir, "../data/monk+s+problems/monks-3.train")
-monk_3_test = os.path.join(script_dir, "../data/monk+s+problems/monks-3.test")
+monk_2_train = os.path.join(script_dir, "../../data/monk+s+problems/monks-2.train")
+monk_2_test = os.path.join(script_dir, "../../data/monk+s+problems/monks-2.test")
 
 # Read the data using the constructed path
-x, y =  read_monk_data(monk_3_train)
-x_test, y_true = read_monk_data(monk_3_test)
+x, y =  read_monk_data(monk_2_train)
+x_test, y_true = read_monk_data(monk_2_test)
 x = feature_one_hot_encoding(x, [3,3,2,3,4,2])
 x_test = feature_one_hot_encoding(x_test, [3,3,2,3,4,2])
 
@@ -59,17 +58,10 @@ for config_key, loss_list in k_loss_list.items():
     k_loss_list[config_key] = [k_loss, k_std]
 
 # Find the minimum mean value in the entire k_loss dictionary
-  # Get the key with the minimum mean loss
-
-valid_models = {
-    key: value for key, value in k_loss_list.items() if not math.isnan(value[0])
-}
-
-min_loss_config = min(valid_models, key=lambda key: k_loss_list[key][0])
-
-min_loss = valid_models[min_loss_config][0]
-std = valid_models[min_loss_config][1]
+min_loss_config = min(k_loss_list, key=lambda key: k_loss_list[key][0])  # Get the key with the minimum mean loss
+min_loss = k_loss_list[min_loss_config][0]
+std = k_loss_list[min_loss_config][1]
 
 save = (f"Minimum loss: {min_loss} with std: {std} for config: {min_loss_config}")
 
-save_config_to_json(save, "config/config_k_fold_monk_3.json")
+save_config_to_json(save, "config/config_k_fold_monk_2.json")
