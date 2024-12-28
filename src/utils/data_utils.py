@@ -75,8 +75,5 @@ def readTestCupData(filename):
 
 import json
 
-def save_config_to_json(config, file_path):
 
-    with open(file_path, 'w') as f:
-            json.dump(config, f, indent=4)
 

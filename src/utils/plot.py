@@ -54,3 +54,88 @@ def provaplot(losses, accuracies, epochs):
     plt.legend()
 
     plt.show()
+
+
+def plot_trials(train_losses, val_losses, accuracies):
+    """
+    Plots the loss and accuracy curves for multiple runs, handling varying lengths.
+
+    Parameters:
+    losses (list of np.ndarray): A list where each element is an array of losses for a run.
+    accuracies (list of np.ndarray): A list where each element is an array of accuracies for a run.
+    """
+    if len(val_losses) != len(accuracies):
+        raise ValueError("The number of loss and accuracy runs must be the same.")
+
+    num_runs = len(val_losses)
+
+    # Set up plot
+    plt.figure(figsize=(12, 5))
+
+    # Plot loss curve
+    plt.subplot(1, 2, 1)
+    for i, run_losses in enumerate(val_losses):
+        plt.plot(range(1, len(run_losses) + 1), run_losses, label=f'Run {i + 1}', linestyle='--')
+
+    plt.plot(range(1, len(train_losses) + 1), train_losses, label='Training Loss', linewidth=2)
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.title('Loss Curve')
+    plt.legend()
+
+    # Plot accuracy curve
+    plt.subplot(1, 2, 2)
+    for i, run_accuracies in enumerate(accuracies):
+        plt.plot(range(1, len(run_accuracies) + 1), run_accuracies, label=f'Run {i + 1}')
+    plt.xlabel('Epochs')
+    plt.ylabel('Accuracy')
+    plt.title('Accuracy Curve')
+    plt.legend()
+
+    # Show plot
+    plt.tight_layout()
+    plt.show()
+    plt.close()  # Close the plot to free memory
+
+
+def save_image_trials(train_losses, val_losses, accuracies, file_path):
+    """
+    Saves the loss and accuracy curves for multiple runs to an image file.
+
+    Parameters:
+    losses (list of np.ndarray): A list where each element is an array of losses for a run.
+    accuracies (list of np.ndarray): A list where each element is an array of accuracies for a run.
+    file_path (str): The path to save the image file.
+    """
+    if len(val_losses) != len(accuracies):
+        raise ValueError("The number of loss and accuracy runs must be the same.")
+
+    num_runs = len(val_losses)
+
+    # Set up plot
+    plt.figure(figsize=(12, 5))
+
+    # Plot loss curve
+    plt.subplot(1, 2, 1)
+    for i, run_losses in enumerate(val_losses):
+        plt.plot(range(1, len(run_losses) + 1), run_losses, label=f'Run {i + 1}', linestyle='--')
+
+    plt.plot(range(1, len(train_losses) + 1), train_losses, label='Training Loss', linewidth=2)
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.title('Loss Curve')
+    plt.legend()
+
+    # Plot accuracy curve
+    plt.subplot(1, 2, 2)
+    for i, run_accuracies in enumerate(accuracies):
+        plt.plot(range(1, len(run_accuracies) + 1), run_accuracies, label=f'Run {i + 1}')
+    plt.xlabel('Epochs')
+    plt.ylabel('Accuracy')
+    plt.title('Accuracy Curve')
+    plt.legend()
+
+    # Save plot to file
+    plt.tight_layout()
+    plt.savefig(file_path)
+    plt.close()  # Close the plot to free memory

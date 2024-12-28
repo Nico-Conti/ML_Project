@@ -87,13 +87,15 @@ def generate_random_search_configs(num_instances, n_unit_out, regression, grid={
         else:
             momentum = random.uniform(*grid['momentum'])
 
+        patience = random.choice(grid['patience'])
+
         new_config = {
             'n_unit_list': n_unit_list,
             'act_list': act_list,
             'learning_rate': learning_rate,
             'lambd': lambd,
             'momentum': momentum,
-            'patience': 12
+            'patience': patience
         }
 
         randomized_configs.append(new_config)
@@ -205,9 +207,6 @@ def generate_fine_grid_search_configs(num_instances, n_unit_out, regression, gri
                                             })
 
     return grid_configs
-
-
-
 
 def parse_config(config):
     new_dict = {}

@@ -3,19 +3,8 @@ import os
 sys.path.append(os.path.join(sys.path[0], '..', '..'))
 
 from src.utils.data_utils import *
-from src.activation_function import  *
-from src.layer import LayerDense
-from src.data_splitter import *
-from src.utils.plot import *
-from src.network import Network as nn
-from src.utils.grid_search_configs import *
 from src.utils.hyperparameters_grid import *
 from src.model_selection import *
-from src.metrics import mean_euclidean_error as MSE
-from src.metrics import binary_accuracy as BA
-
-
-import numpy as np
 
 script_dir = os.path.dirname(__file__)
 
@@ -25,19 +14,25 @@ monk_1_test = os.path.join(script_dir, "../../data/monk+s+problems/monks-1.test"
 
 # Read the data using the constructed path
 x, y =  read_monk_data(monk_1_train)
-x_test, y_true = read_monk_data(monk_1_test)
 x = feature_one_hot_encoding(x, [3,3,2,3,4,2])
-x_test = feature_one_hot_encoding(x_test, [3,3,2,3,4,2])
 
 n_in = np.size(x[1])
 n_out = 1
 
-n_in_test = np.size(x_test[1])
-
 val_size = 0.2
-k = 5
 
-data = k_fold(x, y, n_out, val_size, random_grid, k)
+split_type = "stratified"
+search_type = "random"   
+
+# Define the grid
+grid = random_grid_2
+
+config, metrics = grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_instances=2, regression=False, model_selection="k_fold")
 
 
-save_config_to_json(data, "config/monk_1/config_k_fold_monk_1.json")
+for i, fold_data in enumerate(metrics['k_fold_results']):
+    save_image_trials(fold_data['trial_train_losses'][0], fold_data['trial_val_losses'], fold_data['trial_val_accs'], f"config/monk_1/k_fold_monk_1_number_{i+1}.png")
+
+save_config_to_json(config, "config/monk_1/config_k_fold_monk_1.json")
+
+

@@ -15,10 +15,10 @@ grid= {
 
 
 random_grid = {
-    'n_layers': [1,2],
-    'a_fun': [Act_Sigmoid(), Act_Tanh(), Act_LeakyReLU(), Act_ReLU()],
+    'n_layers': [1,1],
+    'a_fun': [Act_Sigmoid(), Act_Tanh(), Act_ReLU(), Act_LeakyReLU()],
     'n_unit': [2, 6],
-    'learning_rate': [0.01, 0.05],
+    'learning_rate': [0.001, 0.01],
     'learning_rate_decay_max': [0.01, 0.2],
     'learning_rate_decay_min': [0.00001, 0.001],
     'learning_rate_decay_epochs': [50, 100],
@@ -26,6 +26,20 @@ random_grid = {
     'momentum': [0.5, 0.8],
     'patience': [5]
 }
+
+random_grid_2 = {
+    'n_layers': [1,1],
+    'a_fun': [Act_LeakyReLU()],
+    'n_unit': [4,6],
+    'learning_rate': [0.007, 0.0095],
+    'learning_rate_decay_max': [0.01, 0.2],
+    'learning_rate_decay_min': [0.00001, 0.001],
+    'learning_rate_decay_epochs': [50, 100],
+    'lambd': [0.0000001, 0.000002],
+    'momentum': [0.7, 0.8],
+    'patience': [5]
+}
+
 
 fine_grid = {
     "n_layers": (1, 2),  # Range of number of layers
@@ -40,15 +54,5 @@ fine_grid = {
     "momentum": (0.91, 0.925, 3)
 }
 
-random_grid_2 = {
-    'n_layers': [1,2],
-    'a_fun': [Act_Sigmoid(), Act_ReLU()],
-    'n_unit': [3, 5],
-    'learning_rate': [0.05, 0.25],
-    'learning_rate_decay_max': [0.01, 0.2],
-    'learning_rate_decay_min': [0.00001, 0.001],
-    'learning_rate_decay_epochs': [50, 100],
-    'lambd': [0.001, 0.01],
-    'momentum': [0.85, 0.95],
-    'patience': [10, 20]
-}
+
+

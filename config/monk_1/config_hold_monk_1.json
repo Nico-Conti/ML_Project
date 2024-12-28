@@ -1,4 +1,59 @@
 [
-    "Eval: [np.float64(0.31202130616916757)]  for config: {'n_unit_list': [6, 1], 'act_list': ['Act_Sigmoid()', 'Act_Sigmoid()'], 'learning_rate': 'LearningRate(0.04300734656215225)', 'lambd': 'L2Regularization(3.761506001923137e-06)', 'momentum': 0, 'patience': 12}",
-    "Eval train: [np.float64(0.23514823885891442)]  for config: {'n_unit_list': [6, 1], 'act_list': ['Act_Sigmoid()', 'Act_Sigmoid()'], 'learning_rate': 'LearningRate(0.04300734656215225)', 'lambd': 'L2Regularization(3.761506001923137e-06)', 'momentum': 0, 'patience': 12}"
+    {
+        "config": {
+            "n_unit_list": [
+                6,
+                1
+            ],
+            "act_list": [
+                "Act_LeakyReLU()",
+                "Act_Sigmoid()"
+            ],
+            "learning_rate": "LearningRate(0.008716939213369823)",
+            "lambd": "L1Regularization(1.9419516621979147e-06)",
+            "momentum": 0.7904791810805833,
+            "patience": 5
+        },
+        "avg_val_loss": 0.024699027804731932,
+        "avg_train_loss": 0.029214090922023123,
+        "std_val_loss": 0.006752151236425531
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                5,
+                1
+            ],
+            "act_list": [
+                "Act_LeakyReLU()",
+                "Act_Sigmoid()"
+            ],
+            "learning_rate": "LearningRate(0.009264399936346451)",
+            "lambd": "L2Regularization(4.91592693795802e-07)",
+            "momentum": 0.7543117445476318,
+            "patience": 5
+        },
+        "avg_val_loss": 0.07738235085727627,
+        "avg_train_loss": 0.035608458554170906,
+        "std_val_loss": 0.027580689383444976
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                4,
+                1
+            ],
+            "act_list": [
+                "Act_LeakyReLU()",
+                "Act_Sigmoid()"
+            ],
+            "learning_rate": "LearningRate(0.008412184174091605)",
+            "lambd": "L1Regularization(9.097898008031417e-07)",
+            "momentum": 0.7397475841755545,
+            "patience": 5
+        },
+        "avg_val_loss": 0.08319441326796741,
+        "avg_train_loss": 0.08005445404517066,
+        "std_val_loss": 0.031213919703039838
+    }
 ]

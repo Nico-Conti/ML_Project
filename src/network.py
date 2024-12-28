@@ -26,6 +26,7 @@ class Network:
         self.loss_val = []
         self.acc_val = []
 
+
     def forward(self, data_in):
         for layer in self.layers:
             data_in = layer.forward(data_in)
@@ -46,14 +47,14 @@ class Network:
 
     
                            
-    def train(self, x_train, y_train, x_val=None, y_val=None, batch_size=-1, learning_rate=lr(0.001), epochs=300, patience = None, lambd = L2(0), momentum = 0, early_stopping = False, min_delta=0.001, min_train_loss=0):
+    def train(self, x_train, y_train, x_val=None, y_val=None, batch_size=-1, learning_rate=lr(0.001), epochs=300, patience = None, lambd = L2(0), momentum = 0, early_stopping = False, min_delta=0.0001, min_train_loss=0):
         if batch_size == -1:
                 for epoch in range(epochs):
                     self.forw_then_back(x_train, y_train, learning_rate(epoch), lambd, momentum)
                     self.update_train_metrics(x_train, y_train)
                     self.update_val_metrics(x_val, y_val)
                     if early_stopping is True:
-                        self.early_stopping(0.0005)
+                        self.early_stopping(min_delta)
                         if self.wait >= patience:
                             
                             # print(f"GOOD THING THERE IS EARLY STOPPING TO SAVE THE DAY! epoch stopped at:{epoch}")
@@ -79,7 +80,7 @@ class Network:
                     self.update_train_metrics(x_train, y_train)
                     self.update_val_metrics(x_val, y_val)
                     if early_stopping is True:
-                        self.early_stopping(0.0005)
+                        self.early_stopping(min_delta)
                         if self.wait >= patience:
                             # print(f"GOOD THING THERE IS EARLY STOPPING TO SAVE THE DAY! epoch stopped at:{epoch}")
                             break
@@ -111,3 +112,6 @@ class Network:
             self.wait = 0
         else:
             self.wait += 1
+
+    def model_metrics(self):
+        return self.loss, self.acc, self.loss_val, self.acc_val

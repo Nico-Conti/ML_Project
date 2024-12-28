@@ -1,49 +1,40 @@
-{
-    "model_1": {
-        "n_unit_list": [
-            5,
-            1
-        ],
-        "act_list": [
-            "Act_ReLU()",
-            "Act_Sigmoid()"
-        ],
-        "learning_rate": "LearningRate(0.024069639907017742)",
-        "lambd": "L1Regularization(5.982365707733038e-06)",
-        "momentum": 0.7074530967914473,
-        "patience": 12
+[
+    {
+        "config": {
+            "n_unit_list": [
+                5,
+                1
+            ],
+            "act_list": [
+                "Act_LeakyReLU()",
+                "Act_Sigmoid()"
+            ],
+            "learning_rate": "LearningRate(0.009059394056746342)",
+            "lambd": "L2Regularization(5.28125509805916e-07)",
+            "momentum": 0.7402170518247899,
+            "patience": 5
+        },
+        "avg_val_loss": 0.14306907964880133,
+        "avg_train_loss": 0.09979660173032538,
+        "std_val_loss": 0.0720963058497925
     },
-    "model_2": {
-        "n_unit_list": [
-            5,
-            1
-        ],
-        "act_list": [
-            "Act_Tanh()",
-            "Act_Sigmoid()"
-        ],
-        "learning_rate": "LearningRate(0.048774416890992524)",
-        "lambd": "L1Regularization(6.195832294067161e-06)",
-        "momentum": 0.6007035138991208,
-        "patience": 12
-    },
-    "model_3": {
-        "n_unit_list": [
-            2,
-            1
-        ],
-        "act_list": [
-            "Act_ReLU()",
-            "Act_Sigmoid()"
-        ],
-        "learning_rate": "LearningRate(0.041719414759960625)",
-        "lambd": "L1Regularization(1.632243436385961e-06)",
-        "momentum": 0.5491348366776082,
-        "patience": 12
-    },
-    "metrics": [
-        "First Eval: 0.0905432698655902 with std: 0.05828177642548176 and train Eval: 0.060140787086495964",
-        "Second Eval: 0.11781456335634141 with std: 0.051584101742955635 and train Eval 0.07537920571080298",
-        "Third Eval: 0.181854134467897 with std: 0.08783943043650398 and train Eval: 0.13417605039331676"
-    ]
-}
+    {
+        "config": {
+            "n_unit_list": [
+                4,
+                1
+            ],
+            "act_list": [
+                "Act_LeakyReLU()",
+                "Act_Sigmoid()"
+            ],
+            "learning_rate": "LearningRate(0.009472000200168983)",
+            "lambd": "L2Regularization(7.800881132465068e-07)",
+            "momentum": 0.7613750957972065,
+            "patience": 5
+        },
+        "avg_val_loss": 0.16325842674834184,
+        "avg_train_loss": 0.13576627820781764,
+        "std_val_loss": 0.117232931898211
+    }
+]

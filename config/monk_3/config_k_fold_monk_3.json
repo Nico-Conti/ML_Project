@@ -1,49 +1,65 @@
-{
-    "model_1": {
-        "n_unit_list": [
-            6,
-            1
-        ],
-        "act_list": [
-            "Act_Tanh()",
-            "Act_Sigmoid()"
-        ],
-        "learning_rate": "LearningRate(0.038424850177880616)",
-        "lambd": "L2Regularization(3.5165022208688244e-05)",
-        "momentum": 0.7096357588189481,
-        "patience": 12
+[
+    {
+        "model": {
+            "n_unit_list": [
+                4,
+                1
+            ],
+            "act_list": [
+                "Act_Tanh()",
+                "Act_Sigmoid()"
+            ],
+            "learning_rate": "LearningRate(0.0601112543096941)",
+            "lambd": "L1Regularization(3.122957265402838e-07)",
+            "momentum": 0.7959719458871075,
+            "patience": 5
+        },
+        "metrics": {
+            "validation_loss": 0.11941948066307825,
+            "std": 0.027576339524119368,
+            "train_loss": 0.06752320030719047
+        }
     },
-    "model_2": {
-        "n_unit_list": [
-            2,
-            1
-        ],
-        "act_list": [
-            "Act_Tanh()",
-            "Act_Sigmoid()"
-        ],
-        "learning_rate": "LearningRate(0.036219908160561747)",
-        "lambd": "L1Regularization(8.980487250311141e-05)",
-        "momentum": 0.6601997072814355,
-        "patience": 12
+    {
+        "model": {
+            "n_unit_list": [
+                4,
+                1
+            ],
+            "act_list": [
+                "Act_Tanh()",
+                "Act_Sigmoid()"
+            ],
+            "learning_rate": "LearningRate(0.06658850135508068)",
+            "lambd": "L2Regularization(8.781808682295543e-07)",
+            "momentum": 0.7880136940857254,
+            "patience": 5
+        },
+        "metrics": {
+            "validation_loss": 0.12286854000198781,
+            "std": 0.027555176702303428,
+            "train_loss": 0.06818720737403004
+        }
     },
-    "model_3": {
-        "n_unit_list": [
-            6,
-            1
-        ],
-        "act_list": [
-            "Act_Tanh()",
-            "Act_Sigmoid()"
-        ],
-        "learning_rate": "LearningRate(0.027330034120224764)",
-        "lambd": "L1Regularization(7.550363755627666e-05)",
-        "momentum": 0.6005060838367926,
-        "patience": 12
-    },
-    "metrics": [
-        "Minimum loss val: 0.11477288197445508 with std: 0.04044603671024114 and min loss train: 0.06176364938459729",
-        "Second Minimum loss val: 0.11564663409785383 with std: 0.038989067037396956 and min loss train: 0.06435817446555445",
-        "Third Minimum loss val: 0.11623002231899957 with std: 0.04251078564373331 and min loss train: 0.06363504220125678"
-    ]
-}
+    {
+        "model": {
+            "n_unit_list": [
+                4,
+                1
+            ],
+            "act_list": [
+                "Act_Tanh()",
+                "Act_Sigmoid()"
+            ],
+            "learning_rate": "LearningRate(0.07266186899871283)",
+            "lambd": "L1Regularization(7.151557423691134e-07)",
+            "momentum": 0.7914784227224321,
+            "patience": 5
+        },
+        "metrics": {
+            "validation_loss": 0.12448709251629435,
+            "std": 0.03340350026570842,
+            "train_loss": 0.06502083916774218
+        }
+    }
+]

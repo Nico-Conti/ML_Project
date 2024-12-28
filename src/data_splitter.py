@@ -34,7 +34,7 @@ class DataSplitter:
         
         return X_train, X_val, y_train, y_val
     
-    def k_fold_split(self, X, y, k=5):
+    def k_fold_split(self, X, y, k):
         n_samples = X.shape[0]
         indices = np.arange(n_samples)
         

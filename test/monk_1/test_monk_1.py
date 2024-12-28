@@ -3,41 +3,39 @@ import os
 sys.path.append(os.path.join(sys.path[0], '..', '..'))
 
 from src.utils.data_utils import *
-from src.activation_function import  *
-from src.layer import LayerDense
 from src.metrics import *
 from src.network import Network as nn
-from src.learning_rate import LearningRate as lr, LearningRateLinearDecay as lrLD
 from src.regularization import *
+from src.utils.json_utils import *
 
 import numpy as np
 
 script_dir = os.path.dirname(__file__)
 
+def test_monk_1(config_path, x, y, x_test, y_test, n_in):
+    init_config, train_config = load_best_model(config_path)
 
-# Construct the relative path to the data file
-monk_1_train = os.path.join(script_dir, "../../data/monk+s+problems/monks-1.train")
-monk_1_test = os.path.join(script_dir, "../../data/monk+s+problems/monks-1.test")
+    network = nn(n_in, *init_config)
 
-# Read the data using the constructed path
-x, y =  read_monk_data(monk_1_train)
-x_test, y_true = read_monk_data(monk_1_test)
-x = feature_one_hot_encoding(x, [3,3,2,3,4,2])
-x_test = feature_one_hot_encoding(x_test, [3,3,2,3,4,2])
+    network.train(x, y, x_test, y_test, *train_config)
 
-n_in = np.size(x[1])
-n_out = 1
+    y_out = network.forward(x_test).flatten()
 
-n_in_test = np.size(x_test[1])
+    print(mean_euclidean_error(y_test, y_out))
+    print(binary_accuracy(y_test, y_out))
 
-n_unit_per_layer = [2, 5, 1]
-act_per_layer = [Act_Tanh(), Act_Sigmoid()]
+if __name__ == "__main__":
+     # Construct the relative path to the data file
+    monk_1_train = os.path.join(script_dir, "../../data/monk+s+problems/monks-1.train")
+    monk_1_test = os.path.join(script_dir, "../../data/monk+s+problems/monks-1.test")
 
-network = nn(n_in, n_unit_per_layer, act_per_layer)
+    # Read the data using the constructed path
+    x, y =  read_monk_data(monk_1_train)
+    x_test, y_test = read_monk_data(monk_1_test)
+    x = feature_one_hot_encoding(x, [3,3,2,3,4,2])
+    x_test = feature_one_hot_encoding(x_test, [3,3,2,3,4,2])
 
-network.train(x, y, x_test, y_true, batch_size=-1, learning_rate=lr(0.09), lambd=L1Regularization(0), momentum = 0.69,  early_stopping=False, min_train_loss=0.025)
+    n_in = np.size(x[1])
+    n_out = 1
 
-y_out = network.forward(x_test).flatten()
-
-print(mean_euclidean_error(y_true, y_out))
-print(binary_accuracy(y_true, y_out))
+    test_monk_1("config/monk_1/config_hold_monk_1.json", x, y, x_test, y_test, n_in)
