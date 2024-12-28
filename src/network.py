@@ -2,7 +2,7 @@ import os
 import numpy as np
 
 import src.activation_function as fun
-from src.metrics import mean_euclidean_error as MEE, binary_accuracy
+from src.metrics import  binary_accuracy
 from src.layer import LayerDense
 from src.learning_rate import LearningRate as lr
 from src.regularization import L2Regularization as L2
@@ -12,7 +12,7 @@ from src.data_splitter import DataSplitter
 
 
 class Network:
-    def __init__(self, n_in, nUnit_l, a_fun):
+    def __init__(self, n_in, nUnit_l, a_fun, loss_function):
         self.layers = []
         for i in range(len(nUnit_l)):
             self.layers.append(LayerDense(n_in, nUnit_l[i], a_fun[i]))
@@ -25,6 +25,8 @@ class Network:
         self.acc = []
         self.loss_val = []
         self.acc_val = []
+
+        self.loss_function = loss_function
 
 
     def forward(self, data_in):
@@ -42,7 +44,8 @@ class Network:
     def forw_then_back(self, data_in, y_true, learning_rate, lambd, momentum):
         y_out = self.forward(data_in)
         if y_out.shape[1] == 1: y_out = np.reshape(y_out, y_out.shape[0])
-        diff = np.subtract(y_true,y_out)
+        # diff = np.subtract(y_true,y_out)
+        diff = self.loss_function.derivative(y_true, y_out)
         self.backward(diff, learning_rate, lambd, momentum)
 
     
@@ -95,13 +98,13 @@ class Network:
     def update_train_metrics(self, data_in, y_true):
         y_out = self.forward(data_in)
         if y_out.shape[1] == 1: y_out = np.reshape(y_out, y_out.shape[0])
-        self.loss.append(MEE(y_true,y_out))
+        self.loss.append(self.loss_function.compute(y_true,y_out))
         self.acc.append(binary_accuracy(y_true,y_out))
 
     def update_val_metrics(self, data_in, y_true):
         y_out = self.forward(data_in)
         if y_out.shape[1] == 1: y_out = np.reshape(y_out, y_out.shape[0])
-        self.loss_val.append(MEE(y_true,y_out))
+        self.loss_val.append(self.loss_function.compute(y_true,y_out))
         self.acc_val.append(binary_accuracy(y_true,y_out))
 
 

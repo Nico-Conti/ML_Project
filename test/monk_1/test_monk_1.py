@@ -8,6 +8,7 @@ from src.network import Network as nn
 from src.regularization import *
 from src.utils.json_utils import *
 
+
 import numpy as np
 
 script_dir = os.path.dirname(__file__)
@@ -15,14 +16,13 @@ script_dir = os.path.dirname(__file__)
 def test_monk_1(config_path, x, y, x_test, y_test, n_in):
     init_config, train_config = load_best_model(config_path)
 
-    network = nn(n_in, *init_config)
+    network = nn(n_in, *init_config, loss_function=MEE())
 
     network.train(x, y, x_test, y_test, *train_config)
 
     y_out = network.forward(x_test).flatten()
 
-    print(mean_euclidean_error(y_test, y_out))
-    print(binary_accuracy(y_test, y_out))
+
 
 if __name__ == "__main__":
      # Construct the relative path to the data file

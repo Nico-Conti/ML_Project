@@ -5,6 +5,7 @@ sys.path.append(os.path.join(sys.path[0], '..', '..'))
 from src.utils.data_utils import *
 from src.utils.hyperparameters_grid import *
 from src.model_selection import *
+from src.utils.plot import *
 
 script_dir = os.path.dirname(__file__)
 

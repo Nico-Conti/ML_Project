@@ -1,8 +1,8 @@
 import json
 import ast
 from src.activation_function import *  # Import all necessary activation functions
-from src.regularization import L1Regularization, L2Regularization  # Import regularization classes
-from src.learning_rate import LearningRate  # Import LearningRate class
+from src.regularization import *  # Import regularization classes
+from src.learning_rate import *  # Import LearningRate class
 
 activation_mapping = {
     'Act_ReLU()': Act_ReLU(),
@@ -12,14 +12,25 @@ activation_mapping = {
     'Act_LeakyReLU()': Act_LeakyReLU()
 }
 
+regularization_mapping = {
+        'L1Regularization': L1Regularization,
+        'L2Regularization': L2Regularization,
+        # Add other regularization types as needed
+    }
+
+learning_rate_mapping = {
+    'LearningRate': LearningRate,
+    'LearningRateLinearDecay': LearningRateLinearDecay
+}
+
 def load_best_model(filepath):
     with open(filepath, 'r') as f:
         data = json.load(f)
 
     data=data[0] # Get Best Model
 
-    model_config = data["model"]
-    model_metrics = data["metrics"]
+    model_config = data["config"]
+    min_train_loss = data["avg_train_loss"]
 
     # Mapping for activation functions
     
@@ -38,15 +49,20 @@ def load_best_model(filepath):
     learning_rate_str = model_config["learning_rate"]
     # Assuming learning_rate_str is in the format 'LearningRate(0.001)'
     # Extract the value:
-    learning_rate_value = float(learning_rate_str.split('(')[1].split(')')[0])
-    learning_rate = LearningRate(learning_rate_value)
+    learning_rate_type = learning_rate_str.split('(')[0]
+    if learning_rate_type in learning_rate_mapping:
+        if learning_rate_mapping[learning_rate_type] == 'LearningRateLinearDecay':
+            learning_rate_max = float(learning_rate_str.split('(')[1].split(',')[0])
+            learning_rate_epochs = int(learning_rate_str.split(',')[1].split(',')[0])
+            learning_min = float(learning_rate_str.split(',')[1].split(')')[2])
+            learning_rate = learning_rate_mapping[learning_rate_type()]
+        else:
+            learning_rate_value = float(learning_rate_str.split('(')[1].split(')')[0])
+            learning_rate = learning_rate_mapping[learning_rate_type](learning_rate_value)
+    
 
-    # Mapping for regularization types
-    regularization_mapping = {
-        'L1Regularization': L1Regularization,
-        'L2Regularization': L2Regularization,
-        # Add other regularization types as needed
-    }
+
+    
 
     # Load regularization
     lambd_str = model_config["lambd"]
@@ -69,13 +85,14 @@ def load_best_model(filepath):
     batch_size = int(model_config.get("batch_size", -1))
     epochs = int(model_config.get("epochs", 500))
     min_delta = float(model_config.get("min_delta", 0.001))
-    min_train_loss = model_metrics.get("train_loss", 0.0)
 
     # Load n_unit_list
     n_unit_list = model_config["n_unit_list"]
 
+    loss_function = model_config["loss_function"]
+
     # Create configurations
-    init_config = (n_unit_list, activation_functions)
+    init_config = (n_unit_list, activation_functions, loss_function)
     train_config = (batch_size, learning_rate, epochs, patience, lambd, momentum, early_stopping, min_delta, min_train_loss)
 
     return init_config, train_config

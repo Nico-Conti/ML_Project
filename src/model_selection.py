@@ -3,16 +3,11 @@ import os
 sys.path.append(os.path.join(sys.path[0], '..'))
 
 from src.utils.data_utils import *
-from src.activation_function import  *
 from src.network import Network as nn
 from src.network import *
-from src.utils.plot import *
 from src.utils.grid_search_configs import *
 from src.data_splitter import *
-from src.metrics import mean_euclidean_error as MEE
-from src.metrics import binary_accuracy as BA
 from src.utils.json_utils import *
-from src.utils.plot import *
 
 import numpy as np
 import math
@@ -227,7 +222,6 @@ def grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_
 
     total_configs = len(configs)
 
-
     best_loss_val = float('inf')
     best_models_info = []
 
@@ -238,7 +232,6 @@ def grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_
         print("------------------------------")
 
         
-        
         if model_selection == "hold_out":
             trial_val_losses = []
             trial_train_losses = []
@@ -247,8 +240,14 @@ def grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_
             x_train, x_val, y_train, y_val = data.split(x, y)
             
             for trial in range(n_trials):
-                network = nn(n_in, config['n_unit_list'], config['act_list'])
-                network.train(x_train, y_train, x_val, y_val, batch_size=-1, learning_rate=config['learning_rate'], lambd=config['lambd'], momentum=config['momentum'], patience=config['patience'], early_stopping=True)
+                network = nn(n_in, config['n_unit_list'], config['act_list'], config['loss_function'])
+                
+                network.train(
+                        x_train, y_train, x_val, y_val, batch_size=config['batch_size'],
+                        learning_rate=config['learning_rate'], lambd=config['lambd'],
+                        momentum=config['momentum'], patience=config['patience'], early_stopping = True
+                    )
+                
                 train_loss, train_acc, val_loss, val_acc = network.model_metrics()
                 trial_val_losses.append(val_loss)
                 trial_train_losses.append(train_loss)
@@ -270,6 +269,7 @@ def grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_
 
             best_models_info.append(current_model_info)
             best_models_info.sort(key=lambda item: item['avg_val_loss'])
+
             best_models_info = best_models_info[:3]
             
 
@@ -292,8 +292,13 @@ def grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_
 
 
                 for trial in range(n_trials):
-                    network = nn(n_in, config['n_unit_list'], config['act_list'])
-                    network.train(x_train, y_train, x_val, y_val, batch_size=-1, learning_rate=config['learning_rate'], lambd=config['lambd'], momentum=config['momentum'], patience=config['patience'], early_stopping = True)
+                    network = nn(n_in, config['n_unit_list'], config['act_list'], config['loss_function'])
+
+                    network.train(
+                            x_train, y_train, x_val, y_val, batch_size=config['batch_size'],
+                            learning_rate=config['learning_rate'], lambd=config['lambd'],
+                            momentum=config['momentum'], patience=config['patience'], early_stopping = True
+                    )
 
                     train_loss, train_acc, val_loss, val_acc = network.model_metrics()
 
@@ -332,7 +337,7 @@ def grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_
             "config": parse_config(model_info['config']),
             "avg_val_loss": model_info['avg_val_loss'],
             "avg_train_loss": model_info['avg_train_loss'],
-            "std_val_loss": model_info.get('std_val_loss'),  # Use .get() for optional keys
+            "std_val_loss": model_info['std_val_loss'],  # Use .get() for optional keys
         }
         top_models_for_json.append(json_friendly_model)
 
