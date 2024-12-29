@@ -73,7 +73,6 @@ def readTestCupData(filename):
             input.append(values)
     return input
 
-import json
 
 
 

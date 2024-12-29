@@ -13,6 +13,7 @@
             "lambd": "L2Regularization(1.4709410941466946e-06)",
             "momentum": 0.7020184946101561,
             "patience": 5,
+            "batch_size": -1,
             "loss_function": "MEE()"
         },
         "avg_val_loss": 0.20756227560845594,

@@ -26,9 +26,9 @@ split_type = "stratified"
 search_type = "random"   
 
 # Define the grid
-grid = random_grid_2
+grid = random_grid
 
-config, metrics = grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_instances=2, regression=False, model_selection="k_fold")
+config, metrics = grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_instances=20, regression=False, model_selection="k_fold")
 
 
 for i, fold_data in enumerate(metrics['k_fold_results']):

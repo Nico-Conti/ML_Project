@@ -44,7 +44,6 @@ class Network:
     def forw_then_back(self, data_in, y_true, learning_rate, lambd, momentum):
         y_out = self.forward(data_in)
         if y_out.shape[1] == 1: y_out = np.reshape(y_out, y_out.shape[0])
-        # diff = np.subtract(y_true,y_out)
         diff = self.loss_function.derivative(y_true, y_out)
         self.backward(diff, learning_rate, lambd, momentum)
 
@@ -55,7 +54,8 @@ class Network:
                 for epoch in range(epochs):
                     self.forw_then_back(x_train, y_train, learning_rate(epoch), lambd, momentum)
                     self.update_train_metrics(x_train, y_train)
-                    self.update_val_metrics(x_val, y_val)
+                    if y_val is not None:
+                        self.update_val_metrics(x_val, y_val)
                     if early_stopping is True:
                         self.early_stopping(min_delta)
                         if self.wait >= patience:
@@ -81,15 +81,20 @@ class Network:
                         else:
                             self.forw_then_back(x_train[i:], y_train[i:],  learning_rate(epoch), lambd, momentum)
                     self.update_train_metrics(x_train, y_train)
-                    self.update_val_metrics(x_val, y_val)
+                    if y_val is not None:
+                        self.update_val_metrics(x_val, y_val)   
                     if early_stopping is True:
                         self.early_stopping(min_delta)
                         if self.wait >= patience:
                             # print(f"GOOD THING THERE IS EARLY STOPPING TO SAVE THE DAY! epoch stopped at:{epoch}")
                             break
+
+                    else:
+                        if self.loss[-1] < min_train_loss:
+                            break
                 
-                # if early_stopping is False:
-                #     plot_learning_curve(self.loss, self.loss_val, self.acc_val)
+                if early_stopping is False:
+                    plot_learning_curve(self.loss, self.loss_val, self.acc_val)
                 
 
 

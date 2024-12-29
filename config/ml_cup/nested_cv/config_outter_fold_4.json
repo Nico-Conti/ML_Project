@@ -1,0 +1,25 @@
+[
+    {
+        "config": {
+            "n_unit_list": [
+                13,
+                7,
+                3
+            ],
+            "act_list": [
+                "Act_Sigmoid()",
+                "Act_Sigmoid()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(0.054740524232466656)",
+            "lambd": "L2Regularization(0.00046561025761102597)",
+            "momentum": 0.8767945449808696,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()"
+        },
+        "avg_val_loss": 1.5317130810465396,
+        "avg_train_loss": 1.533839174452432,
+        "std_val_loss": 0.18564705700896508
+    }
+]

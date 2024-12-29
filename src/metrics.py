@@ -43,11 +43,23 @@ class MEE(Loss):
 
 
     def compute(self, outputs, targets):  # mean euclidean error loss
-        return np.mean(np.sqrt(np.power(targets - outputs, 2)))
+        if outputs.ndim == 1:
+            return np.mean(np.sqrt(np.power(targets - outputs, 2)))
+        else: 
+            return np.mean(np.sqrt(np.sum(np.power(targets - outputs, 2), axis=1)))
+        
 
 
     def derivative(self, outputs, targets):  # derivative of MEE
-        return -2 * (targets - outputs)/(np.sqrt(np.sum(np.square(targets - outputs))))
+        # return -2 * (targets - outputs)/(np.sqrt(np.sum(np.square(targets - outputs))))
+        if outputs.ndim == 1:
+            differences = targets - outputs
+            return -differences / (np.sqrt(np.power(targets - outputs, 2)) + 1e-12)
+
+        else:
+            differences = targets - outputs
+            norms = np.linalg.norm(differences, axis=-1, keepdims=True) + 1e-12  # Evita divisioni per zero
+            return -differences / norms
 
 
 class MSE(Loss):
@@ -58,7 +70,11 @@ class MSE(Loss):
 
 
     def compute(self, outputs, targets):  # mean squared error loss
-        return np.mean(np.power(targets - outputs, 2))
+        if outputs.ndim == 1:
+            return np.mean(np.power(targets - outputs, 2))
+        else:
+
+            return np.mean(np.sum(np.power(targets - outputs, 2), axis =1))
 
 
     def derivative(self, outputs, targets):  # derivative of MSE

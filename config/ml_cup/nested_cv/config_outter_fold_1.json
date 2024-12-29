@@ -1,0 +1,52 @@
+[
+    {
+        "config": {
+            "n_unit_list": [
+                6,
+                5,
+                20,
+                8,
+                3
+            ],
+            "act_list": [
+                "Act_ReLU()",
+                "Act_Tanh()",
+                "Act_Sigmoid()",
+                "Act_Tanh()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(0.06756008231401843)",
+            "lambd": "L1Regularization(0.0008670752319104154)",
+            "momentum": 0.6437379830268235,
+            "patience": 10,
+            "batch_size": 100,
+            "loss_function": "MEE()"
+        },
+        "avg_val_loss": 2.5744223339981125,
+        "avg_train_loss": 2.5808327127311177,
+        "std_val_loss": 0.20330266934540173
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                12,
+                5,
+                3
+            ],
+            "act_list": [
+                "Act_Tanh()",
+                "Act_ReLU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRateLinearDecay(0.03683966568477513, 63, 0.00023218161894433988)",
+            "lambd": "L2Regularization(0)",
+            "momentum": 0.6438636331148854,
+            "patience": 10,
+            "batch_size": 1,
+            "loss_function": "MEE()"
+        },
+        "avg_val_loss": 2.9524284344691147,
+        "avg_train_loss": 2.911986453839245,
+        "std_val_loss": 0.32418186862491416
+    }
+]

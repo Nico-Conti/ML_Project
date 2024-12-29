@@ -5,6 +5,7 @@ sys.path.append(os.path.join(sys.path[0], '..', '..'))
 from src.utils.data_utils import *
 from src.utils.hyperparameters_grid import *
 from src.model_selection import *
+from src.utils.plot import *
 
 script_dir = os.path.dirname(__file__)
 
@@ -14,21 +15,24 @@ monk_2_test = os.path.join(script_dir, "../../data/monk+s+problems/monks-2.test"
 
 # Read the data using the constructed path
 x, y =  read_monk_data(monk_2_train)
-x_test, y_true = read_monk_data(monk_2_test)
 x = feature_one_hot_encoding(x, [3,3,2,3,4,2])
-x_test = feature_one_hot_encoding(x_test, [3,3,2,3,4,2])
 
+n_in = np.size(x[1])
 n_out = 1
 
 val_size = 0.2
 
 split_type = "stratified"
-search_type = "random"   
+search_type = "fine"   
 
 # Define the grid
-grid = random_grid_2
+grid = fine_grid_monk_2
 
-data = k_fold(x, y, n_out, val_size, split_type, grid, search_type, num_instances=10, regression=False)
+config, metrics = grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_instances=1000, regression=False, model_selection="k_fold")
+
+for i, fold_data in enumerate(metrics['k_fold_results']):
+    save_image_trials(fold_data['trial_train_losses'][0], fold_data['trial_val_losses'], fold_data['trial_val_accs'], f"config/monk_2/k_fold_monk_2_number_{i+1}.png")
+
+save_config_to_json(config, "config/monk_2/config_k_fold_monk_2.json")
 
 
-save_config_to_json(data, "config/monk_2/config_k_fold_monk_2.json")

@@ -1,48 +1,6 @@
 [
     {
-        "model": {
-            "n_unit_list": [
-                4,
-                1
-            ],
-            "act_list": [
-                "Act_LeakyReLU()",
-                "Act_Sigmoid()"
-            ],
-            "learning_rate": "LearningRate(0.008812483134171139)",
-            "lambd": "L1Regularization(1.355419855146658e-07)",
-            "momentum": 0.7509559279306509,
-            "patience": 5
-        },
-        "metrics": {
-            "validation_loss": 0.3780623186819142,
-            "std": 0.1161090679602367,
-            "train_loss": 0.37324303706051964
-        }
-    },
-    {
-        "model": {
-            "n_unit_list": [
-                4,
-                1
-            ],
-            "act_list": [
-                "Act_LeakyReLU()",
-                "Act_Sigmoid()"
-            ],
-            "learning_rate": "LearningRate(0.00784605180188892)",
-            "lambd": "L1Regularization(8.437827607335679e-07)",
-            "momentum": 0,
-            "patience": 5
-        },
-        "metrics": {
-            "validation_loss": 0.3880755938830408,
-            "std": 0.07544966957275917,
-            "train_loss": 0.3785305919991106
-        }
-    },
-    {
-        "model": {
+        "config": {
             "n_unit_list": [
                 6,
                 1
@@ -51,15 +9,57 @@
                 "Act_LeakyReLU()",
                 "Act_Sigmoid()"
             ],
-            "learning_rate": "LearningRate(0.007855717618135706)",
-            "lambd": "L1Regularization(3.135288793310158e-07)",
-            "momentum": 0.76357728970723,
-            "patience": 5
+            "learning_rate": "LearningRateLinearDecay(0.05, 75, 0.000525)",
+            "lambd": "L1Regularization(6.5000000000000004e-06)",
+            "momentum": 0.9,
+            "patience": 10,
+            "batch_size": 25,
+            "loss_function": "MEE()"
         },
-        "metrics": {
-            "validation_loss": 0.38876878765074785,
-            "std": 0.12233723406487967,
-            "train_loss": 0.3687267971512171
-        }
+        "avg_val_loss": 0.0014569134032698424,
+        "avg_train_loss": 0.0009629422223321202,
+        "std_val_loss": 0.00034799992725770284
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                6,
+                1
+            ],
+            "act_list": [
+                "Act_LeakyReLU()",
+                "Act_Sigmoid()"
+            ],
+            "learning_rate": "LearningRateLinearDecay(0.045, 65, 0.00045)",
+            "lambd": "L1Regularization(4e-06)",
+            "momentum": 0.9,
+            "patience": 10,
+            "batch_size": 25,
+            "loss_function": "MEE()"
+        },
+        "avg_val_loss": 0.0016799944579339071,
+        "avg_train_loss": 0.0010725263274257192,
+        "std_val_loss": 0.0005776618088360925
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                6,
+                1
+            ],
+            "act_list": [
+                "Act_LeakyReLU()",
+                "Act_Sigmoid()"
+            ],
+            "learning_rate": "LearningRateLinearDecay(0.05, 65, 0.00045)",
+            "lambd": "L1Regularization(4e-06)",
+            "momentum": 0.9,
+            "patience": 10,
+            "batch_size": 25,
+            "loss_function": "MEE()"
+        },
+        "avg_val_loss": 0.0017755002907906734,
+        "avg_train_loss": 0.0009414686995344937,
+        "std_val_loss": 0.0004848371634238098
     }
 ]

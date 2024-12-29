@@ -229,7 +229,7 @@ def grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_
     for i, config in enumerate(configs):
         print("------------------------------")
         print(f"\nProcessing configuration {i+1}/{total_configs}")
-        print("------------------------------")
+        # print("------------------------------")
 
         
         if model_selection == "hold_out":
@@ -241,7 +241,7 @@ def grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_
             
             for trial in range(n_trials):
                 network = nn(n_in, config['n_unit_list'], config['act_list'], config['loss_function'])
-                
+
                 network.train(
                         x_train, y_train, x_val, y_val, batch_size=config['batch_size'],
                         learning_rate=config['learning_rate'], lambd=config['lambd'],
@@ -283,7 +283,7 @@ def grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_
             k_fold_results = []
             for x_train, x_val, y_train, y_val in data.k_fold_split(x, y, k):
                 # print("------------------------------")
-                print("Fold In progress: ", fold_index)
+                # print("Fold In progress: ", fold_index)
                 # print("------------------------------")
 
                 trial_val_loss = []

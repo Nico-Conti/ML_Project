@@ -3,6 +3,7 @@ import ast
 from src.activation_function import *  # Import all necessary activation functions
 from src.regularization import *  # Import regularization classes
 from src.learning_rate import *  # Import LearningRate class
+from src.metrics import *  # Import loss functions
 
 activation_mapping = {
     'Act_ReLU()': Act_ReLU(),
@@ -23,14 +24,23 @@ learning_rate_mapping = {
     'LearningRateLinearDecay': LearningRateLinearDecay
 }
 
-def load_best_model(filepath):
+loss_function_mapping = {
+    'MEE()': MEE(),
+    'MSE()': MSE(),
+}
+
+def load_best_model(filepath, model_number=1, use_train_loss=True):
     with open(filepath, 'r') as f:
         data = json.load(f)
 
-    data=data[0] # Get Best Model
+    data=data[model_number-1] # Get Best Model
 
     model_config = data["config"]
-    min_train_loss = data["avg_train_loss"]
+
+    if use_train_loss:
+        min_train_loss = data["avg_train_loss"]
+    else:
+        min_train_loss = 0
 
     # Mapping for activation functions
     
@@ -51,17 +61,14 @@ def load_best_model(filepath):
     # Extract the value:
     learning_rate_type = learning_rate_str.split('(')[0]
     if learning_rate_type in learning_rate_mapping:
-        if learning_rate_mapping[learning_rate_type] == 'LearningRateLinearDecay':
+        if learning_rate_type == 'LearningRateLinearDecay':
             learning_rate_max = float(learning_rate_str.split('(')[1].split(',')[0])
             learning_rate_epochs = int(learning_rate_str.split(',')[1].split(',')[0])
-            learning_min = float(learning_rate_str.split(',')[1].split(')')[2])
-            learning_rate = learning_rate_mapping[learning_rate_type()]
+            learning_min = float(learning_rate_str.split(',')[2].split(')')[0])
+            learning_rate = learning_rate_mapping[learning_rate_type](learning_rate_max, learning_rate_epochs, learning_min)
         else:
             learning_rate_value = float(learning_rate_str.split('(')[1].split(')')[0])
             learning_rate = learning_rate_mapping[learning_rate_type](learning_rate_value)
-    
-
-
     
 
     # Load regularization
@@ -90,6 +97,10 @@ def load_best_model(filepath):
     n_unit_list = model_config["n_unit_list"]
 
     loss_function = model_config["loss_function"]
+    if loss_function in loss_function_mapping:
+        loss_function = loss_function_mapping[loss_function]
+    else:
+        raise ValueError(f"Unknown loss function: {loss_function}")
 
     # Create configurations
     init_config = (n_unit_list, activation_functions, loss_function)

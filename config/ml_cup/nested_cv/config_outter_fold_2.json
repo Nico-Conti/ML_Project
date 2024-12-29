@@ -1,0 +1,46 @@
+[
+    {
+        "config": {
+            "n_unit_list": [
+                7,
+                3
+            ],
+            "act_list": [
+                "Act_ReLU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(0.030870441206393144)",
+            "lambd": "L1Regularization(3.53250838712178e-05)",
+            "momentum": 0.5244633844645965,
+            "patience": 10,
+            "batch_size": -1,
+            "loss_function": "MEE()"
+        },
+        "avg_val_loss": 3510.7213847297267,
+        "avg_train_loss": 3323.4575769341886,
+        "std_val_loss": 7010.012217932591
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                19,
+                16,
+                3
+            ],
+            "act_list": [
+                "Act_ReLU()",
+                "Act_LeakyReLU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRateLinearDecay(0.02748178271444511, 63, 0.0003076957955069595)",
+            "lambd": "L2Regularization(0)",
+            "momentum": 0.8204934413514872,
+            "patience": 20,
+            "batch_size": 100,
+            "loss_function": "MEE()"
+        },
+        "avg_val_loss": Infinity,
+        "avg_train_loss": Infinity,
+        "std_val_loss": NaN
+    }
+]
