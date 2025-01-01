@@ -281,7 +281,6 @@ def generate_fine_grid_search_configs(num_instances, n_unit_out, regression, gri
                                                     'loss_function': loss_function
                                                 })
 
-    print(grid_configs)
     return grid_configs
 
 def parse_config(config):

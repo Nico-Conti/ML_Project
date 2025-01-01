@@ -153,15 +153,15 @@ random_grid_4 = {
 fine_grid_monk_1 = {
     "n_layers": (1, 1),  # Range of number of layers
     "n_unit": (6,6,1), # (min, max, num_steps)
-    "a_fun": [Act_Tanh()],
-    "learning_rate": (0.01, 0.03, 30),
-    # "learning_rate_decay_max": (0.01, 0.03, 1),
-    # "learning_rate_decay_epochs": (40, 60, 1),
-    # "learning_rate_decay_min": (0.008, 0.008, 1),
+    "a_fun": [Act_LeakyReLU()],
+    "learning_rate": (0.02, 0.025, 20),
+    "learning_rate_decay_max": (0.04, 0.05, 5),
+    "learning_rate_decay_epochs": (40, 60, 2),
+    "learning_rate_decay_min": (0.005, 0.02, 5),
     "lambd": (0, 0, 1),
     "lambd_type": [L1],
-    "momentum": (0.6, 0.75, 30),
-    'patience': [10],
+    "momentum": (0.6, 0.75, 10),
+    'patience': [5],
     'batch_size': [-1],
     'loss_function': [MSE()]
 }
@@ -186,13 +186,13 @@ fine_grid_monk_2 = {
 
 fine_grid_monk_3 = {
     "n_layers": (1, 1),  # Range of number of layers
-    "n_unit": (5,6,2), # (min, max, num_steps)
+    "n_unit": (5,5,1), # (min, max, num_steps)
     "a_fun": [Act_Tanh()],
-    "learning_rate": (0.0008, 0.002, 5),
+    "learning_rate": (0.0008, 0.002, 10),
     # "learning_rate_decay_max": (0.045, 0.05, 3),
     # "learning_rate_decay_epochs": (85, 85, 1),
     # "learning_rate_decay_min": (0.0006, 0.00075, 3),
-    "lambd": (0.00002, 0.00005, 5),
+    "lambd": (0.00002, 0.0005, 12),
     "lambd_type": [L2, L1],
     "momentum": (0.75, 0.75, 1),
     'patience': [10],

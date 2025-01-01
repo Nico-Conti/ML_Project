@@ -6,6 +6,7 @@ sys.path.append(os.path.join(sys.path[0], '..'))
 
 from utils.data_utils import *
 from metrics import *
+from activation_function import *
 
 
 
@@ -16,14 +17,18 @@ script_dir = os.path.dirname(__file__)
 loss = MEE()
 loss_2 = MSE()
 
+act = Act_LeakyReLU()
 
-x = np.array([[4, 3], [3, 2], [3, 6]])
+x = np.array([[-1, 0], [3, 2], [3, 6]])
 y = np.array([[1, 2], [3, 4], [5, 6]])
 
-x = np.array([2, 3, 4])
-y = np.array([3, 1, 1])
+# x = np.array([0, 3, 4])
+# y = np.array([3, 1, 1])
 
 print(x.ndim)
+
+print(act.forward_fun(x))
+print(act.derivative_fun(x))
 
 # x = np.array([[2], [3], [4]])
 # y = np.array([[3], [1], [1]])
@@ -32,7 +37,7 @@ print(x.ndim)
 # print(np.shape(y))
 
 # print(loss.compute(x, y))
-print(loss.derivative(x, y))
+# print(loss.derivative(x, y))
 
 # differences = predictions - output
 # distances = np.sqrt(np.power(differences, 2)) + epsilon
@@ -47,7 +52,7 @@ print(loss.derivative(x, y))
 # print(np.sqrt(np.power(x - y, 2)))
 
 # print(loss_2.compute(x, y))
-print(loss_2.derivative(x, y))
+# print(loss_2.derivative(x, y))
 
 
 

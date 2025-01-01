@@ -26,13 +26,13 @@ n_in = np.size(x[1])
 n_out = 1
 
 
-val_size = 0.2
+val_size = 0.1
 
 split_type = "stratified"
-search_type = "random"   
+search_type = "fine"   
 
 # Define the grid
-grid = random_grid
+grid = fine_grid_monk_1
 
 config, metrics = grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_instances=100, regression=False, model_selection="hold_out")
 

@@ -9,16 +9,16 @@
                 "Act_Tanh()",
                 "Act_Sigmoid()"
             ],
-            "learning_rate": "LearningRate(0.0017000000000000001)",
-            "lambd": "L1Regularization(3.5000000000000004e-05)",
+            "learning_rate": "LearningRate(0.0018666666666666666)",
+            "lambd": "L1Regularization(6.363636363636364e-05)",
             "momentum": 0.75,
             "patience": 10,
             "batch_size": -1,
             "loss_function": "MSE()"
         },
-        "avg_val_loss": 0.05979568857157008,
-        "avg_train_loss": 0.053550516094467315,
-        "std_val_loss": 0.06365781454690715
+        "avg_val_loss": 0.058091655494782304,
+        "avg_train_loss": 0.04541349265958033,
+        "std_val_loss": 0.041074460917088405
     },
     {
         "config": {
@@ -30,36 +30,36 @@
                 "Act_Tanh()",
                 "Act_Sigmoid()"
             ],
-            "learning_rate": "LearningRate(0.0014000000000000002)",
-            "lambd": "L1Regularization(5e-05)",
+            "learning_rate": "LearningRate(0.0012000000000000001)",
+            "lambd": "L2Regularization(6.363636363636364e-05)",
             "momentum": 0.75,
             "patience": 10,
             "batch_size": -1,
             "loss_function": "MSE()"
         },
-        "avg_val_loss": 0.060289422524546686,
-        "avg_train_loss": 0.04712451550883342,
-        "std_val_loss": 0.04937953297185765
+        "avg_val_loss": 0.060308921078385404,
+        "avg_train_loss": 0.04817604499494936,
+        "std_val_loss": 0.05485588764026434
     },
     {
         "config": {
             "n_unit_list": [
-                6,
+                5,
                 1
             ],
             "act_list": [
                 "Act_Tanh()",
                 "Act_Sigmoid()"
             ],
-            "learning_rate": "LearningRate(0.0011)",
-            "lambd": "L1Regularization(3.5000000000000004e-05)",
+            "learning_rate": "LearningRate(0.0016)",
+            "lambd": "L1Regularization(0.0002818181818181818)",
             "momentum": 0.75,
             "patience": 10,
             "batch_size": -1,
             "loss_function": "MSE()"
         },
-        "avg_val_loss": 0.06035885964136274,
-        "avg_train_loss": 0.05329786006788371,
-        "std_val_loss": 0.05398231202177252
+        "avg_val_loss": 0.060462038110749905,
+        "avg_train_loss": 0.04929815391729625,
+        "std_val_loss": 0.04553693687114603
     }
 ]

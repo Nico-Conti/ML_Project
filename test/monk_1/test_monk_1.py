@@ -28,7 +28,7 @@ x_test = feature_one_hot_encoding(x_test, [3,3,2,3,4,2])
 n_in = np.size(x[1])
 n_out = 1
 
-init_config, train_config = load_best_model("config/monk_1/config_k_fold_monk_1.json", model_number=1, use_train_loss=True)
+init_config, train_config = load_best_model("config/monk_1/config_hold_monk_1.json", model_number=1, use_train_loss=False)
 
 print(init_config)
 print(train_config)

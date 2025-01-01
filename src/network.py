@@ -45,7 +45,7 @@ class Network:
     def forw_then_back(self, data_in, y_true, learning_rate, lambd, momentum):
         y_out = self.forward(data_in)
         if y_out.shape[1] == 1: y_out = np.reshape(y_out, y_out.shape[0])
-        diff = 2 * (y_true - y_out)
+        diff =  (y_true - y_out)
         self.backward(diff, learning_rate, lambd, momentum)
 
     
