@@ -1,0 +1,65 @@
+[
+    {
+        "config": {
+            "n_unit_list": [
+                12,
+                3
+            ],
+            "act_list": [
+                "Act_Sigmoid()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(0.002125656086053965)",
+            "lambd": "L2Regularization(0.00014929635974938855)",
+            "momentum": 0.5850863713501577,
+            "patience": 25,
+            "batch_size": -1,
+            "loss_function": "MSE()"
+        },
+        "avg_val_loss": 10.70608680936304,
+        "avg_train_loss": 10.341334362969011,
+        "std_val_loss": 1.6552197248451992
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                20,
+                3
+            ],
+            "act_list": [
+                "Act_Sigmoid()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(0.0019395863321178444)",
+            "lambd": "L2Regularization(0.0008748889631659345)",
+            "momentum": 0.6871971359141182,
+            "patience": 25,
+            "batch_size": -1,
+            "loss_function": "MSE()"
+        },
+        "avg_val_loss": 12.493313988769794,
+        "avg_train_loss": 11.123548562432722,
+        "std_val_loss": 3.1949210191567468
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                13,
+                3
+            ],
+            "act_list": [
+                "Act_Sigmoid()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(0.0025780389209069067)",
+            "lambd": "L2Regularization(0.00019848880996754372)",
+            "momentum": 0.5507112947221083,
+            "patience": 25,
+            "batch_size": -1,
+            "loss_function": "MSE()"
+        },
+        "avg_val_loss": 13.548651188575638,
+        "avg_train_loss": 13.12200188948635,
+        "std_val_loss": 2.3429764821412764
+    }
+]

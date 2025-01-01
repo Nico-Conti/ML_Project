@@ -9,6 +9,7 @@ from src.regularization import L2Regularization as L2
 from src.utils.plot import provaplot, plot_learning_curve
 from src.utils.data_utils import shuffle_indices
 from src.data_splitter import DataSplitter
+from src.metrics import MSE
 
 
 class Network:
@@ -44,7 +45,7 @@ class Network:
     def forw_then_back(self, data_in, y_true, learning_rate, lambd, momentum):
         y_out = self.forward(data_in)
         if y_out.shape[1] == 1: y_out = np.reshape(y_out, y_out.shape[0])
-        diff = self.loss_function.derivative(y_true, y_out)
+        diff = 2 * (y_true - y_out)
         self.backward(diff, learning_rate, lambd, momentum)
 
     

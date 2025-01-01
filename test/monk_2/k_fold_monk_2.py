@@ -23,10 +23,10 @@ n_out = 1
 val_size = 0.2
 
 split_type = "stratified"
-search_type = "fine"   
+search_type = "random"   
 
 # Define the grid
-grid = fine_grid_monk_2
+grid = random_grid_monk
 
 config, metrics = grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_instances=1000, regression=False, model_selection="k_fold")
 

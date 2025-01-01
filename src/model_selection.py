@@ -220,6 +220,7 @@ def grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_
         print("Search type not mentioned performing random search")
         configs = generate_random_search_configs(num_instances, n_out, regression, grid)
 
+
     total_configs = len(configs)
 
     best_loss_val = float('inf')

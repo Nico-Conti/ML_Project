@@ -25,7 +25,7 @@ x_test = feature_one_hot_encoding(x_test, [3,3,2,3,4,2])
 n_in = np.size(x[1])
 n_out = 1
 
-val_size = 0.2
+val_size = 0.1
 
 split_type = "stratified"
 search_type = "fine"   

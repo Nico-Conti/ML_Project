@@ -39,10 +39,10 @@ for model_number in range(1, 4):
 
     ensemble.append(y_out)
 
-    print(f"Loss: {MEE().compute(y_test, y_out)}")
+    print(f"Loss: {MSE().compute(y_test, y_out)}")
     print(f"Accuracy: {binary_accuracy(y_test, y_out)}")
 
 y_out = np.mean(ensemble, axis=0)
 
-print(f"Loss: {MEE().compute(y_test, y_out)}")
+print(f"Loss: {MSE().compute(y_test, y_out)}")
 print(f"Accuracy: {binary_accuracy(y_test, y_out)}")

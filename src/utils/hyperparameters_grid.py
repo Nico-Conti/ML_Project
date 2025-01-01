@@ -26,22 +26,67 @@ random_grid_monk = {
     'momentum': [0.5, 0.95],
     'patience': [5, 10],
     'batch_size': [1, -1, 25, 50],
-    'loss_function': MEE()
+    'loss_function': MSE()
 }
 
-
-random_grid = {
-    'n_layers': [1,4],
+random_grid_ml = {
+    'n_layers': [1, 1],
     'a_fun': [Act_Sigmoid(), Act_Tanh(), Act_ReLU(), Act_LeakyReLU()],
     'n_unit': [2, 20],
-    'learning_rate': [0.001, 0.1],
+    'learning_rate': [0.001, 0.01],
     'learning_rate_decay_max': [0.01, 0.05],
     'learning_rate_decay_min': [0.00001, 0.001],
     'learning_rate_decay_epochs': [50, 100],
     'lambd': [0.000001, 0.001],
     'momentum': [0.5, 0.95],
-    'patience': [10, 20],
-    'batch_size': [1, -1, 50, 100],
+    'patience': [25, 50],
+    'batch_size': [-1],
+    'loss_function': MSE()
+}
+
+random_grid_monk_1 = {
+    'n_layers': [1, 1],
+    'a_fun': [Act_Tanh()],
+    'n_unit': [6, 6],
+    'learning_rate': [0.008, 0.03],
+    'learning_rate_decay_max': [0.01, 0.03],
+    'learning_rate_decay_min': [0.008, 0.008],
+    'learning_rate_decay_epochs': [20, 60],
+    'lambd': [0, 0],
+    'momentum': [0.65, 0.75],
+    'patience': [5, 10, 15],
+    'batch_size': [-1],
+    'loss_function': MSE()
+}
+
+random_grid_monk_3 = {
+    'n_layers': [1, 2],
+    'a_fun': [Act_Tanh(), Act_Sigmoid()],
+    'n_unit': [2, 6],
+    'learning_rate': [0.00025, 0.02],
+    'learning_rate_decay_max': [0.002, 0.02],
+    'learning_rate_decay_min': [0.0005, 0.0005],
+    'learning_rate_decay_epochs': [20, 60],
+    'lambd': [0.00001, 0.0001],
+    'momentum': [0.6, 0.95],
+    'patience': [5, 10, 15],
+    'batch_size': [-1],
+    'loss_function': MSE()
+}
+
+
+random_grid = {
+    'n_layers': [2,4],
+    'a_fun': [Act_Sigmoid(), Act_Tanh(), Act_ReLU(), Act_LeakyReLU()],
+    'n_unit': [2, 20],
+    'learning_rate': [0.0001, 0.1],
+    'learning_rate_decay_max': [0.001, 0.05],
+    'learning_rate_decay_min': [0.00001, 0.001],
+    'learning_rate_decay_epochs': [50, 100],
+    'lambd': [0.000001, 0.001],
+    'momentum': [0.5, 0.95],
+    'patience': [25, 50],
+    'batch_size': [-1, 50, 100],
     'loss_function': MEE()
 }
 
@@ -105,6 +150,22 @@ random_grid_4 = {
     'loss_function': MEE()
 }
 
+fine_grid_monk_1 = {
+    "n_layers": (1, 1),  # Range of number of layers
+    "n_unit": (6,6,1), # (min, max, num_steps)
+    "a_fun": [Act_Tanh()],
+    "learning_rate": (0.01, 0.03, 30),
+    # "learning_rate_decay_max": (0.01, 0.03, 1),
+    # "learning_rate_decay_epochs": (40, 60, 1),
+    # "learning_rate_decay_min": (0.008, 0.008, 1),
+    "lambd": (0, 0, 1),
+    "lambd_type": [L1],
+    "momentum": (0.6, 0.75, 30),
+    'patience': [10],
+    'batch_size': [-1],
+    'loss_function': [MSE()]
+}
+
 
 
 fine_grid_monk_2 = {
@@ -125,18 +186,18 @@ fine_grid_monk_2 = {
 
 fine_grid_monk_3 = {
     "n_layers": (1, 1),  # Range of number of layers
-    "n_unit": (2,5,3), # (min, max, num_steps)
+    "n_unit": (5,6,2), # (min, max, num_steps)
     "a_fun": [Act_Tanh()],
-    "learning_rate": (0.18, 0.32, 3),
-    "learning_rate_decay_max": (0.045, 0.05, 3),
-    "learning_rate_decay_epochs": (85, 85, 1),
-    "learning_rate_decay_min": (0.0006, 0.00075, 3),
-    "lambd": (0.000002, 0.000007, 3),
-    "lambd_type": [L1],
-    "momentum": (0.6, 0.75, 3),
+    "learning_rate": (0.0008, 0.002, 5),
+    # "learning_rate_decay_max": (0.045, 0.05, 3),
+    # "learning_rate_decay_epochs": (85, 85, 1),
+    # "learning_rate_decay_min": (0.0006, 0.00075, 3),
+    "lambd": (0.00002, 0.00005, 5),
+    "lambd_type": [L2, L1],
+    "momentum": (0.75, 0.75, 1),
     'patience': [10],
-    'batch_size': [1],
-    'loss_function': [MEE()]
+    'batch_size': [-1],
+    'loss_function': [MSE()]
 }
 
 
