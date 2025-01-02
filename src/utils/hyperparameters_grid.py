@@ -31,7 +31,7 @@ random_grid_monk = {
 
 random_grid_ml = {
     'n_layers': [1,1],
-    'a_fun': [Act_Sigmoid()],
+    'a_fun': [Act_Tanh()],
     'n_unit': [20, 30],
     'learning_rate': [0.00001, 0.01],
     'learning_rate_decay_max': [0.0001, 0.01],
@@ -39,8 +39,8 @@ random_grid_ml = {
     'learning_rate_decay_epochs': [50, 80],
     'lambd': [0.00001, 0.0001],
     'momentum': [0.5, 0.95],
-    'patience': [10, 20],
-    'batch_size': [1],
+    'patience': [5, 5],
+    'batch_size': [-1],
     'epoch': 1000,
     'loss_function': MEE()
 }

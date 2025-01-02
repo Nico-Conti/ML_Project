@@ -42,6 +42,7 @@ def grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_
 
     best_loss_val = float('inf')
     best_models_info = []
+    all_models_info = []
 
 
     for i, config in enumerate(configs):
@@ -147,9 +148,19 @@ def grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_
                 'k_fold_results': k_fold_results
             }
             
-            best_models_info.append(current_model_info)
+            if not np.isnan(avg_loss_val):
+                best_models_info.append(current_model_info)
+                current_config = current_model_info.copy()
+                del current_config['k_fold_results']
+                all_models_info.append(current_config)
+                
+            else:
+                print("Nan value found in avg_val_loss, skipping this model")
             best_models_info.sort(key=lambda item: item['avg_val_loss'])
-            best_models_info = best_models_info[:3]
+            best_models_info = best_models_info[:4]
+
+
+        all_models_info.sort(key=lambda item: item['avg_val_loss'])
 
     top_models_for_json = []
     for model_info in best_models_info:
@@ -161,5 +172,16 @@ def grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_
         }
         top_models_for_json.append(json_friendly_model)
 
+    
+    all_models_for_json = []
+    for model_info in all_models_info:
+        json_friendly_model = {
+            "config": parse_config(model_info['config']),
+            "avg_val_loss": model_info['avg_val_loss'],
+            "avg_train_loss": model_info['avg_train_loss'],
+            "std_val_loss": model_info['std_val_loss'],  # Use .get() for optional keys
+        }
+        all_models_for_json.append(json_friendly_model)
 
-    return top_models_for_json, best_models_info[0]
+
+    return top_models_for_json, best_models_info[0], all_models_for_json

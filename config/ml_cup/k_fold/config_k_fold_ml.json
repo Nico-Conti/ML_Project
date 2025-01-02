@@ -2,67 +2,89 @@
     {
         "config": {
             "n_unit_list": [
-                20,
+                24,
                 3
             ],
             "act_list": [
-                "Act_Sigmoid()",
+                "Act_Tanh()",
                 "Act_Linear()"
             ],
-            "learning_rate": "LearningRateLinearDecay(0.002264454658737128, 80, 5.992286680763111e-05)",
-            "lambd": "L2Regularization(1.6357915263502408e-05)",
-            "momentum": 0.7855917789428963,
-            "patience": 20,
-            "batch_size": 1,
+            "learning_rate": "LearningRate(0.0009208259896542358)",
+            "lambd": "L1Regularization(5.496544683611377e-05)",
+            "momentum": 0.6327722634426529,
+            "patience": 5,
+            "batch_size": -1,
             "loss_function": "MEE()",
             "epochs": 1000
         },
-        "avg_val_loss": 0.9960329411310342,
-        "avg_train_loss": 0.909433370652766,
-        "std_val_loss": 0.09722997022868765
+        "avg_val_loss": 4.026680616143968,
+        "avg_train_loss": 4.078540925450768,
+        "std_val_loss": 0.7388613695761207
     },
     {
         "config": {
             "n_unit_list": [
-                25,
+                26,
                 3
             ],
             "act_list": [
-                "Act_Sigmoid()",
+                "Act_Tanh()",
                 "Act_Linear()"
             ],
-            "learning_rate": "LearningRateLinearDecay(0.0040839497671345225, 80, 7.711527074117427e-05)",
-            "lambd": "L1Regularization(3.2721511641994025e-05)",
-            "momentum": 0.5881189597405148,
-            "patience": 10,
-            "batch_size": 1,
+            "learning_rate": "LearningRate(0.002500203335721305)",
+            "lambd": "L2Regularization(3.6336473725329376e-05)",
+            "momentum": 0,
+            "patience": 5,
+            "batch_size": -1,
             "loss_function": "MEE()",
             "epochs": 1000
         },
-        "avg_val_loss": 1.0174963283776672,
-        "avg_train_loss": 0.927587450204894,
-        "std_val_loss": 0.12339830773600799
+        "avg_val_loss": 18649.418000963033,
+        "avg_train_loss": 18609.51693302317,
+        "std_val_loss": 8671.683921103822
     },
     {
         "config": {
             "n_unit_list": [
-                27,
+                22,
                 3
             ],
             "act_list": [
-                "Act_Sigmoid()",
+                "Act_Tanh()",
                 "Act_Linear()"
             ],
-            "learning_rate": "LearningRateLinearDecay(0.0031596867914657086, 68, 7.31733765774647e-05)",
-            "lambd": "L2Regularization(2.4294837048632357e-05)",
-            "momentum": 0.6362003085954424,
-            "patience": 20,
-            "batch_size": 1,
+            "learning_rate": "LearningRateLinearDecay(0.003066785420828977, 61, 5.5876034664886465e-05)",
+            "lambd": "L2Regularization(4.95042840734136e-05)",
+            "momentum": 0.5478192544308454,
+            "patience": 5,
+            "batch_size": -1,
             "loss_function": "MEE()",
             "epochs": 1000
         },
-        "avg_val_loss": 1.0869656680275486,
-        "avg_train_loss": 0.9891404738448404,
-        "std_val_loss": 0.1930321867299551
+        "avg_val_loss": 19329.772970563718,
+        "avg_train_loss": 19633.82600723554,
+        "std_val_loss": 9414.928039181093
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                26,
+                3
+            ],
+            "act_list": [
+                "Act_Tanh()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(0.003287269923532331)",
+            "lambd": "L1Regularization(0)",
+            "momentum": 0,
+            "patience": 5,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1000
+        },
+        "avg_val_loss": 108045.92399018614,
+        "avg_train_loss": 108748.01411205964,
+        "std_val_loss": 19665.545011388313
     }
 ]
