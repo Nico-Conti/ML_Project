@@ -2,19 +2,26 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def plot_learning_curve(train_losses, test_losses, accuracies):
+
     """
     Funzione per tracciare la learning curve basata su training loss, test loss e accuratezza.
     """
     plt.figure(figsize=(12, 6))
 
-    # Subplot per la Loss
-    plt.subplot(1, 2, 1)
+    if accuracies[-1] == 0:
+        plt.subplot(1, 1, 1)
+    else:
+        plt.subplot(1, 2, 1)
     plt.plot(range(len(train_losses)), train_losses, label='Training Loss')
     plt.plot(range(len(test_losses)), test_losses, label='Test Loss')
     plt.xlabel('Epoch')
     plt.ylabel('Loss')
     plt.title('Learning Curve - Loss')
     plt.legend()
+
+    if accuracies[-1] == 0:
+        plt.show()
+        return
 
     # Subplot per l'Accuracy
     plt.subplot(1, 2, 2)
@@ -179,12 +186,14 @@ def save_image_folds(metrics, file_path):
 
 
 
-def save_image_test(train_losses, test_losses, file_path):
+def save_image_test(train_losses, test_losses, test_accuracies, file_path):
     # Set up plot
     plt.figure(figsize=(12, 5))
 
-    # Plot loss curve
-    plt.subplot(1, 1, 1)
+    if test_accuracies[-1] == 0:
+        plt.subplot(1, 1, 1)
+    else:
+        plt.subplot(1, 2, 1)
 
     plt.plot(range(1, len(test_losses) + 1), test_losses, label=f'Test Loss', linestyle='--')
 
@@ -194,7 +203,59 @@ def save_image_test(train_losses, test_losses, file_path):
     plt.title('Loss Curve')
     plt.legend()
 
-    # Save plot to file
+    plt.plot(range(1, len(train_losses) + 1), train_losses, label='Training Loss', linewidth=2)
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.title('Loss Curve')
+    plt.legend()
+
+   
+    num_runs = len(test_losses)
+
+    if test_accuracies[-1] == 0:
+        plt.subplot(1, 2, 2)
+        plt.plot(range(1, len(test_accuracies) + 1), test_accuracies, label=f'Test accuracy')
+        plt.xlabel('Epochs')
+        plt.ylabel('Accuracy')
+        plt.title('Accuracy Curve')
+        plt.legend()
+
+     # Save plot to file
+    plt.tight_layout()
+    plt.savefig(file_path)
+    plt.close()  # Close the plot to free memory
+
+def save_image_val(train_losses, val_losses, val_accuracies, file_path):
+    # Set up plot
+    plt.figure(figsize=(12, 5))
+
+    # Plot loss curve
+    if val_accuracies:
+        plt.subplot(1, 2, 1)
+    else:
+        plt.subplot(1, 1, 1)
+
+    plt.plot(range(1, len(val_losses) + 1), val_losses, label=f'val Loss', linestyle='--')
+    
+
+    plt.plot(range(1, len(train_losses) + 1), train_losses, label='Training Loss', linewidth=2)
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.title('Loss Curve')
+    plt.legend()
+
+   
+    num_runs = len(val_losses)
+
+    if val_accuracies:
+        plt.subplot(1, 2, 2)
+        plt.plot(range(1, len(val_accuracies) + 1), val_accuracies, label=f'Validation accuracy')
+        plt.xlabel('Epochs')
+        plt.ylabel('Accuracy')
+        plt.title('Accuracy Curve')
+        plt.legend()
+
+     # Save plot to file
     plt.tight_layout()
     plt.savefig(file_path)
     plt.close()  # Close the plot to free memory

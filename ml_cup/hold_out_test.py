@@ -32,7 +32,7 @@ x, x_test, y, y_test = data.split(x, y)
 n_in = np.size(x[1])
 n_out = 3
 
-init_config, train_config = load_best_model("config/ml_cup/nested_cv/config_outter_fold_1.json", model_number=4, use_train_loss=False)
+init_config, train_config = load_best_model("config/ml_cup/k_fold/config_k_fold_ml.json", model_number=3, use_train_loss=False)
 
 network = nn(n_in, *init_config)
 

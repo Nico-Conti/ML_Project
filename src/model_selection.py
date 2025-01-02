@@ -62,8 +62,9 @@ def grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_
 
                 network.train(
                         x_train, y_train, x_val, y_val, batch_size=config['batch_size'],
-                        learning_rate=config['learning_rate'], lambd=config['lambd'],
-                        momentum=config['momentum'], patience=config['patience'], early_stopping = True
+                        learning_rate=config['learning_rate'], epochs=config['epochs'],
+                        lambd=config['lambd'], momentum=config['momentum'],
+                        patience=config['patience'], early_stopping = True
                     )
                 
                 train_loss, train_acc, val_loss, val_acc = network.model_metrics()
@@ -114,8 +115,9 @@ def grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_
 
                     network.train(
                             x_train, y_train, x_val, y_val, batch_size=config['batch_size'],
-                            learning_rate=config['learning_rate'], lambd=config['lambd'],
-                            momentum=config['momentum'], patience=config['patience'], early_stopping = True
+                            learning_rate=config['learning_rate'], epochs=config['epochs'],
+                            lambd=config['lambd'], momentum=config['momentum'],
+                            patience=config['patience'], early_stopping = True
                     )
 
                     train_loss, train_acc, val_loss, val_acc = network.model_metrics()

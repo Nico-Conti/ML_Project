@@ -96,6 +96,8 @@ def generate_random_search_configs(num_instances, n_unit_out, regression, grid={
 
         loss_function = grid['loss_function']
 
+        epochs = grid['epoch']
+
         new_config = {
             'n_unit_list': n_unit_list,
             'act_list': act_list,
@@ -104,7 +106,8 @@ def generate_random_search_configs(num_instances, n_unit_out, regression, grid={
             'momentum': momentum,
             'patience': patience,
             'batch_size': batch_size,
-            'loss_function': loss_function
+            'loss_function': loss_function,
+            'epochs': epochs
         }
 
         randomized_configs.append(new_config)
@@ -199,7 +202,8 @@ def generate_fine_grid_search_configs(num_instances, n_unit_out, regression, gri
                                                                 'momentum': momentum,
                                                                 'patience': patience,
                                                                 'batch_size': batch_size,
-                                                                'loss_function': loss_function
+                                                                'loss_function': loss_function,
+                                                                'epochs': grid['epoch']
                                                             })
         else:
             for n_layers in n_layers_values:
@@ -225,7 +229,8 @@ def generate_fine_grid_search_configs(num_instances, n_unit_out, regression, gri
                                                             'momentum': 0,
                                                             'patience': patience,
                                                             'batch_size': batch_size,
-                                                            'loss_function': loss_function
+                                                            'loss_function': loss_function,
+                                                            'epochs': grid['epoch']
                                                         })
 
     elif "learning_rate" in grid:
@@ -254,7 +259,8 @@ def generate_fine_grid_search_configs(num_instances, n_unit_out, regression, gri
                                                         'momentum': momentum,
                                                         'patience': patience,
                                                         'batch_size': batch_size,
-                                                        'loss_function': loss_function
+                                                        'loss_function': loss_function,
+                                                        'epochs': grid['epoch']
                                                     })
         else:
             for n_layers in n_layers_values:
@@ -278,7 +284,8 @@ def generate_fine_grid_search_configs(num_instances, n_unit_out, regression, gri
                                                     'momentum': 0,
                                                     'patience': patience,
                                                     'batch_size': batch_size,
-                                                    'loss_function': loss_function
+                                                    'loss_function': loss_function,
+                                                    'epochs': grid['epoch']
                                                 })
 
     return grid_configs

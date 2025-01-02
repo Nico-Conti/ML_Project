@@ -52,9 +52,9 @@ for x_train, x_test, y_train, y_test in outter_fold.k_fold_split(x, y, k):
     print("------------------------------------------------------------")
     
     # grid = grid_list[outter_fold_idx - 1]
-    grid = random_grid
+    grid = random_grid_ml
 
-    config, metrics = grid_search(x_train, y_train, n_in, n_out, val_size, split_type, grid, search_type, num_instances=1000, regression=True, model_selection="k_fold")
+    config, metrics = grid_search(x_train, y_train, n_in, n_out, val_size, split_type, grid, search_type, num_instances=10, regression=True, model_selection="k_fold")
 
     #Save the results of the inner k fold
     save_image_folds(metrics, f"config/ml_cup/nested_cv/outter_fold_{outter_fold_idx}.png")
@@ -72,7 +72,7 @@ for x_train, x_test, y_train, y_test in outter_fold.k_fold_split(x, y, k):
 
     test_loss.append(MEE().compute(y_test, y_out))
 
-    save_image_test(train_loss_list, test_loss_list, f"config/ml_cup/nested_cv/test_outter_fold_{outter_fold_idx}.png")
+    save_image_test(train_loss_list, test_loss_list, test_acc_list,  f"config/ml_cup/nested_cv/test_outter_fold_{outter_fold_idx}.png")
     outter_fold_idx += 1
 
 print(test_loss) 

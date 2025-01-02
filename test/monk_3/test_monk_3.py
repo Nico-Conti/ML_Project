@@ -29,7 +29,7 @@ ensemble = []
 for model_number in range(1, 4):
     print(f"Model number: {model_number}")
 
-    init_config, train_config = load_best_model("config/monk_3/config_k_fold_monk_3.json", model_number, use_train_loss=True)
+    init_config, train_config = load_best_model("config/monk_3/config_hold_monk_3.json", model_number, use_train_loss=False)
 
     network = nn(n_in, *init_config)
 

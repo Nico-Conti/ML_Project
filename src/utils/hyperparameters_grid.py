@@ -30,18 +30,19 @@ random_grid_monk = {
 }
 
 random_grid_ml = {
-    'n_layers': [1, 1],
-    'a_fun': [Act_Sigmoid(), Act_Tanh(), Act_ReLU(), Act_LeakyReLU()],
-    'n_unit': [2, 20],
-    'learning_rate': [0.001, 0.01],
-    'learning_rate_decay_max': [0.01, 0.05],
-    'learning_rate_decay_min': [0.00001, 0.001],
-    'learning_rate_decay_epochs': [50, 100],
-    'lambd': [0.000001, 0.001],
+    'n_layers': [1,1],
+    'a_fun': [Act_Sigmoid()],
+    'n_unit': [20, 30],
+    'learning_rate': [0.00001, 0.01],
+    'learning_rate_decay_max': [0.0001, 0.01],
+    'learning_rate_decay_min': [0.00005, 0.0001],
+    'learning_rate_decay_epochs': [50, 80],
+    'lambd': [0.00001, 0.0001],
     'momentum': [0.5, 0.95],
-    'patience': [25, 50],
-    'batch_size': [-1],
-    'loss_function': MSE()
+    'patience': [10, 20],
+    'batch_size': [1],
+    'epoch': 1000,
+    'loss_function': MEE()
 }
 
 random_grid_monk_1 = {
@@ -96,7 +97,7 @@ random_grid_1 = {
     'n_unit': [2, 6],
     'learning_rate': [0.001, 0.01],
     'learning_rate_decay_max': [0.01, 0.05],
-    'learning_rate_decay_min': [0.00001, 0.001],
+    'learning_rate_decay_min': [0.000225, 0.000225],
     'learning_rate_decay_epochs': [50, 100],
     'lambd': [0.0000001, 0.00001],
     'momentum': [0.5, 0.8],
@@ -150,6 +151,23 @@ random_grid_4 = {
     'loss_function': MEE()
 }
 
+fine_grid_ml= {
+    "n_layers": (1, 1),  # Range of number of layers
+    "n_unit": (40,40,1), # (min, max, num_steps)
+    "a_fun": [Act_Sigmoid()],
+    "learning_rate": (0.02, 0.025, 1),
+    "learning_rate_decay_max": (0.0001, 0.0006, 5),
+    "learning_rate_decay_epochs": (35, 55, 3),
+    "learning_rate_decay_min": (0.00004, 0.0001, 5),
+    "lambd": (0.0, 0.0, 1),
+    "lambd_type": [L1],
+    "momentum": (0.7, 0.75, 5),
+    'patience': [10],
+    'batch_size': [-1],
+    'loss_function': [MEE()]
+}
+
+
 fine_grid_monk_1 = {
     "n_layers": (1, 1),  # Range of number of layers
     "n_unit": (6,6,1), # (min, max, num_steps)
@@ -197,7 +215,8 @@ fine_grid_monk_3 = {
     "momentum": (0.75, 0.75, 1),
     'patience': [10],
     'batch_size': [-1],
-    'loss_function': [MSE()]
+    'loss_function': [MSE()],
+    'epoch': 300
 }
 
 

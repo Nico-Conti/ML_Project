@@ -30,7 +30,7 @@ n_trials = 3
 val_size = 0.2
 internal_test_size = 0.25
 
-data = DataSplitter(internal_test_size, random_state=20)
+data = DataSplitter(internal_test_size, random_state=None)
 
 x, x_test, y, y_test = data.split(x, y)
 
@@ -49,7 +49,7 @@ grid_list = [random_grid_1, random_grid_2, random_grid_3, random_grid_4]
 
 grid = random_grid_ml
 
-config, metrics = grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_instances=100, regression=True, model_selection="k_fold")
+config, metrics = grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_instances=10, regression=True, model_selection="k_fold")
 
 for i, fold_data in enumerate(metrics['k_fold_results']):
     save_image_trials(fold_data['trial_train_losses'][0], fold_data['trial_val_losses'], fold_data['trial_val_accs'], f"config/ml_cup/k_fold/k_fold_ml_number_{i+1}.png")
