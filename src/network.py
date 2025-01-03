@@ -44,6 +44,8 @@ class Network:
 
     def forw_then_back(self, data_in, y_true, learning_rate, lambd, momentum):
         y_out = self.forward(data_in)
+        # print(np.shape(y_out))
+        # print(np.shape(y_true))
         if y_out.shape[1] == 1: y_out = np.reshape(y_out, y_out.shape[0])
         diff =  (y_true - y_out)
         self.backward(diff, learning_rate, lambd, momentum)
@@ -53,6 +55,7 @@ class Network:
     def train(self, x_train, y_train, x_val=None, y_val=None, batch_size=-1, learning_rate=lr(0.001), epochs=300, patience = None, lambd = L2(0), momentum = 0, early_stopping = False, min_delta=0.0001, min_train_loss=0):
         if batch_size == -1:
                 for epoch in range(epochs):
+                    # print(f"Epoch: {epoch}")
                     self.forw_then_back(x_train, y_train, learning_rate(epoch), lambd, momentum)
                     self.update_train_metrics(x_train, y_train)
                     if y_val is not None:
@@ -63,12 +66,12 @@ class Network:
                             
                             # print(f"GOOD THING THERE IS EARLY STOPPING TO SAVE THE DAY! epoch stopped at:{epoch}")
                             break
-                # plot_learning_curve(self.loss, self.loss_val, self.acc_val)
+                
 
                     else:
                         if self.loss[-1] < min_train_loss:
                             break
-
+                # plot_learning_curve(self.loss, self.loss_val, self.acc_val)
                            
                 if early_stopping is False:
                     plot_learning_curve(self.loss, self.loss_val, self.acc_val)

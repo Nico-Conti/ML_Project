@@ -30,17 +30,33 @@ random_grid_monk = {
 }
 
 random_grid_ml = {
-    'n_layers': [1,1],
-    'a_fun': [Act_Tanh()],
-    'n_unit': [20, 30],
-    'learning_rate': [0.00001, 0.01],
-    'learning_rate_decay_max': [0.0001, 0.01],
-    'learning_rate_decay_min': [0.00005, 0.0001],
-    'learning_rate_decay_epochs': [50, 80],
-    'lambd': [0.00001, 0.0001],
-    'momentum': [0.5, 0.95],
-    'patience': [5, 5],
+    'n_layers': [1,2],
+    'a_fun': [Act_ELU()],
+    'n_unit': [8, 16, 32],
+    'learning_rate': [0.000001, 0.0001],
+    'learning_rate_decay_max': [0.000001, 0.00001],
+    'learning_rate_decay_min': [0.0000005, 0.000001],
+    'learning_rate_decay_epochs': [40, 60],
+    'lambd': [0.00000001, 0.00001],
+    'momentum': [0.35, 0.95],
+    'patience': [5, 10],
     'batch_size': [-1],
+    'epoch': 1000,
+    'loss_function': MEE()
+}
+
+random_grid_ml_SGD = {
+    'n_layers': [2,2],
+    'a_fun': [Act_Sigmoid(), Act_ReLU(), Act_LeakyReLU()],
+    'n_unit': [10, 40],
+    'learning_rate': [0.000001, 0.0001],
+    'learning_rate_decay_max': [0.00001, 0.0001],
+    'learning_rate_decay_min': [0.0000005, 0.000001],
+    'learning_rate_decay_epochs': [40, 60],
+    'lambd': [0.00000001, 0.00001],
+    'momentum': [0.5, 0.95],
+    'patience': [5, 10],
+    'batch_size': [1],
     'epoch': 1000,
     'loss_function': MEE()
 }
@@ -153,8 +169,8 @@ random_grid_4 = {
 
 fine_grid_ml= {
     "n_layers": (1, 1),  # Range of number of layers
-    "n_unit": (40,40,1), # (min, max, num_steps)
-    "a_fun": [Act_Sigmoid()],
+    "n_unit": (8,32,3), # (min, max, num_steps)
+    "a_fun": [Act_ELU()],
     "learning_rate": (0.02, 0.025, 1),
     "learning_rate_decay_max": (0.0001, 0.0006, 5),
     "learning_rate_decay_epochs": (35, 55, 3),

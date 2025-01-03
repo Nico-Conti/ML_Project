@@ -54,8 +54,14 @@ def generate_random_search_configs(num_instances, n_unit_out, regression, grid={
     for _ in range(num_instances):
 
         num_hidden_layers = random.randint(*grid["n_layers"])
+        #Generaete ranodm values
+        # n_unit_list = [
+        #     random.randint(*grid["n_unit"])
+        #     for _ in range(num_hidden_layers)
+        # ]
+        #choose random values from the list
         n_unit_list = [
-            random.randint(*grid["n_unit"])
+            random.choice(grid["n_unit"])
             for _ in range(num_hidden_layers)
         ]
         n_unit_list.append(n_unit_out)
@@ -109,6 +115,22 @@ def generate_random_search_configs(num_instances, n_unit_out, regression, grid={
             'loss_function': loss_function,
             'epochs': epochs
         }
+
+        #MANUAL INPUT LAYER
+        # new_config = {
+        #     'n_unit_list': [8, 3],
+        #     'act_list': [Act_ELU(), Act_Linear()],
+        #     'learning_rate': learning_rate,
+        #     'lambd': lambd,
+        #     'momentum': momentum,
+        #     'patience': patience,
+        #     'batch_size': batch_size,
+        #     'loss_function': loss_function,
+        #     'epochs': epochs
+        # }
+
+        
+
 
         randomized_configs.append(new_config)
         

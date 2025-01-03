@@ -30,7 +30,7 @@ n_trials = 3
 val_size = 0.2
 internal_test_size = 0.25
 
-outter_fold = DataSplitter(internal_test_size, random_state=20)
+outter_fold = DataSplitter(internal_test_size, random_state=42)
 
 k = math.ceil(1 / internal_test_size)
 if k < 2:

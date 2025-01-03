@@ -5,9 +5,9 @@ from src.weight_init import *
 class LayerDense():
 
     def __init__(self, n_in, n_out, activation:function):
-        if activation.__class__.__name__ == 'Act_Sigmoid' or activation.__class__.__name__ == 'Act_Tanh':
+        if activation.__class__.__name__ == 'Act_Sigmoid' or activation.__class__.__name__ == 'Act_Tanh' :
             self.weights = init_xavier_weights(n_in, n_out, seed=None)
-        elif activation.__class__.__name__ == 'Act_LeakyReLU' or activation.__class__.__name__ == 'Act_ReLU':
+        elif activation.__class__.__name__ == 'Act_LeakyReLU' or activation.__class__.__name__ == 'Act_ReLU' or activation.__class__.__name__ == 'Act_ELU':
             self.weights = init_he_weights(n_in, n_out, seed=None)
         else:
             self.weights = init_rand_w(n_in, n_out, limit=0.5, seed=None)
@@ -24,12 +24,24 @@ class LayerDense():
         self.net = np.dot(inputs, self.weights) + self.bias
         self.output  = self.activation.forward_fun(self.net)
 
+        # print(f"Inputs shape: {np.shape(self.inputs)}")
+
+        # print(f"Weights shape: {np.shape(self.weights)}")
+
+        # print(f"Net shape: {np.shape(self.net)}")
+        # print(self.inputs)
+        # print(self.weights)
+        # print(self.bias)
+        # print(self.net)
+        # print(self.output)
+
         return self.output
 
     def backward(self, upstream_delta, learning_rate, lambd, momentum):
         
         # Apply the derivative of the activation function
         derivative_output = self.activation.derivative_fun(self.net)
+        # print(derivative_output)
         if derivative_output.shape[1] == 1: derivative_output = np.reshape(derivative_output, derivative_output.shape[0])
 
         # Calculate the delta for this layer
@@ -59,9 +71,6 @@ class LayerDense():
         new_upstream_delta = np.dot(delta, self.weights.T)
 
         self.bias = self.bias + self.grad_biases * learning_rate - lambd(self.bias)
-        self.weights = self.weights + self.grad_weights * learning_rate - lambd(self.weights)
-
-         
-                
+        self.weights = self.weights + self.grad_weights * learning_rate - lambd(self.weights) 
 
         return new_upstream_delta

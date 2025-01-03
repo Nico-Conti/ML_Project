@@ -10,7 +10,8 @@ activation_mapping = {
     'Act_Sigmoid()': Act_Sigmoid(),
     'Act_Tanh()': Act_Tanh(),
     'Act_Linear()': Act_Linear(),
-    'Act_LeakyReLU()': Act_LeakyReLU()
+    'Act_LeakyReLU()': Act_LeakyReLU(),
+    'Act_ELU()': Act_ELU()
 }
 
 regularization_mapping = {

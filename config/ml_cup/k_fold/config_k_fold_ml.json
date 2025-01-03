@@ -2,89 +2,93 @@
     {
         "config": {
             "n_unit_list": [
-                24,
+                32,
                 3
             ],
             "act_list": [
-                "Act_Tanh()",
+                "Act_ELU()",
                 "Act_Linear()"
             ],
-            "learning_rate": "LearningRate(0.0009208259896542358)",
-            "lambd": "L1Regularization(5.496544683611377e-05)",
-            "momentum": 0.6327722634426529,
+            "learning_rate": "LearningRate(3.843390624541822e-05)",
+            "lambd": "L1Regularization(8.63866390642005e-06)",
+            "momentum": 0.6163509105826654,
             "patience": 5,
             "batch_size": -1,
             "loss_function": "MEE()",
             "epochs": 1000
         },
-        "avg_val_loss": 4.026680616143968,
-        "avg_train_loss": 4.078540925450768,
-        "std_val_loss": 0.7388613695761207
+        "avg_val_loss": 0.7856840779805062,
+        "avg_train_loss": 0.7219846416486908,
+        "std_val_loss": 0.0808344668460655
     },
     {
         "config": {
             "n_unit_list": [
-                26,
+                32,
                 3
             ],
             "act_list": [
-                "Act_Tanh()",
+                "Act_ELU()",
                 "Act_Linear()"
             ],
-            "learning_rate": "LearningRate(0.002500203335721305)",
-            "lambd": "L2Regularization(3.6336473725329376e-05)",
-            "momentum": 0,
+            "learning_rate": "LearningRate(3.7278510357008795e-05)",
+            "lambd": "L1Regularization(7.834622967442846e-06)",
+            "momentum": 0.6809972080286923,
             "patience": 5,
             "batch_size": -1,
             "loss_function": "MEE()",
             "epochs": 1000
         },
-        "avg_val_loss": 18649.418000963033,
-        "avg_train_loss": 18609.51693302317,
-        "std_val_loss": 8671.683921103822
+        "avg_val_loss": 0.7955521982642004,
+        "avg_train_loss": 0.7035786656080977,
+        "std_val_loss": 0.12671661149152133
     },
     {
         "config": {
             "n_unit_list": [
-                22,
+                16,
+                32,
                 3
             ],
             "act_list": [
-                "Act_Tanh()",
+                "Act_ELU()",
+                "Act_ELU()",
                 "Act_Linear()"
             ],
-            "learning_rate": "LearningRateLinearDecay(0.003066785420828977, 61, 5.5876034664886465e-05)",
-            "lambd": "L2Regularization(4.95042840734136e-05)",
-            "momentum": 0.5478192544308454,
+            "learning_rate": "LearningRate(2.4092087259786096e-05)",
+            "lambd": "L2Regularization(0)",
+            "momentum": 0.5488936071523004,
             "patience": 5,
             "batch_size": -1,
             "loss_function": "MEE()",
             "epochs": 1000
         },
-        "avg_val_loss": 19329.772970563718,
-        "avg_train_loss": 19633.82600723554,
-        "std_val_loss": 9414.928039181093
+        "avg_val_loss": 0.7959110295467893,
+        "avg_train_loss": 0.7083050904130739,
+        "std_val_loss": 0.06648457341033151
     },
     {
         "config": {
             "n_unit_list": [
-                26,
+                32,
+                32,
                 3
             ],
             "act_list": [
-                "Act_Tanh()",
+                "Act_ELU()",
+                "Act_ELU()",
                 "Act_Linear()"
             ],
-            "learning_rate": "LearningRate(0.003287269923532331)",
-            "lambd": "L1Regularization(0)",
-            "momentum": 0,
+            "learning_rate": "LearningRate(2.5161574274716517e-05)",
+            "lambd": "L1Regularization(7.846960598123859e-06)",
+            "momentum": 0.4160799396189681,
             "patience": 5,
             "batch_size": -1,
             "loss_function": "MEE()",
             "epochs": 1000
         },
-        "avg_val_loss": 108045.92399018614,
-        "avg_train_loss": 108748.01411205964,
-        "std_val_loss": 19665.545011388313
+        "avg_val_loss": 0.7966923279845177,
+        "avg_train_loss": 0.7010844744657483,
+        "std_val_loss": 0.09759338891195746
     }
 ]

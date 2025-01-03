@@ -36,6 +36,17 @@ class Act_LeakyReLU(function):
     def derivative_fun(self, input_data):
         # Derivative of Leaky ReLU: alpha for negative inputs, 1 for positive inputs
         return np.where(input_data > 0, 1, self.alpha).astype(float)
+    
+class Act_ELU(function):
+    def __init__(self, alpha=1.0):
+        self.alpha = alpha
+
+    def forward_fun(self, input_data):
+        return np.where(input_data > 0, input_data, self.alpha * (np.exp(input_data) - 1))
+
+    def derivative_fun(self, input_data):
+        elu_output = self.forward_fun(input_data)
+        return np.where(input_data > 0, 1, elu_output + self.alpha)
 
 
 class Act_Linear(function):

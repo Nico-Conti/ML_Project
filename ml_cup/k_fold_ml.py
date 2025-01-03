@@ -30,7 +30,7 @@ n_trials = 3
 val_size = 0.2
 internal_test_size = 0.25
 
-data = DataSplitter(internal_test_size, random_state=None)
+data = DataSplitter(internal_test_size, random_state=42)
 
 x, x_test, y, y_test = data.split(x, y)
 
@@ -49,25 +49,26 @@ grid_list = [random_grid_1, random_grid_2, random_grid_3, random_grid_4]
 
 grid = random_grid_ml
 
-best_config, metrics, all_configs = grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_instances=10, regression=True, model_selection="k_fold")
+best_config, metrics, all_configs = grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_instances=1000, regression=True, model_selection="k_fold")
 
 for i, fold_data in enumerate(metrics['k_fold_results']):
     save_image_trials(fold_data['trial_train_losses'][0], fold_data['trial_val_losses'], fold_data['trial_val_accs'], f"config/ml_cup/k_fold/k_fold_ml_number_{i+1}.png")
 
 save_config_to_json(best_config, "config/ml_cup/k_fold/config_k_fold_ml.json")
 save_config_to_json(all_configs, "config/ml_cup/k_fold/configs_tried.json")
-#Training and testing model found for inner k fold on the outter fold
-init_config, train_config = load_best_model(f"config/ml_cup/k_fold/config_k_fold_ml.json", use_train_loss=True)
-
-network = nn(n_in, *init_config)
-network.train(x, y, x_test, y_test, *train_config)
-
-y_out = network.forward(x_test)
-
-train_loss_list, train_acc_list, test_loss_list, test_acc_list = network.model_metrics()
 
 
-save_image_test(train_loss_list, test_loss_list, test_acc_list, f"config/ml_cup/k_fold/hold_out_test.png")
+# init_config, train_config = load_best_model(f"config/ml_cup/k_fold/config_k_fold_ml.json", use_train_loss=True)
+
+# network = nn(n_in, *init_config)
+# network.train(x, y, x_test, y_test, *train_config)
+
+# y_out = network.forward(x_test)
+
+# train_loss_list, train_acc_list, test_loss_list, test_acc_list = network.model_metrics()
+
+
+# save_image_test(train_loss_list, test_loss_list, test_acc_list, f"config/ml_cup/k_fold/hold_out_test.png")
 
 
 

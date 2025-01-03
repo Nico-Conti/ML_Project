@@ -18,12 +18,13 @@ loss = MEE()
 loss_2 = MSE()
 
 act = Act_LeakyReLU()
+act = Act_Sigmoid()
 
 x = np.array([[-1, 0], [3, 2], [3, 6]])
 y = np.array([[1, 2], [3, 4], [5, 6]])
 
-# x = np.array([0, 3, 4])
-# y = np.array([3, 1, 1])
+x = np.array([0, -3, 4])
+y = np.array([3, 1, 1])
 
 print(x.ndim)
 

@@ -30,8 +30,8 @@ n_out = 1
 
 init_config, train_config = load_best_model("config/monk_1/config_hold_monk_1.json", model_number=1, use_train_loss=False)
 
-print(init_config)
-print(train_config)
+# print(init_config)
+# print(train_config)
 
 network = nn(n_in, *init_config)
 

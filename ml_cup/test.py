@@ -22,22 +22,33 @@ ml_test = os.path.join(script_dir, "../data/ml_cup/ML-CUP24-TS.csv")
 x, y =  readTrainingCupData(ml_train)
 
 
-internal_test_size = 0.2
+
+
+internal_test_size = 0.1
 
 data = DataSplitter(internal_test_size, random_state=None)
 
 x, x_test, y, y_test = data.split(x, y)
 
+x = x[:, :]
+y = y[:, :]
 
-n_in = np.size(x[1])
+
+
+n_in = np.size(x[0])
 n_out = 3
 
-init_config, train_config = load_best_model("config/ml_cup/k_fold/config_k_fold_SGD.json", model_number=5, use_train_loss=False)
+init_config, train_config = load_best_model("config/ml_cup/test_config.json", model_number=1, use_train_loss=False)
+
+print(init_config)
+print(train_config)
 
 network = nn(n_in, *init_config)
 
 network.train(x, y, x_test, y_test, *train_config)
 
+print("Training done")
+print(f"Testing input shape: {np.shape(x_test)}")
 y_out = network.forward(x_test)
 
 print(f"Loss: {MEE().compute(y_test, y_out)}")
