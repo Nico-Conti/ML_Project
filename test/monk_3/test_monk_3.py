@@ -26,23 +26,47 @@ n_out = 1
 
 ensemble = []
 
-for model_number in range(1, 4):
-    print(f"Model number: {model_number}")
+# for model_number in range(2, 3):
+#     print(f"Model number: {model_number}")
 
-    init_config, train_config = load_best_model("config/monk_3/config_hold_monk_3.json", model_number, use_train_loss=False)
+#     init_config, train_config = load_best_model("config/monk_3/config_hold_monk_3.json", model_number, use_train_loss=False)
+
+#     network = nn(n_in, *init_config)
+
+#     network.train(x, y, x_test, y_test, *train_config)
+
+#     y_out = network.forward(x_test).flatten()
+
+#     ensemble.append(y_out)
+
+#     print(f"Loss: {MSE().compute(y_test, y_out)}")
+#     print(f"Accuracy: {binary_accuracy(y_test, y_out)}")
+
+
+init_config, train_config = load_best_model("config/monk_3/config_hold_monk_3.json", model_number=1, use_train_loss=True)
+
+avg_test_loss = []
+avg_test_accuracy = []
+avg_train_accuracy = []
+avg_train_loss = []
+
+for i in range(1, 11):
+    print(f"Model number: {i}")
 
     network = nn(n_in, *init_config)
 
     network.train(x, y, x_test, y_test, *train_config)
 
     y_out = network.forward(x_test).flatten()
+    y_pred = network.forward(x).flatten()
 
-    ensemble.append(y_out)
+    avg_test_loss.append(MSE().compute(y_test, y_out))
+    avg_test_accuracy.append(binary_accuracy(y_test, y_out))
+    avg_train_loss.append(MSE().compute(y, y_pred))
+    avg_train_accuracy.append(binary_accuracy(y, y_pred))
 
-    print(f"Loss: {MSE().compute(y_test, y_out)}")
-    print(f"Accuracy: {binary_accuracy(y_test, y_out)}")
-
-y_out = np.mean(ensemble, axis=0)
-
-print(f"Loss: {MSE().compute(y_test, y_out)}")
-print(f"Accuracy: {binary_accuracy(y_test, y_out)}")
+    
+print(f"Average test loss: {np.mean(avg_test_loss)}")
+print(f"Average test accuracy: {np.mean(avg_test_accuracy)}")
+print(f"Average train loss: {np.mean(avg_train_loss)}")
+print(f"Average train accuracy: {np.mean(avg_train_accuracy)}")

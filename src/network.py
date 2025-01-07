@@ -52,7 +52,7 @@ class Network:
 
     
                            
-    def train(self, x_train, y_train, x_val=None, y_val=None, batch_size=-1, learning_rate=lr(0.001), epochs=300, patience = None, lambd = L2(0), momentum = 0, early_stopping = False, min_delta=0.0001, min_train_loss=0):
+    def train(self, x_train, y_train, x_val=None, y_val=None, batch_size=-1, learning_rate=lr(0.001), epochs=300, patience = None, lambd = L2(0), momentum = 0, early_stopping = False, min_delta=0.005, min_train_loss=0):
         if batch_size == -1:
                 for epoch in range(epochs):
                     # print(f"Epoch: {epoch}")
@@ -74,7 +74,7 @@ class Network:
                 # plot_learning_curve(self.loss, self.loss_val, self.acc_val)
                            
                 if early_stopping is False:
-                    plot_learning_curve(self.loss, self.loss_val, self.acc_val)
+                    plot_learning_curve(self.loss, self.loss_val, self.acc, self.acc_val)
 
         else:
                 for epoch in range(epochs):
@@ -97,8 +97,8 @@ class Network:
                         if self.loss[-1] < min_train_loss:
                             break
                 
-                if early_stopping is False:
-                    plot_learning_curve(self.loss, self.loss_val, self.acc_val)
+                # if early_stopping is False:
+                #     plot_learning_curve(self.loss, self.loss_val, self.acc, self.acc_val)
                 
 
 

@@ -9,15 +9,15 @@
                 "Act_LeakyReLU()",
                 "Act_Sigmoid()"
             ],
-            "learning_rate": "LearningRate(0.005420997779250719)",
-            "lambd": "L2Regularization(2.413792439012548e-07)",
-            "momentum": 0.9393598351025996,
+            "learning_rate": "LearningRate(0.0054)",
+            "lambd": "L2Regularization(2.41e-07)",
+            "momentum": 0.93,
             "patience": 10,
             "batch_size": 1,
             "loss_function": "MSE()"
         },
         "avg_val_loss": 0.0008670955356365528,
-        "avg_train_loss": 0.0004076689111088841,
+        "avg_train_loss": 0.0006676689111088841,
         "std_val_loss": 0.00036891742849978694
     },
     {

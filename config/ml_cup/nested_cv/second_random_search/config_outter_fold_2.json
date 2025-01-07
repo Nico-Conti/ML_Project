@@ -1,0 +1,92 @@
+[
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2.4155579925705068e-05)",
+            "lambd": "L2Regularization(3.2132568426571746e-05)",
+            "momentum": 0.6775945145410964,
+            "patience": 10,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.7817449089148962,
+        "avg_train_loss": 0.6810852099053186,
+        "std_val_loss": 0.012851066730198802
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRateLinearDecay(1.9047559369766848e-05, 60, 7.502018910665042e-06)",
+            "lambd": "L1Regularization(1.5069298500341921e-05)",
+            "momentum": 0.7918218436665814,
+            "patience": 10,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.7835661698448529,
+        "avg_train_loss": 0.7031428669522694,
+        "std_val_loss": 0.12089983979816285
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                24,
+                48,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRateLinearDecay(1.0077842559529106e-05, 55, 8.91921405796717e-06)",
+            "lambd": "L1Regularization(2.8315807591783787e-05)",
+            "momentum": 0.7781340297791478,
+            "patience": 10,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.784784991596516,
+        "avg_train_loss": 0.6821836656495847,
+        "std_val_loss": 0.10323208881000723
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(1.94009010772078e-05)",
+            "lambd": "L2Regularization(1.9969038269430015e-05)",
+            "momentum": 0.6334547254068208,
+            "patience": 10,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.7876192940463238,
+        "avg_train_loss": 0.6974132258059889,
+        "std_val_loss": 0.083342498176828
+    }
+]

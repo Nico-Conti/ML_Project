@@ -75,14 +75,14 @@ def generate_random_search_configs(num_instances, n_unit_out, regression, grid={
 
         learning_choices = [
             lr(random.uniform(*grid['learning_rate'])),
-            lrLD(random.uniform(*grid['learning_rate_decay_max']), random.randint(*grid['learning_rate_decay_epochs']), random.uniform(*grid['learning_rate_decay_min']))
+            # lrLD(random.uniform(*grid['learning_rate_decay_max']), random.randint(*grid['learning_rate_decay_epochs']), random.uniform(*grid['learning_rate_decay_min']))
         ]
 
         learning_rate = random.choice(
             learning_choices
         )
 
-        if random.random() < 0.15:
+        if random.random() < 0:
             lambd_choices = [L1(0), L2(0)]
         else:
             lambd_choices = [L1(random.uniform(*grid['lambd'])), L2(random.uniform(*grid['lambd']))]
@@ -91,7 +91,7 @@ def generate_random_search_configs(num_instances, n_unit_out, regression, grid={
             lambd_choices     
         )
 
-        if random.random() < 0.15:
+        if random.random() < 0:
             momentum = 0
         else:
             momentum = random.uniform(*grid['momentum'])
@@ -184,10 +184,12 @@ def generate_fine_grid_search_configs(num_instances, n_unit_out, regression, gri
         else:
             raise ValueError(f"Invalid grid definition for '{key}'. Use a list or a tuple (min, max) or (min, max, num_steps).")
 
-    n_layers_values = generate_grid_values("n_layers")
-    n_unit_values = generate_grid_values("n_unit")
-    a_fun_values = generate_grid_values("a_fun")
-    lambd_type_values = generate_grid_values("lambd_type")
+    # n_layers_values = generate_grid_values("n_layers")
+    n_layers_values = [1]
+    # n_unit_values = generate_grid_values("n_unit")
+    # a_fun_values = generate_grid_values("a_fun")
+    # lambd_type_values = generate_grid_values("lambd_type")
+    lambd_type_values = grid['lambd_type']
     lambd_values = generate_grid_values("lambd")
     patience_values = generate_grid_values("patience")
     batch_size_values = generate_grid_values("batch_size")
@@ -201,71 +203,17 @@ def generate_fine_grid_search_configs(num_instances, n_unit_out, regression, gri
         if "momentum" in grid:
             momentum_values = generate_grid_values("momentum")
             for n_layers in n_layers_values:
-                for n_unit_vals in itertools.product(n_unit_values, repeat=n_layers):
-                    n_unit_list = list(n_unit_vals) + [n_unit_out]
-                    for act_vals in itertools.product(a_fun_values, repeat=n_layers):
-                        act_list = list(act_vals) + [Act_Linear() if regression else Act_Sigmoid()]
-                        for lr_decay_max in lr_decay_max_values:
-                            for lr_decay_epochs in lr_decay_epochs_values:
-                                for lr_decay_min in lr_decay_min_values:
-                                    learning_rate = lrLD(lr_decay_max, lr_decay_epochs, lr_decay_min)
-                                    for lambd_type in lambd_type_values:
-                                        for lambd_val in lambd_values:
-                                            lambd = lambd_type(lambd_val)
-                                            for momentum in momentum_values:
-                                                for patience in patience_values:
-                                                    for batch_size in batch_size_values:
-                                                        for loss_function in loss_function_values:
-                                                            grid_configs.append({
-                                                                'n_unit_list': n_unit_list,
-                                                                'act_list': act_list,
-                                                                'learning_rate': learning_rate,
-                                                                'lambd': lambd,
-                                                                'momentum': momentum,
-                                                                'patience': patience,
-                                                                'batch_size': batch_size,
-                                                                'loss_function': loss_function,
-                                                                'epochs': grid['epoch']
-                                                            })
-        else:
-            for n_layers in n_layers_values:
-                for n_unit_vals in itertools.product(n_unit_values, repeat=n_layers):
-                    n_unit_list = list(n_unit_vals) + [n_unit_out]
-                    for act_vals in itertools.product(a_fun_values, repeat=n_layers):
-                        act_list = list(act_vals) + [Act_Linear() if regression else Act_Sigmoid()]
-                        for lr_decay_max in lr_decay_max_values:
-                            for lr_decay_epochs in lr_decay_epochs_values:
-                                for lr_decay_min in lr_decay_min_values:
-                                    learning_rate = lrLD(lr_decay_max, lr_decay_epochs, lr_decay_min)
-                                    for lambd_type in lambd_type_values:
-                                        for lambd_val in lambd_values:
-                                            lambd = lambd_type(lambd_val)
-                                            for patience in patience_values:
-                                                for batch_size in batch_size_values:
-                                                    for loss_function in loss_function_values:
-                                                        grid_configs.append({
-                                                            'n_unit_list': n_unit_list,
-                                                            'act_list': act_list,
-                                                            'learning_rate': learning_rate,
-                                                            'lambd': lambd,
-                                                            'momentum': 0,
-                                                            'patience': patience,
-                                                            'batch_size': batch_size,
-                                                            'loss_function': loss_function,
-                                                            'epochs': grid['epoch']
-                                                        })
+                # for n_unit_vals in itertools.product(n_unit_values, repeat=n_layers):
+                #     n_unit_list = list(n_unit_vals) + [n_unit_out]
+                #     for act_vals in itertools.product(a_fun_values, repeat=n_layers):
+                #         act_list = list(act_vals) + [Act_Linear() if regression else Act_Sigmoid()]
 
-    elif "learning_rate" in grid:
-        learning_rate_values = generate_grid_values("learning_rate")
-        if "momentum" in grid:
-            momentum_values = generate_grid_values("momentum")
-            for n_layers in n_layers_values:
-                for n_unit_vals in itertools.product(n_unit_values, repeat=n_layers):
-                    n_unit_list = list(n_unit_vals) + [n_unit_out]
-                    for act_vals in itertools.product(a_fun_values, repeat=n_layers):
-                        act_list = list(act_vals) + [Act_Linear() if regression else Act_Sigmoid()]
-                        for learning_rate_val in learning_rate_values:
-                            learning_rate = lr(learning_rate_val)
+                n_unit_list = grid['n_unit'] + [n_unit_out]
+                act_list = grid['a_fun'] + [Act_Linear() if regression else Act_Sigmoid()]
+                for lr_decay_max in lr_decay_max_values:
+                    for lr_decay_epochs in lr_decay_epochs_values:
+                        for lr_decay_min in lr_decay_min_values:
+                            learning_rate = lrLD(lr_decay_max, lr_decay_epochs, lr_decay_min)
                             for lambd_type in lambd_type_values:
                                 for lambd_val in lambd_values:
                                     lambd = lambd_type(lambd_val)
@@ -284,6 +232,72 @@ def generate_fine_grid_search_configs(num_instances, n_unit_out, regression, gri
                                                         'loss_function': loss_function,
                                                         'epochs': grid['epoch']
                                                     })
+
+                                                            
+
+        else:
+            for n_layers in n_layers_values:
+                # for n_unit_vals in itertools.product(n_unit_values, repeat=n_layers):
+                #     n_unit_list = list(n_unit_vals) + [n_unit_out]
+                #     for act_vals in itertools.product(a_fun_values, repeat=n_layers):
+                #         act_list = list(act_vals) + [Act_Linear() if regression else Act_Sigmoid()]
+
+                n_unit_list = grid['n_unit']
+                act_list = grid['a_fun']
+                for lr_decay_max in lr_decay_max_values:
+                    for lr_decay_epochs in lr_decay_epochs_values:
+                        for lr_decay_min in lr_decay_min_values:
+                            learning_rate = lrLD(lr_decay_max, lr_decay_epochs, lr_decay_min)
+                            for lambd_type in lambd_type_values:
+                                for lambd_val in lambd_values:
+                                    lambd = lambd_type(lambd_val)
+                                    for patience in patience_values:
+                                        for batch_size in batch_size_values:
+                                            for loss_function in loss_function_values:
+                                                grid_configs.append({
+                                                    'n_unit_list': n_unit_list,
+                                                    'act_list': act_list,
+                                                    'learning_rate': learning_rate,
+                                                    'lambd': lambd,
+                                                    'momentum': 0,
+                                                    'patience': patience,
+                                                    'batch_size': batch_size,
+                                                    'loss_function': loss_function,
+                                                    'epochs': grid['epoch']
+                                                })
+
+    elif "learning_rate" in grid:
+        learning_rate_values = generate_grid_values("learning_rate")
+        if "momentum" in grid:
+            momentum_values = generate_grid_values("momentum")
+            for n_layers in n_layers_values:
+                # for n_unit_vals in itertools.product(n_unit_values, repeat=n_layers):
+                #     n_unit_list = list(n_unit_vals) + [n_unit_out]
+                #     for act_vals in itertools.product(a_fun_values, repeat=n_layers):
+                #         act_list = list(act_vals) + [Act_Linear() if regression else Act_Sigmoid()]
+
+                n_unit_list = grid['n_unit'] + [n_unit_out]
+                act_list = grid['a_fun'] + [Act_Linear() if regression else Act_Sigmoid()]
+                for learning_rate_val in learning_rate_values:
+                    learning_rate = lr(learning_rate_val)
+                    for lambd_type in lambd_type_values:
+                        for lambd_val in lambd_values:
+                            lambd = lambd_type(lambd_val)
+                            for momentum in momentum_values:
+                                for patience in patience_values:
+                                    for batch_size in batch_size_values:
+                                        for loss_function in loss_function_values:
+                                            grid_configs.append({
+                                                'n_unit_list': n_unit_list,
+                                                'act_list': act_list,
+                                                'learning_rate': learning_rate,
+                                                'lambd': lambd,
+                                                'momentum': momentum,
+                                                'patience': patience,
+                                                'batch_size': batch_size,
+                                                'loss_function': loss_function,
+                                                'epochs': grid['epoch']
+                                            })
         else:
             for n_layers in n_layers_values:
                 for n_unit_vals in itertools.product(n_unit_values, repeat=n_layers):

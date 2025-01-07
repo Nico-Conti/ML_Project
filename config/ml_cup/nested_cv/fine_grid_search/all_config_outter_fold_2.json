@@ -1,0 +1,596 @@
+[
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2e-05)",
+            "lambd": "L1Regularization(4e-05)",
+            "momentum": 0.65,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.8092935389086369,
+        "avg_train_loss": 0.7618698632379163,
+        "std_val_loss": 0.06740655765391093
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2.5e-05)",
+            "lambd": "L1Regularization(4.5e-05)",
+            "momentum": 0.65,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 300
+        },
+        "avg_val_loss": 0.8211248803871966,
+        "avg_train_loss": 0.7510774530677055,
+        "std_val_loss": 0.050900687395031584
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2.25e-05)",
+            "lambd": "L1Regularization(4.25e-05)",
+            "momentum": 0.65,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.8246457747049455,
+        "avg_train_loss": 0.7620791835495133,
+        "std_val_loss": 0.07869000415637328
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2.5e-05)",
+            "lambd": "L1Regularization(4.5e-05)",
+            "momentum": 0.6000000000000001,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.8253037662694039,
+        "avg_train_loss": 0.7586700668068411,
+        "std_val_loss": 0.05648533434218949
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2.25e-05)",
+            "lambd": "L1Regularization(4.25e-05)",
+            "momentum": 0.6000000000000001,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 300
+        },
+        "avg_val_loss": 0.8268237139234182,
+        "avg_train_loss": 0.7639871769066645,
+        "std_val_loss": 0.1282504520301424
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2.5e-05)",
+            "lambd": "L1Regularization(4e-05)",
+            "momentum": 0.55,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.8272770818609141,
+        "avg_train_loss": 0.7665870529201481,
+        "std_val_loss": 0.0956378226741849
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2.5e-05)",
+            "lambd": "L1Regularization(4e-05)",
+            "momentum": 0.65,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 300
+        },
+        "avg_val_loss": 0.828183644929603,
+        "avg_train_loss": 0.7528283851898036,
+        "std_val_loss": 0.10976098133659012
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2.25e-05)",
+            "lambd": "L1Regularization(4e-05)",
+            "momentum": 0.55,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 300
+        },
+        "avg_val_loss": 0.8324225496452712,
+        "avg_train_loss": 0.7726510241580347,
+        "std_val_loss": 0.1021746394139137
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2.5e-05)",
+            "lambd": "L1Regularization(4.5e-05)",
+            "momentum": 0.55,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 200
+        },
+        "avg_val_loss": 0.8334274750119512,
+        "avg_train_loss": 0.764146698333332,
+        "std_val_loss": 0.11191657702342762
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2.5e-05)",
+            "lambd": "L1Regularization(4.25e-05)",
+            "momentum": 0.55,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.8400200266244943,
+        "avg_train_loss": 0.7656358193211865,
+        "std_val_loss": 0.03396974130443764
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2e-05)",
+            "lambd": "L1Regularization(4.5e-05)",
+            "momentum": 0.65,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 300
+        },
+        "avg_val_loss": 0.8410762808743029,
+        "avg_train_loss": 0.7748893316049308,
+        "std_val_loss": 0.06709321339280325
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2e-05)",
+            "lambd": "L1Regularization(4.5e-05)",
+            "momentum": 0.55,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 250
+        },
+        "avg_val_loss": 0.8425733191304898,
+        "avg_train_loss": 0.7694187484844675,
+        "std_val_loss": 0.03578611060550944
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2.5e-05)",
+            "lambd": "L1Regularization(4.25e-05)",
+            "momentum": 0.65,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.8472156130605091,
+        "avg_train_loss": 0.7541217532657304,
+        "std_val_loss": 0.05725199617291985
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2e-05)",
+            "lambd": "L1Regularization(4.5e-05)",
+            "momentum": 0.6000000000000001,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.8485063979761789,
+        "avg_train_loss": 0.7708542916104679,
+        "std_val_loss": 0.07595534693186476
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2.25e-05)",
+            "lambd": "L1Regularization(4.5e-05)",
+            "momentum": 0.6000000000000001,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.8502251108284226,
+        "avg_train_loss": 0.7600087690306131,
+        "std_val_loss": 0.08382882475899883
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2e-05)",
+            "lambd": "L1Regularization(4.25e-05)",
+            "momentum": 0.65,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.850684356920669,
+        "avg_train_loss": 0.7676836105302275,
+        "std_val_loss": 0.15988737104924416
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2.5e-05)",
+            "lambd": "L1Regularization(4e-05)",
+            "momentum": 0.6000000000000001,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.850806917427437,
+        "avg_train_loss": 0.7648849401659251,
+        "std_val_loss": 0.1092148116188012
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2e-05)",
+            "lambd": "L1Regularization(4e-05)",
+            "momentum": 0.55,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.8534270819786404,
+        "avg_train_loss": 0.7764920425364912,
+        "std_val_loss": 0.15523948060170306
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2.25e-05)",
+            "lambd": "L1Regularization(4e-05)",
+            "momentum": 0.65,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.8555396539932889,
+        "avg_train_loss": 0.7583539748844712,
+        "std_val_loss": 0.09286692239514413
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2.5e-05)",
+            "lambd": "L1Regularization(4.25e-05)",
+            "momentum": 0.6000000000000001,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.8557270009691444,
+        "avg_train_loss": 0.7684491339447296,
+        "std_val_loss": 0.09378982564533736
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2e-05)",
+            "lambd": "L1Regularization(4.25e-05)",
+            "momentum": 0.55,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.8557796888878147,
+        "avg_train_loss": 0.7771908427680044,
+        "std_val_loss": 0.13005331852496613
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2.25e-05)",
+            "lambd": "L1Regularization(4.5e-05)",
+            "momentum": 0.55,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.8558701958268504,
+        "avg_train_loss": 0.7656872716112415,
+        "std_val_loss": 0.07703159591416096
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2e-05)",
+            "lambd": "L1Regularization(4.25e-05)",
+            "momentum": 0.6000000000000001,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.8587006747210191,
+        "avg_train_loss": 0.7669161943591034,
+        "std_val_loss": 0.13205035800376777
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2.25e-05)",
+            "lambd": "L1Regularization(4.25e-05)",
+            "momentum": 0.55,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.8588264395692722,
+        "avg_train_loss": 0.7677416140362601,
+        "std_val_loss": 0.05174173147233324
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2.25e-05)",
+            "lambd": "L1Regularization(4e-05)",
+            "momentum": 0.6000000000000001,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.86322212375839,
+        "avg_train_loss": 0.752178765130801,
+        "std_val_loss": 0.05713120554038982
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2e-05)",
+            "lambd": "L1Regularization(4e-05)",
+            "momentum": 0.6000000000000001,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.8675456732781172,
+        "avg_train_loss": 0.7717148088920848,
+        "std_val_loss": 0.1171628600292697
+    },
+    {
+        "config": {
+            "n_unit_list": [
+                64,
+                3
+            ],
+            "act_list": [
+                "Act_ELU()",
+                "Act_Linear()"
+            ],
+            "learning_rate": "LearningRate(2.25e-05)",
+            "lambd": "L1Regularization(4.5e-05)",
+            "momentum": 0.65,
+            "patience": 20,
+            "batch_size": -1,
+            "loss_function": "MEE()",
+            "epochs": 1500
+        },
+        "avg_val_loss": 0.8681945037279059,
+        "avg_train_loss": 0.7639974144972,
+        "std_val_loss": 0.04767971976734252
+    }
+]

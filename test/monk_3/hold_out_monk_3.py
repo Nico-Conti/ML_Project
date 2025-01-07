@@ -26,7 +26,7 @@ n_in = np.size(x[1])
 n_out = 1
 
 
-val_size = 0.1
+val_size = 0.2
 
 split_type = "stratified"
 search_type = "fine"   
@@ -34,10 +34,10 @@ search_type = "fine"
 # Define the grid
 grid = fine_grid_monk_3
 
-config, metrics = grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_instances=100, regression=False, model_selection="hold_out")
+best_config, metrics, all_configs = grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_instances=2000, regression=False, model_selection="hold_out")
 
 save_image_val(metrics['trial_train_losses'][0], metrics['trial_val_losses'][0], metrics['trial_val_accs'][0], "config/monk_3/hold_out_monk_3.png")
 
-save_config_to_json(config, "config/monk_3/config_hold_monk_3.json")
-
+save_config_to_json(best_config, "config/monk_3/config_hold_monk_3.json")
+save_config_to_json(all_configs, "config/monk_3/all_config_hold_monk_3.json")
 
