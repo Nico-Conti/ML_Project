@@ -28,20 +28,31 @@ x_test = feature_one_hot_encoding(x_test, [3,3,2,3,4,2])
 n_in = np.size(x[1])
 n_out = 1
 
-init_config, train_config = load_best_model("config/monk_1/config_hold_monk_1.json", model_number=1, use_train_loss=False)
+init_config, train_config = load_best_model("config/monk_1/config_hold_monk_1.json", model_number=2, use_train_loss=True)
 
-# print(init_config)
-# print(train_config)
+avg_test_loss = []
+avg_test_accuracy = []
+avg_train_accuracy = []
+avg_train_loss = []
 
-network = nn(n_in, *init_config)
+for i in range(1, 2):
+    print(f"Model number: {i}")
 
-network.train(x, y, x_test, y_test, *train_config)
+    network = nn(n_in, *init_config)
 
-y_out = network.forward(x_test).flatten()
+    network.train(x, y, x_test, y_test, *train_config)
 
-print(f"Loss: {MSE().compute(y_test, y_out)}")
-print(f"Accuracy: {binary_accuracy(y_test, y_out)}")
+    y_out = network.forward(x_test).flatten()
+    y_pred = network.forward(x).flatten()
 
+    avg_test_loss.append(MSE().compute(y_test, y_out))
+    avg_test_accuracy.append(binary_accuracy(y_test, y_out))
+    avg_train_loss.append(MSE().compute(y, y_pred))
+    avg_train_accuracy.append(binary_accuracy(y, y_pred))
 
-
+    
+print(f"Average test loss: {np.mean(avg_test_loss)}")
+print(f"Average test accuracy: {np.mean(avg_test_accuracy)}")
+print(f"Average train loss: {np.mean(avg_train_loss)}")
+print(f"Average train accuracy: {np.mean(avg_train_accuracy)}")
     
