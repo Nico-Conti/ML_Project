@@ -2,8 +2,20 @@
 
 ## Introduction
 This group project was developed for the Machine Learning course in the Master’s Degree program at the University of Pisa. The library created was utilized to build the final NN model, which was used to make predictions on the blind test set for the **ML CUP 2025** competition.
+<br><br>
+<p align = "center">
+  <img src = "Stemma_unipi.svg" width="200" height="200">
+</p>
 
-
+<p align = "center">
+  Computer Science Department
+  <br>
+  A project for
+  <br>
+  the Machine Learning course
+  <br>
+  in the AI Master's program at the University of Pisa.
+</p>
 
 ## 📖 Overview
 This project implements a **neural network from scratch**, the implementation relies solely on core programming constructs and numerical libraries like **NumPy**, avoiding high-level machine learning frameworks. The goal is to provide a deeper understanding of the fundamental concepts behind neural networks, including forward propagation, backpropagation, weight updates, and optimization techniques.
