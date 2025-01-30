@@ -54,16 +54,19 @@ def generate_random_search_configs(num_instances, n_unit_out, regression, grid={
     for _ in range(num_instances):
 
         num_hidden_layers = random.randint(*grid["n_layers"])
-        #Generaete ranodm values
-        # n_unit_list = [
-        #     random.randint(*grid["n_unit"])
-        #     for _ in range(num_hidden_layers)
-        # ]
-        #choose random values from the list
+
+        #Generate random values between the min and max values for the number of m_units
         n_unit_list = [
-            random.choice(grid["n_unit"])
+            random.randint(*grid["n_unit"])
             for _ in range(num_hidden_layers)
         ]
+        #choose at random values from the list of n_units
+        # n_unit_list = [
+        #     random.choice(grid["n_unit"])
+        #     for _ in range(num_hidden_layers)
+        # ]
+
+        #Append final n_unit_out which will specific for each classification/regression problem
         n_unit_list.append(n_unit_out)
 
         act_list = [
@@ -75,7 +78,7 @@ def generate_random_search_configs(num_instances, n_unit_out, regression, grid={
 
         learning_choices = [
             lr(random.uniform(*grid['learning_rate'])),
-            # lrLD(random.uniform(*grid['learning_rate_decay_max']), random.randint(*grid['learning_rate_decay_epochs']), random.uniform(*grid['learning_rate_decay_min']))
+            lrLD(random.uniform(*grid['learning_rate_decay_max']), random.randint(*grid['learning_rate_decay_epochs']), random.uniform(*grid['learning_rate_decay_min']))
         ]
 
         learning_rate = random.choice(

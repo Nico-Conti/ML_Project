@@ -31,6 +31,7 @@ class Network:
 
 
     def forward(self, data_in):
+        # Forward pass each layerof the network
         for layer in self.layers:
             data_in = layer.forward(data_in)
 
@@ -42,17 +43,27 @@ class Network:
         for layer in reversed(self.layers):
             upstream_delta = layer.backward(upstream_delta, learning_rate, lambd, momentum)
 
+    #Performs a forward pass and then a backward pass
     def forw_then_back(self, data_in, y_true, learning_rate, lambd, momentum):
+
         y_out = self.forward(data_in)
-        # print(np.shape(y_out))
-        # print(np.shape(y_true))
+        
         if y_out.shape[1] == 1: y_out = np.reshape(y_out, y_out.shape[0])
+
+        #LMS is based on squared error
         diff =  (y_true - y_out)
+        diff = diff / len(data_in)
         self.backward(diff, learning_rate, lambd, momentum)
 
     
                            
-    def train(self, x_train, y_train, x_val=None, y_val=None, batch_size=-1, learning_rate=lr(0.001), epochs=300, patience = None, lambd = L2(0), momentum = 0, early_stopping = False, min_delta=0.005, min_train_loss=0):
+    def train(
+            self, x_train, y_train, x_val=None, y_val=None,
+            batch_size=-1, learning_rate=lr(0.001), epochs=300,
+            patience = None, lambd = L2(0), momentum = 0,
+            early_stopping = False, min_delta=0.005, plot=False):
+        
+        #Batch size -1 is used for full batch training
         if batch_size == -1:
                 for epoch in range(epochs):
                     # print(f"Epoch: {epoch}")
@@ -60,6 +71,8 @@ class Network:
                     self.update_train_metrics(x_train, y_train)
                     if y_val is not None:
                         self.update_val_metrics(x_val, y_val)
+
+                    #Check if users wishes to use early stopping
                     if early_stopping is True:
                         self.early_stopping(min_delta)
                         if self.wait >= patience:
@@ -69,12 +82,10 @@ class Network:
                 
 
                     else:
-                        if self.loss[-1] < min_train_loss:
+                        self.training_plateau()
+                        if self.wait >= 100:
+                            
                             break
-                # plot_learning_curve(self.loss, self.loss_val, self.acc_val)
-                           
-                if early_stopping is False:
-                    plot_learning_curve(self.loss, self.loss_val, self.acc, self.acc_val)
 
         else:
                 for epoch in range(epochs):
@@ -94,11 +105,14 @@ class Network:
                             break
 
                     else:
-                        if self.loss[-1] < min_train_loss:
+                        self.training_plateau()
+                        if self.wait >= 100:
                             break
-                
-                # if early_stopping is False:
-                #     plot_learning_curve(self.loss, self.loss_val, self.acc, self.acc_val)
+        
+
+        #If users want to plot the learning curve of the model
+        if plot is True:
+            plot_learning_curve(self.loss, self.loss_val, self.acc, self.acc_val)
                 
 
 
@@ -119,11 +133,25 @@ class Network:
 
     def early_stopping(self, min_delta):
 
+
         if self.loss_val[-1] < self.min_val and self.min_val - self.loss_val[-1] > min_delta:
             self.min_val = self.loss_val[-1]
             self.wait = 0
         else:
             self.wait += 1
+
+    def training_plateau(self):
+        if len(self.loss) < 2:
+            self.wait = 0
+
+        #This is used during a final retraining to check if training loss has plateaued
+        else:
+            if self.loss[-2] - self.loss[-1] < 0.00001:
+                
+                self.wait += 1
+            else:
+                self.wait = 0
+            
 
     def model_metrics(self):
         return self.loss, self.acc, self.loss_val, self.acc_val

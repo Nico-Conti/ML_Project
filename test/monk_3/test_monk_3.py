@@ -26,36 +26,19 @@ n_out = 1
 
 ensemble = []
 
-# for model_number in range(2, 3):
-#     print(f"Model number: {model_number}")
-
-#     init_config, train_config = load_best_model("config/monk_3/config_hold_monk_3.json", model_number, use_train_loss=False)
-
-#     network = nn(n_in, *init_config)
-
-#     network.train(x, y, x_test, y_test, *train_config)
-
-#     y_out = network.forward(x_test).flatten()
-
-#     ensemble.append(y_out)
-
-#     print(f"Loss: {MSE().compute(y_test, y_out)}")
-#     print(f"Accuracy: {binary_accuracy(y_test, y_out)}")
-
-
-init_config, train_config = load_best_model("config/monk_3/config_hold_monk_3.json", model_number=1, use_train_loss=True)
+init_config, train_config = load_best_model("config/monk_3/config_hold_monk_3.json", model_number=1)
 
 avg_test_loss = []
 avg_test_accuracy = []
 avg_train_accuracy = []
 avg_train_loss = []
 
-for i in range(1, 11):
-    print(f"Model number: {i}")
 
+#Up range if you want to have a average score of model
+for i in range(0, 1):
     network = nn(n_in, *init_config)
 
-    network.train(x, y, x_test, y_test, *train_config)
+    network.train(x, y, x_test, y_test, *train_config, plot=True)
 
     y_out = network.forward(x_test).flatten()
     y_pred = network.forward(x).flatten()

@@ -18,15 +18,17 @@ script_dir = os.path.dirname(__file__)
 
 
 
-def grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_instances=10, regression=False, model_selection = "hold_out"):
+def grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_instances=10, regression=False, model_selection = "hold_out", seed_split=None):
 
-    n_trials = 3
+    n_trials = 10
 
+    #Decides if we apply a stratified splitting strategy or not
     if split_type == "stratified":
-        data = StratifiedDataSplitter(val_size, random_state=None)
+        data = StratifiedDataSplitter(val_size, random_state=seed_split)
     else:
-        data = DataSplitter(val_size, random_state=None)
+        data = DataSplitter(val_size, random_state=seed_split)
 
+    #Choice of Grid Search tecnique
     if search_type == "random":
         configs = generate_random_search_configs(num_instances, n_out, regression, grid)
 
