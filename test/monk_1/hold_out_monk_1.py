@@ -29,12 +29,17 @@ n_out = 1
 val_size = 0.2
 
 split_type = "stratified"
-search_type = "random"   
+search_type = "random"
+
+
 
 # Define the grid
 grid = random_grid_monk_1
 
-config, metrics, all = grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_instances=500, regression=False, model_selection="hold_out")
+
+#Call grid serach function where we pass the data, the grid, the search type and the model selection type.
+#We pass a split seed only if we proceed with nested grid searches to have same validation set for each grid search.
+config, metrics, all = grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_instances=4000, regression=False, model_selection="hold_out", seed_split=42)
 
 save_image_trials(metrics['trial_train_losses'][0], metrics['trial_val_losses'], metrics['trial_val_accs'], "config/monk_1/hold_out_monk_1.png")
 

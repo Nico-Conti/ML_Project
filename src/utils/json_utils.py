@@ -30,7 +30,7 @@ loss_function_mapping = {
     'MSE()': MSE(),
 }
 
-def load_best_model(filepath, model_number=1, use_train_loss=True):
+def load_best_model(filepath, model_number=1):
     with open(filepath, 'r') as f:
         data = json.load(f)
 
@@ -38,10 +38,6 @@ def load_best_model(filepath, model_number=1, use_train_loss=True):
 
     model_config = data["config"]
 
-    if use_train_loss:
-        min_train_loss = data["avg_train_loss"]
-    else:
-        min_train_loss = 0
 
     # Mapping for activation functions
     
@@ -105,7 +101,7 @@ def load_best_model(filepath, model_number=1, use_train_loss=True):
 
     # Create configurations
     init_config = (n_unit_list, activation_functions, loss_function)
-    train_config = (batch_size, learning_rate, epochs, patience, lambd, momentum, early_stopping, min_delta, min_train_loss)
+    train_config = (batch_size, learning_rate, epochs, patience, lambd, momentum, early_stopping, min_delta)
 
     return init_config, train_config
 

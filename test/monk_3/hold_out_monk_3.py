@@ -29,12 +29,14 @@ n_out = 1
 val_size = 0.2
 
 split_type = "stratified"
-search_type = "fine"   
+search_type = "random"   
 
 # Define the grid
-grid = fine_grid_monk_3
+grid = random_grid_monk_3
 
-best_config, metrics, all_configs = grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_instances=2000, regression=False, model_selection="hold_out")
+
+
+best_config, metrics, all_configs = grid_search(x, y, n_in, n_out, val_size, split_type, grid, search_type, num_instances=4000, regression=False, model_selection="hold_out", seed_split=42)
 
 save_image_val(metrics['trial_train_losses'][0], metrics['trial_val_losses'][0], metrics['trial_val_accs'][0], "config/monk_3/hold_out_monk_3.png")
 

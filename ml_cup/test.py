@@ -38,7 +38,7 @@ y = y[:, :]
 n_in = np.size(x[0])
 n_out = 3
 
-init_config, train_config = load_best_model("config/ml_cup/test_config.json", model_number=1, use_train_loss=False)
+init_config, train_config = load_best_model("config/ml_cup/test_config.json", model_number=1)
 
 print(init_config)
 print(train_config)
